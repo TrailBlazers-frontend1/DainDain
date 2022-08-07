@@ -1,0 +1,115 @@
+.twod-parent-container{
+    display: grid;
+    grid-template-columns: 75% 25%;
+    grid-gap: 10px;
+    /* grid-template-rows: 1fr; */
+}
+
+.twod-view-container{
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    border-radius: 15px;
+    padding-bottom: 20px;
+}
+
+.twod-navbar{
+    display: flex;
+    align-items: center;
+}
+
+.twod-navbar p{
+    padding: 10px;
+    /* border-right: 1px solid black; */
+    font-size: 1.125rem;
+    cursor: pointer;
+}
+
+.twod-navbar .active{
+    color: var(--secondary-color);
+    font-weight: 600;
+    background-color: var(--primary-color-light);
+    border-top: 2px solid var(--secondary-color);
+}
+
+
+.lottery-op-record-parent-container{
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.lottery-op-record-header{
+    font-size: 1.125rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.875rem;
+
+}
+
+.lottery-op-record-time-container{
+    text-align: center;
+    font-size: 0.875rem;
+    color: white;
+    font-weight: 500;
+    padding: 10px;
+    background-color: #7C8AC7;
+    border-radius: 50px;
+    margin-bottom: 1.875rem;
+}
+
+.lottery-op-evening-container{
+    background-color: var(--primary-color-light);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.lottery-op-evening-time{
+    font-size: 1.125rem;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 1.875rem;
+}
+
+.lottery-op-details-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lottery-op-details-set-container, .lottery-op-details-value-container, .lottery-op-details-number-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.lottery-op-details-set-header, .lottery-op-details-value-header, .lottery-op-details-number-header{
+    font-size: 0.875rem;
+    font-weight: 300;
+    margin-bottom: 5px;
+    color: #978C98;
+}
+
+.lottery-op-details-set-text, .lottery-op-details-value-text, .lottery-op-details-number-text{
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.lottery-op-morning-container{
+    background-color: var(--primary-color-light);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 1.875rem;
+}
+
+.lottery-op-records-container{
+    height: 109.675rem;
+    overflow-y: scroll;
+}

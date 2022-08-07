@@ -1,0 +1,142 @@
+.onenumber-header-container{
+    padding:0 25px;
+    margin-top: 3.125rem;
+    margin-bottom: 3.125rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.onenumber-header-washrate{
+    display: flex;
+    align-items: center;
+}
+
+.onenumber-header{
+    margin-right: 2.5rem;
+    padding: 5px 10px;
+    background-color: #5D5E6B;
+    font-size: 1.125rem;
+    border-radius: 5px;
+    color: white;
+}
+
+.onenumber-washrate{
+    font-size: 0.75rem;
+
+}
+
+.onenumber-description{
+    font-size: 0.75rem;
+    color: #D9D9D9;
+}
+
+.onenumber-numbers-parent-container{
+    padding: 0 25px;
+}
+
+.onenumber-numbers-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.onenumber-1stone-container{
+    display: flex;
+    align-items: center;
+    
+}
+
+.onenumber-1stone-label{
+    margin-right: 5px;
+}
+
+.onenumber-1stone-numbers-container{
+    display: flex;
+
+}
+
+.onenumber-1stone-number-btn-container{
+    display: block;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    position: relative;
+    border: none;
+}
+
+.onenumber-1stone-number-btn-container:not(:last-child){
+    margin-right: 5px;
+}
+
+.onenumber-1stone-number-btn-container p {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.125rem;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.onenumber-1stone-number-btn-container input[type="checkbox"]{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    appearance: none;
+    background-color : #E5E5E5;
+    cursor: pointer;
+}
+
+.onenumber-1stone-btn-container{
+    display: block;
+    width: 4.375rem;
+    height: 3.125rem;
+    border-radius: 10px;
+    position: relative;
+    border: none;
+}
+
+.onenumber-1stone-btn-container p{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.125rem;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.onenumber-1stone-btn-container input[type="checkbox"]{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    appearance: none;
+    background-color : #E5E5E5;
+    cursor: pointer;
+}
+
+.onenumber-1stone-btns-container{
+    display: flex;
+    align-items: center;
+}
+
+.onenumber-1stone-btn-container:not(:last-child){
+    margin-right: 5px;
+}
+
+.onenumber-line{
+    height: 2px;
+    background-color: var(--primary-color);
+    margin: 30px 0;
+}
+
+.onenumber-details-number{
+    width: 50px;
+    overflow-wrap: break-word;
+}

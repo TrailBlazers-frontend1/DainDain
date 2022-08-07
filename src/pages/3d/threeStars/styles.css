@@ -1,0 +1,122 @@
+.threestars-select-container{
+    padding: 25px;
+    /* display: flex;
+    align-items: center; */
+    background-color: var(--primary-color-light);
+}
+
+.threestars-select-competiton-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.threestars-select-competiton-label{
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-right: 3.75rem;
+}
+
+.threestars-select-competiton-btn{
+    padding: 3px 10px;
+    font-size: 1.125rem;
+    color: var(--secondary-color);
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+}
+
+.threestars-select-group-container{
+    display: flex;
+    align-items: center;
+}
+
+.threestars-select-group-label{
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-right: 3.75rem;
+}
+
+.threestars-select-group-btn{
+    padding: 3px 10px;
+    font-size: 1.125rem;
+    /* color: var(--secondary-color); */
+    background-color: transparent;
+    /* border: 2px solid var(--secondary-color); */
+    border-radius: 5px;
+    border: none;
+    margin-right: 3.75rem;
+}
+
+.threestars-numbers-parent-container{
+    padding: 0 1.563rem;
+}
+
+.threestars-numbers-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.threestars-numbers-container:not(:last-child){
+    margin-bottom: 30px;
+}
+
+.threestars-1stone-container{
+    display: flex;
+    align-items: center;
+}
+
+.threestars-1stone-label{
+    margin-right: 5px;
+}
+
+.threestars-1stone-numbers-container{
+    display: flex;
+}
+
+.threestars-lstone-btns-container{
+    display: flex;
+    align-items: center;
+}
+
+.threestars-lstone-btn-container{
+    display: block;
+    width: 4.375rem;
+    height: 3.125rem;
+    border-radius: 50%;
+    position: relative;
+    border: none;
+}
+
+.threestars-lstone-btn-container:not(:last-child){
+    margin-right: 5px;
+}
+
+.threestars-lstone-btn-container p{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 1.125rem;
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.threestars-lstone-btn-container input[type="checkbox"]{
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    appearance: none;
+    background-color : #E5E5E5;
+    cursor: pointer;
+}
+
+.threed-line{
+    height: 2px;
+    margin: 30px 0;
+    background-color: var(--primary-color);
+}

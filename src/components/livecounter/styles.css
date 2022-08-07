@@ -1,0 +1,120 @@
+.livecounter-container{
+    width: 100%;
+    height: 9.375rem;
+    padding: 20px 0;
+    background-image: linear-gradient(
+  90deg,
+  hsl(51deg 100% 50%) 0%,
+  hsl(49deg 100% 24%) 50%,
+  hsl(0deg 0% 0%) 100%
+);
+    margin-bottom: 3.75rem;
+}
+
+.livecounter-content-container{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.livecounter-category-container{
+    text-align: center;
+    color: white;
+}
+
+.livecounter-category-number{
+    font-size: 1.563rem;
+    font-weight: 500;
+    margin-bottom: 10pxs;
+}
+
+.livecounter-category-text{
+    font-size: 1.125rem;
+    font-weight: 500;
+}
+
+.livecounter-category-text{
+
+}
+
+.livecounter-multiply-times-container{
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    color: white;
+}
+
+.livecounter-multiply-times-container span{
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #FF7F2B;
+}
+
+.livecounter-counter-container{
+    text-align: center;
+}
+
+.livecounter-time-container{
+    display: flex;
+    align-items: center;
+}
+
+.livecounter-hour-container, .livecounter-minute-container, .livecounter-second-container{
+    display: flex;
+    align-items: center;
+}
+.livecounter-hour-container div, .livecounter-minute-container div, .livecounter-second-container div{
+    font-size: 25px;
+    font-weight: 500;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+}
+
+.livecounter-hour-container div:not(:last-child), .livecounter-minute-container div:not(:last-child), .livecounter-second-container div:not(:last-child){
+    margin-right: 3px;
+}
+
+.time-divider{
+    font-size: 40px;
+    margin: 0 5px;
+    color: white;
+}
+
+.livecounter-lotteryopnum-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.livecounter-lotteryopnum-header-container{
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 1.25rem;
+    color: white;
+}
+
+.livecounter-lotteryopnum-header-container span{
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #FF7F2B;
+}
+
+.livecounter-lotteryopnum-num-container{
+    display: flex;
+    align-items: center;
+}
+
+.livecounter-lotteryopnum-num-container p{
+    font-size: 1.5rem;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 50%;
+    background-color: #FFDD44;
+}
+
+.livecounter-lotteryopnum-1st{
+    margin-right: 10px;
+}

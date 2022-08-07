@@ -1,0 +1,12 @@
+.select{
+    background-color: transparent;
+    border: none;
+}
+
+.select.white{
+    color: white;
+}
+
+.select option{
+    color: black;
+}
