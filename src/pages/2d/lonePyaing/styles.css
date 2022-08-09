@@ -91,6 +91,14 @@
     cursor: pointer;
 }
 
+.onenumber-1stone-number-btn-container input[type="checkbox"].checked{
+    background-color: #FC8E63 !important;
+}
+
+.lonepyaing-btn-checked{
+    background-color: #FC8E63 !important;
+}
+
 .onenumber-1stone-btn-container{
     display: block;
     width: 4.375rem;

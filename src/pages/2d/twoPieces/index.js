@@ -1,18 +1,33 @@
-import React,{useState} from 'react'
+import React,{useState, useRef, useEffect} from 'react'
 import "./styles.css"
 
 const TwoPieces = () => {
     const [customerName,setCustomerName] = useState("")
     const [customerPhno,setCustomerPhno] = useState("")
+    const [customerType,setCustomerType] = useState("guest")
+    const customerNameInput = useRef('')
+    const customerPhnoInput = useRef('')
     const [number,setNumber] = useState("")
     const [amount,setAmount] = useState("1000")
     const [twodNumbers,setTwodNumbers] = useState([])
+
+    // useEffect(() => {
+    //   console.log(twodNumbers)
+    // },[twodNumbers])
+
     const submitCustomerInfo = (e) => {
       e.preventDefault()
-      // console.log(customerName,customerPhno)
-      // setCustomerName("")
-      // setCustomerPhno("")
+      setCustomerName(customerNameInput.current.value)
+      setCustomerPhno(customerPhnoInput.current.value)
+      // console.log(customerType)
+      // setCustomerName('')
+      // setCustomerPhno('')
+      customerNameInput.current.value=""
+      customerPhnoInput.current.value = ""
+      setCustomerType("guest")
+      
     }
+
     
     //delete number from number details start
     const deleteNumber = (item) => {
@@ -66,11 +81,33 @@ const TwoPieces = () => {
       setTwodNumbers(newarr)
     }
     //increase amount by pressing - btn in number details end
+
+    const add0Infront = () => {
+      const newarr = twodNumbers.map((number) => {
+        if(number.number < 10){
+          // console.log(`0${number.number}`)
+          return {...number,number: `0${number.number}`}
+        }
+        return number
+      })
+
+      // setTwodNumbers(newarr)
+      console.log(newarr)
+      return newarr
+    }
   
     //submit number amount details start
     const submitBetNow = () => {
-      console.log(twodNumbers)
-      setTwodNumbers([])
+      if(customerName == "" && customerPhno == ""){
+        alert("Please Provide Customer name and phone number")
+      }
+      else{
+        
+        setTwodNumbers([])
+        console.log({customerName,customerType ,customerPhno,twodNumbers})
+
+        setTwodNumbers([])
+      }
     }
     //submit number amount details end
   
@@ -177,20 +214,28 @@ const TwoPieces = () => {
             <p className='twopieces-rate-label'>Rate:</p>
             <p className='twopieces-rate-num'>85</p>
           </div>
-          <div className='twopieces-max-container'>
+          {/* <div className='twopieces-max-container'>
             <p className='twopieces-max-label'>Max:</p>
             <p className='twopieces-max-num'>1000000</p>
           </div>
           <div className='twopieces-sale-container'>
             <p className='twopieces-sale-label'>Sale:</p>
             <p className='twopieces-sale-num'>1000000</p>
-          </div>
+          </div> */}
         </div>
     </div>)
       }
       return(rowarray)
     }
     //two number row end
+
+    //total amount start
+    const twoPiecesTotalAmount = () => {
+      const amountArr = twodNumbers.map((number) => parseInt(number.amount))
+      // console.log(amountArr)
+      const totalAmount = amountArr.reduce((previous,current) => previous+current,0)
+      return totalAmount
+        }
 
 
     return (
@@ -274,23 +319,23 @@ const TwoPieces = () => {
           <form onSubmit={(e) => submitCustomerInfo(e)} className='twopieces-name-phno-input-container'>
             <div className='twopieces-name-input-container'>
               <p>Name:</p>
-              <input value={customerName} onChange={(e) => setCustomerName(e.target.value)} required type="text" name="twopieces name"></input>
+              <input ref={customerNameInput} required type="text" name="twopieces name"></input>
             </div>
             <div className='twopieces-phno-input-container'>
               <p>Ph No:</p>
-              <input value={customerPhno} onChange={(e) => setCustomerPhno(e.target.value)} required type="text" name="twopieces phno"></input>
+              <input ref={customerPhnoInput} required type="text" name="twopieces phno"></input>
             </div>
   
-            <div className='customer-type-container'>
+            <div   className='customer-type-container'>
               <p>Choose the type of customer</p>
               <div className='customer-type-radios-container'>
   
                 <div className='customer-type-radio-container'>
-                  <input type="radio" id="guest" name="customer type" value="guest" checked></input>
+                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"}></input>
                   <label htmlFor='guest'>Guest</label>
                 </div>
                 <div className='customer-type-radio-container'>
-                  <input type="radio" id="royal" name="customer type" value="royal"></input>
+                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal"></input>
                   <label htmlFor='royal'>Royal</label>
                 </div>
               </div>
@@ -304,7 +349,7 @@ const TwoPieces = () => {
             <p className='twopieces-customer-name'>{customerName}</p>
             <div className='twopieces-number-input-container'>
               <p>Number:</p>
-              <input value={number} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" min="0" max="99"></input>
+              <input required value={number} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" min="0" max="99"></input>
             </div>
   
             <div className='twopieces-amount-input-container'>
@@ -315,7 +360,7 @@ const TwoPieces = () => {
                     setAmount(parseInt(amount)-100)
                   }
                   }}>-</button>
-              <input value={amount} onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount">
+              <input value={amount}   onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount">
               </input>
   
                 <button type='button' className='twopieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}}>+</button>
@@ -365,8 +410,8 @@ const TwoPieces = () => {
                     <p>{twodNumbers.length}</p>
                   </div>
                   <div className='twod-overall-detail-container'>
-                    <p>Punch Fee</p>
-                    <p>0</p>
+                    <p>Total Amount</p>
+                    <p>{twoPiecesTotalAmount()}</p>
                   </div>
                   <div className='twod-overall-detail-container'>
                     <p>Lottery Closing Time</p>
