@@ -2,7 +2,7 @@
     display: grid;
     grid-template-columns: 75% 25%;
     grid-gap: 10px;
-    /* grid-template-rows: 1fr; */
+    /* grid-auto-rows: minmax(max-content,min-content); */
 }
 
 .twod-view-container{
@@ -110,6 +110,13 @@
 }
 
 .lottery-op-records-container{
-    height: 109.675rem;
+    /* height: -moz-calc(100% - 40px);
+    height: -webkit-calc(100% - 40px);
+    height: calc(100% - 40px); */
+    height: 1500px;
     overflow-y: scroll;
+}
+
+.lottery-op-records-lonepyaing-container{
+    height: 600px;
 }

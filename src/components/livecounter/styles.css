@@ -1,21 +1,24 @@
 .livecounter-container{
     width: 100%;
     height: 9.375rem;
-    padding: 20px 0;
+    /* padding: 20px 0; */
     background-image: linear-gradient(
   90deg,
   hsl(51deg 100% 50%) 0%,
   hsl(49deg 100% 24%) 50%,
   hsl(0deg 0% 0%) 100%
 );
-    margin-bottom: 3.75rem;
+    margin-bottom: 2rem;
 }
 
 .livecounter-content-container{
     display: flex;
     align-items: center;
     width: 100%;
+    height: 100%;
     justify-content: space-between;
+    /* align-content: center; */
+    /* margin: auto 0; */
 }
 
 .livecounter-category-container{
@@ -77,6 +80,10 @@
     margin-right: 3px;
 }
 
+.livecounter-lotteryopnum-2nd{
+    margin-right: 10px;
+}
+
 .time-divider{
     font-size: 40px;
     margin: 0 5px;
@@ -117,4 +124,10 @@
 
 .livecounter-lotteryopnum-1st{
     margin-right: 10px;
+}
+
+@media screen and (max-width:1600px){
+    .livecounter-container{
+        height: 120px;
+    }
 }

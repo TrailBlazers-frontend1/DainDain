@@ -14,7 +14,7 @@ const LiveCounter = ({category}) => {
             </div>
 
             <div className='livecounter-counter-container'>
-                <p className='livecounter-multiply-times-container'><span>Multiplied 2022080101</span> times</p>
+                <p className='livecounter-multiply-times-container'><span>08/01/2022  01</span> Number</p>
                 <div className='livecounter-time-container'>
                     <div className='livecounter-hour-container'>
                         <div className='livecounter-hour-1stdigit'>1</div>
@@ -38,7 +38,7 @@ const LiveCounter = ({category}) => {
             </div>
 
             <div className='livecounter-lotteryopnum-container'>
-                <p className='livecounter-lotteryopnum-header-container'><span>Multiplied 2022080101</span> times</p>
+                <p className='livecounter-lotteryopnum-header-container'><span>08/01/2022  01</span> Number</p>
                 <div className='livecounter-lotteryopnum-num-container'>
                     {category === "2d" && (
                         <>

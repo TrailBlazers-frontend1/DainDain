@@ -1,0 +1,141 @@
+.agent-profile-img-parent-container{
+    margin: auto;
+    width: 250px;
+    height: 250px;
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.agent-profile-img-container{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.agent-profile-img-container img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.agent-profile-img-parent-container .agent-profile-img-icon{
+    font-size: 1.563rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+.agent-name-container{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.agent-name-container p{
+    font-size: 1.563rem;
+
+}
+
+.agent-name-container .agent-profile-name-icon{
+    font-size: 1.563rem;
+    color: var(--primary-color);
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.agent-id{
+    font-size: 1.125rem;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.agent-coin-container{
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.agent-coin-container > p{
+    font-size: 1.563rem;
+    font-weight: 600;
+}
+
+.agent-remaining-coin-container{
+    display: flex;
+    align-items: center;
+    margin-left: 50px;
+}
+
+.agent-remaining-coin-container p{
+    font-size: 1.563rem;
+    font-weight: 600;
+}
+
+.agent-remaining-coin-icon{
+    font-size: 2.5rem;
+    margin-left: 10px;
+}
+
+.agent-transaction-history-parent-container{
+    width: 850px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 30px;
+}
+
+.agent-transaction-history-parent-container > p{
+    text-align: center;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.agent-transaction-history-labels-container{
+    display: flex;
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+
+
+.agent-transaction-history-labels-container p:nth-child(2){
+    margin-left: 200px;
+}
+.agent-transaction-history-labels-container p:nth-child(3){
+    margin-left: 150px;
+}
+.agent-transaction-history-labels-container p:nth-child(4){
+    margin-left: 90px;
+}
+.agent-transaction-history-labels-container p:nth-child(5){
+    margin-left: 90px;
+}
+.agent-transaction-history-rows-container{
+    width: 100%;
+    height: 16.25em;
+    background-color: white;
+    border: 3px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+.agent-transaction-history-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.agent-transaction-history-row:not(:first-child){
+    margin-top: 15px;
+}
+
+.agent-transaction-history-row p:nth-child(1){
+    width: 100px;
+}

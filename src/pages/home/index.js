@@ -1,4 +1,5 @@
-import React from 'react'
+import React,{useState} from 'react'
+import {Link} from "react-router-dom"
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
 import homepageimg from "../../imgs/homepage-img.jpg"
@@ -9,6 +10,7 @@ import "./styles.css"
 
 
 const Home = () => {
+    const [twoOrThree,setTwoOrThree] = useState("two")
     return(
         <>
             <Header/>
@@ -30,10 +32,10 @@ const Home = () => {
                 </div>
                 <div className='App hot-game-content-container'>
                     <div className='hot-game-btn-container'>
-                        <button className='hot-game-2d-btn'>
+                        <button onClick={() => setTwoOrThree("two")} className={twoOrThree === "two" ? 'hot-game-2d-btn hot-game-active' : 'hot-game-2d-btn'}>
                             2D
                         </button>
-                        <button className='hot-game-3d-btn'>
+                        <button onClick={() => setTwoOrThree("three")} className={twoOrThree === "three" ? 'hot-game-3d-btn hot-game-active' : 'hot-game-3d-btn'}>
                             3D
                         </button>
                     </div>
@@ -45,8 +47,9 @@ const Home = () => {
                             </div>
                             <div className='hot-game-text-container'>
                                 <div className='hot-game-text-header-container'>
-                                    <p className='hot-game-text-title'>
-                                        2D
+                                    <p data-before={twoOrThree === "two" ? "2D" : "3D"} className='hot-game-text-title'>
+                                        {twoOrThree === "two" && "2D"}
+                                        {twoOrThree === "three" && "3D"}
                                     </p>
                                     <div className='hot-game-text-compensation-container'>
                                         <p className='hot-game-text-compensation-text'>Maximum Compensation</p>
@@ -55,7 +58,7 @@ const Home = () => {
                                 </div>
 
                                 <p className='hot-game-text'>Professional lottery platform, fast lottery opening, high payout, rich gameplay! TTBET is dedicated to providing rich games to global lottery users and creating a high-quality entertainment environment for players.</p>
-                                <button className='hot-game-btn'>Enter <Icon icon="ep:arrow-right-bold" /></button>
+                                <Link to={twoOrThree === "two" ? "/2d" : "/3d"} className='hot-game-btn'>Enter <Icon icon="ep:arrow-right-bold" /></Link>
                             </div>
 
 

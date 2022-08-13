@@ -1,4 +1,4 @@
-.dai-register-outer-overlay{
+.request-promo-outeroverlay{
     width: 100%;
     height: 100%;
     background-color: rgba(72, 81, 102, 0.8);
@@ -8,16 +8,19 @@
     bottom: 0;
     left: 0;
     z-index: 2;
+    /* display: none; */
 }
 
-.dai-register-open{
+.request-promo-open{
     display: block;
 }
-.dai-register-close{
+.request-promo-close{
     display: none;
 }
 
-.dai-register-form{
+
+
+.request-promo-form{
     width: 27.5rem;
     padding: 20px;
     position: absolute;
@@ -29,40 +32,40 @@
     border-radius: 15px;
 }
 
-.dai-register-header{
+.request-promo-header{
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.875rem;
 }
 
-.dai-register-title{
+.request-promo-title{
     font-size: 1.125rem;
     font-weight: 600;
 }
 
-.dai-register-cross-btn{
+.request-promo-cross-btn{
     font-size: 30px;
     color: var(--primary-color);
     cursor: pointer;
 }
 
-.dai-register-phno-input-container{
+.request-promo-phno-input-container{
     width: 100%;
     height: 40px;
     position: relative;
     margin-bottom: 1.875rem;
 }
 
-.dai-phno-input{
+.request-promo-phno-input{
     width: 100%;
     height: 100%;
-    padding-left: 80px;
+    padding-left: 50px;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
 
-.dai-register-phno-input-container p{
+.request-promo-phno-input-container p{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -70,66 +73,41 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: #676974;
+    pointer-events: none;
 }
 
-.dai-register-name-input-container{
+.request-promo-role-container{
     width: 100%;
-    height: 40px;
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 1.875rem;
 }
 
-.dai-name-input{
-    width: 100%;
-    height: 100%;
-    padding-left: 80px;
-    border: 3px solid var(--primary-color);
-    border-radius: 5px;
-}
-
-.dai-register-name-input-container p{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-    font-size: 0.875rem;
+.request-promo-role-container p{
+    font-size: 1.125rem;
     font-weight: 500;
     color: #676974;
+    pointer-events: none;
 }
 
-.dai-register-pw-input-container{
-    width: 100%;
-    height: 40px;
-    position: relative;
-    margin-bottom: 1.875rem;
-}
-
-.dai-pw-input{
-    width: 100%;
-    height: 100%;
-    padding-left: 80px;
-    border: 3px solid var(--primary-color);
+.request-promo-role-container select{
+    background-color: white;
+    border: 2px solid var(--primary-color);
     border-radius: 5px;
+    width: 150px;
+    height: 30px;
+    
 }
 
-.dai-register-pw-input-container .dairegister-pw-icon{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #676974;
-}
-
-.dai-register-remark-input-container{
+.request-promo-remark-container{
     width: 100%;
     height: 9.375rem;
     /* position: relative; */
     margin-bottom: 1.875rem;
 }
 
-.dai-remark-input{
+.request-promo-remark-input{
     width: 100%;
     height: 100%;
     padding-left: 10px;
@@ -138,17 +116,7 @@
     resize: none;
 }
 
-/* .dai-register-remark-input-container p{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 10px;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #676974;
-} */
-
-.dai-register-btn{
+.request-promo-btn{
     padding: 10px 60px;
     border: none;
     background-color: var(--secondary-color);
@@ -158,5 +126,25 @@
     /* text-align: center; */
     display: block;
     margin: auto;
-    /* margin-top: 3.125rem; */
+}
+
+.opstaff-id-input-container, .refree-id-input-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.875rem;
+}
+
+.opstaff-id-input-container p, .refree-id-input-container p{
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: #676974;
+    pointer-events: none;
+}
+
+.opstaff-id-input-container input, .refree-id-input-container input{
+    width: 10.938rem;
+    height: 30px;
+    border: 3px solid var(--primary-color);
+    border-radius: 5px;
 }

@@ -16,6 +16,8 @@
 .language-container{
     display: flex;
     align-items: center;
+    /* height: 60px; */
+
 }
 
 .flag-container{
@@ -32,9 +34,26 @@
     border-radius: 50%;
 }
 
-/* .header-btn-container{
+.header-btn-container{
+    display: flex;
+    align-items: center;
 
-} */
+}
+
+.user-name{
+    font-size: 1.125rem;
+    color: white;
+    text-decoration: none;
+}
+
+.log-out-btn{
+    margin-left: 5rem;
+    padding: 5px 20px;
+    background-color: #FF5B5B;
+    border: none;
+    color: white;
+    border-radius: 7px;
+}
 
 .login-btn{
     padding: 5px 20px;
@@ -55,6 +74,6 @@
 
 @media screen and (max-width:1600px){
     .header{
-        height: 80px;
+        height: 60px;
     }
 }

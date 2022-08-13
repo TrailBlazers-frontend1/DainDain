@@ -1,12 +1,21 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import "./styles.css"
 import loginimg from "../../imgs/log-in.png"
 import Dropdown from '../dropdown'
 import myanmarflag from "../../imgs/myanmar-flag.jpg"
 import englandflag from "../../imgs/england-flag.webp"
+import { useSelector , useDispatch } from 'react-redux'
 import { Icon } from '@iconify/react';
+import { login } from '../../redux/user'
 
 const Login = ({isLoginOpen,setIsLoginOpen}) => {
+
+    const [phNo,setPhNo] = useState("")
+    const [password,setPassword] = useState("")
+
+    const {user_login} = useSelector(state => state.user)
+
+    const dispatch = useDispatch()
 
     const [language,setLanguage] = useState("myanmar")
     const options = [
@@ -17,6 +26,33 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
     const handleChange = (e) => {
         setLanguage(e.target.value)
     }
+
+    const handleLoginSubmit =(e) => {
+        e.preventDefault()
+
+        const userData = {
+            name : "Thurein Win",
+            phNo: phNo,
+            role : "guest",
+            isLoggedIn : true
+        }
+
+        dispatch(login(userData))
+
+        setPhNo("")
+        setPassword("")
+        setIsLoginOpen(false)
+    }
+
+    // if(!user_login.isLoggedIn){
+    //     setIsLoginOpen(true)
+    // }
+    
+    useEffect(() => {
+        if(!user_login.isLoggedIn){
+            setIsLoginOpen(true)
+        }
+    },[])
   return (
     <div className={isLoginOpen ? `login-outer-overlay login-open` : "login-outer-overlay login-close"}>
         <div className='login-container'>
@@ -45,13 +81,13 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
 
 
 
-                <form className='login-form'>
+                <form onSubmit={(e) => handleLoginSubmit(e)} className='login-form'>
                     <div className='login-phno-input-container'>
-                        <input type="tel" className="login-phno-input"></input>
+                        <input placeholder='0912345678'  required value={phNo} onChange={(e) => setPhNo(e.target.value)} type="tel" className="login-phno-input"></input>
                         <p>+95</p>
                     </div>
                     <div className='login-pw-input-container'>
-                        <input type="password" className="login-pw-input"></input>
+                        <input required value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="login-pw-input"></input>
                         <Icon icon="ant-design:lock-outlined" className='login-pw-icon'/>
                         
                     </div>

@@ -1,25 +1,43 @@
 import React,{useState} from 'react'
-import DaiRegister from '../dai-register'
+
 import { Link } from 'react-router-dom'
+import RequestPromotion from '../requestPromotion'
 import "./styles.css"
+import {useSelector} from "react-redux"
 
 const Navbar = () => {
-  const [isDaiRegOpen,setIsDaiRegOpen] = useState(false)
+
+  const [isRequestPromoOpen,setIsRequestPromoOpen] = useState(false)
+
+  const {user_login} = useSelector(state => state.user)
+  
   return (
     <>
-    <DaiRegister isDaiRegOpen={isDaiRegOpen} setIsDaiRegOpen={setIsDaiRegOpen}/>
+
+    <RequestPromotion isRequestPromoOpen={isRequestPromoOpen} setIsRequestPromoOpen={setIsRequestPromoOpen}/>
+    
     <div className='navbar-container'>
         <p className="logo">LOGO</p>
 
         <div className='navbar-links-container'>
           <Link to="/">Main Page</Link>
-          <Link to="/2d">2D</Link>
-          <Link to="/3d">3D</Link>
+          {
+            user_login.role === "operation staff" ? <Link to = "/refreerequests">Refree Requests</Link> :
+              <>
+              <Link to="/2d">2D</Link>
+              <Link to="/3d">3D</Link>
+              </>
+          }
+          
         </div>
         <div className='navbar-btn-container'>
-            <button className='site-admin-rgs-btn'>Site Admin Register</button>
-            <button className='dai-rgs-btn' onClick={() => setIsDaiRegOpen(true)}>Dai Register</button>
-            <button className='agent-admin-rgs-btn'>Agent Register</button>
+          {
+            user_login.isLoggedIn && user_login.role==="guest" ? <button className='request-promotion-btn' onClick={() => setIsRequestPromoOpen(true)}>Request Promotion</button>:
+            null
+          }
+            
+            {/* <button className='dai-rgs-btn' onClick={() => setIsDaiRegOpen(true)}>Dai Register</button>
+            <button className='agent-admin-rgs-btn'>Agent Register</button> */}
         </div>
     </div>
     </>

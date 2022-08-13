@@ -180,7 +180,7 @@ const LonePyaing = () => {
         <div className='onenumber-numbers-parent-container'>
             <div className='onenumber-numbers-container'>
                 <div className='onenumber-1stone-container'>
-                    <p className='onenumber-1stone-label'>first Number:</p>
+                    <p className='onenumber-1stone-label'>First Number:</p>
                     <div className='onenumber-1stone-numbers-container'>
                         {firstNumberRow()}
                     </div>

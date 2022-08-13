@@ -6,8 +6,8 @@ const Dropdown = ({color,label,options,value,handleChange}) => {
     <label>
         {label? label : null}
         <select className={`select ${color}`} value={value} onChange={handleChange}>
-            {options.map((option) => (
-                <option value={option.value}>{option.label}</option>
+            {options.map((option,index) => (
+                <option key={index} value={option.value}>{option.label}</option>
             ))}
         </select>
     </label>

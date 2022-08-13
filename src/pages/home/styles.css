@@ -45,13 +45,19 @@
 .hot-game-btn-container button{
     padding: 10px 25px;
     border: none;
-    background-color: var(--secondary-color);
-    color: white;
+    background-color: var(--primary-color);
+    color: black;
     border-radius: 10px;
+    font-weight: 500;
 }
 
 .hot-game-2d-btn{
     margin-right: 2.5rem;
+}
+
+.hot-game-2d-btn.hot-game-active, .hot-game-3d-btn.hot-game-active{
+    background-color: var(--secondary-color);
+    color: white;
 }
 
 .hot-game-outer{
@@ -105,7 +111,7 @@
 }
 
 .hot-game-text-title::before{
-    content: "2D";
+    content: attr(data-before);
     position: absolute;
     top: 60px;
     color: var(--primary-color);
@@ -140,6 +146,8 @@
     border: none;
     background-color: var(--secondary-color);
     border-radius: 10px;
+    display: inline-block;
+    text-decoration: none;
 }
 
 .live-section{

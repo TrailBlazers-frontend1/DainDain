@@ -192,7 +192,7 @@
 
 .twopieces-name-input-container input{
     height: 2.5rem;
-    width: 19.375rem;
+    width: 18rem;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
@@ -212,7 +212,7 @@
 
 .twopieces-phno-input-container input{
     height: 2.5rem;
-    width: 19.375rem;
+    width: 18rem;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
@@ -266,11 +266,24 @@
     width: 27.125rem;
 }
 
+.twopieces-customer-infos{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .twopieces-customer-name{
     text-align: center;
     font-size: 1.125rem;
     font-weight: 500;
-    margin-bottom: 2.188rem;
+    /* margin-bottom: 2.188rem; */
+}
+
+.twopieces-customer-phno{
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin: 10px 0 20px 0;
 }
 
 .twopieces-number-input-container{
@@ -282,7 +295,7 @@
 
 .twopieces-number-input-container input{
     height: 2.5rem;
-    width: 17.938rem;
+    width: 17rem;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
@@ -330,6 +343,7 @@
     border: none;
     border-top: 3px solid var(--primary-color);
     border-bottom: 3px solid var(--primary-color);
+    width: 11rem;
 }
 
 .twopieces-number-amount-btn{

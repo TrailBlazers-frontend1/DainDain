@@ -13,6 +13,11 @@
     font-weight: 600;
 }
 
+.navbar-links-container{
+    /* margin: auto; */
+    /* text-align: center; */
+}
+
 .navbar-links-container a{
     text-decoration: none;
     color: #676974;
