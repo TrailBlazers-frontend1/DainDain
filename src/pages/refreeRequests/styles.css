@@ -1,7 +1,7 @@
 .refree-requests-parent-container{
     display: grid;
     grid-template-columns: 40% 60%;
-    grid-gap: 30px;
+    /* grid-gap: 10px; */
     margin-top: 60px;
 }
 
@@ -82,13 +82,14 @@
     -webkit-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
     -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
     padding: 20px 10px;
+    margin-left: 20px;
 }
 
 .refree-list-header{
     text-align: center;
     font-size: 1.125rem;
     font-weight: 600;
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
 }
 
 .refree-list-labels-container{
@@ -105,13 +106,13 @@
 }
 
 .refree-list-labels-container p:nth-child(2){
-    margin-left: 200px;
+    margin-left: 150px;
 }
 .refree-list-labels-container p:nth-child(3){
-    margin-left: 170px;
+    margin-left: 95px;
 }
 .refree-list-labels-container p:nth-child(4){
-    margin-left: 140px;
+    margin-left: 70px;
 }
 
 .refree-list-row-container{
@@ -135,4 +136,35 @@
 
 .refree-list-row:not(:first-child){
     margin-top: 15px;
+}
+
+.btn-wrapper{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.refree-crud-add-btn{
+   /* float: right; */
+   padding: 5px 10px;
+   border: 2px solid var(--secondary-color);
+   border-radius: 5px;
+   background-color: white;
+   display: inline-block;
+}
+
+.refree-list-edit-btn{
+    padding: 5px 10px;
+    border: 2px solid var(--secondary-color);
+    border-radius: 5px;
+    background-color: white;
+    margin-right: 10px;
+}
+
+.refree-list-delete-btn{
+    padding: 5px 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: white;
 }

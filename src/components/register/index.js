@@ -71,7 +71,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         </div> */}
 
         <button type="submit" className='dai-register-btn'>Register</button>
-          {user_register.name ? <p>{user_register.name}</p>:null}
+          {/* {user_register.name ? <p>{user_register.name}</p>:null} */}
       </form>
 
     </div>
