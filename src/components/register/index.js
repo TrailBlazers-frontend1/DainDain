@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import "./styles.css"
 import { Icon } from '@iconify/react';
 import {useSelector, useDispatch } from 'react-redux/es/exports';
@@ -11,9 +11,19 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
   const [password,setPassword] = useState("")
   const [confirmPassword,setConfirmPassword] = useState("")
 
+  const [isPhnoValid,setIsPhnoValid] = useState(false)
+
   const {user_register} = useSelector(state => state.user)
 
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(phno.length === 11){
+      setIsPhnoValid(true)
+    }else{
+      setIsPhnoValid(false)
+    }
+  },[phno])
 
   const signUp = (e) => {
     e.preventDefault()
@@ -53,6 +63,12 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         <div className='dai-register-phno-input-container'>
           <input required  value={phno} onChange={(e) => setphno(e.target.value)} type="tel" className="dai-phno-input"></input>
           <p>+95</p>
+          <span className={isPhnoValid? "valid-message" : 'warning-message'}>{isPhnoValid? "This Phone Number is valid" : "This Phone Number is not valid"}</span>
+        </div>
+        <div className='dai-register-otp-input-container'>
+          <p>OTP:</p>
+          <input required  type="number" className="dai-otp-input"></input>
+          <button className='otp-request-btn'>Get OTP</button>
         </div>
         <div className='dai-register-name-input-container'>
           <input required value={name} onChange={(e) => setName(e.target.value)} type="text" className="dai-name-input"></input>

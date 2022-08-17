@@ -1,9 +1,12 @@
 import React,{useState, useRef} from 'react'
 import "./styles.css"
 
+import BetNowModal from '../../../components/betnowmodal'
 import {useSelector} from "react-redux"
 
 const ThreePieces = () => {
+
+  const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
 
     const [customerName,setCustomerName] = useState("")
     const [customerPhno,setCustomerPhno] = useState("")
@@ -39,7 +42,7 @@ const ThreePieces = () => {
             setThreePiecesNumbers([...threePiecesNumbers,newNumber])
           }
       }else{
-        alert("Number should have two digits")
+        alert("Number should have three digits")
       }
         
       setNumber("")
@@ -69,8 +72,9 @@ const ThreePieces = () => {
       }
       else{
         
-        console.log(customerName,customerPhno,customerType,threePiecesNumbers)
-        setThreePiecesNumbers([])
+        // console.log(customerName,customerPhno,customerType,threePiecesNumbers)
+        // setThreePiecesNumbers([])
+        setIsBetNowModalOpen(true)
       }
     }
 
@@ -125,6 +129,12 @@ const ThreePieces = () => {
     }
   return (
     <>
+    <BetNowModal isBetNowModalOpen={isBetNowModalOpen} setIsBetNowModalOpen={setIsBetNowModalOpen}
+       customerName= {customerName}
+       customerPhno= {customerPhno}
+       customerType={customerType}
+       threePiecesNumbers = {threePiecesNumbers}
+       setThreePiecesNumbers={setThreePiecesNumbers}/>
     <div className='threepieces-parent-container'>
       <div className='threepieces-select-container'>
         <div className='threepieces-select-competiton-container'>

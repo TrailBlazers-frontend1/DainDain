@@ -1,37 +1,75 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import "./styles.css"
 import { Icon } from '@iconify/react';
+import { addRefree, editRefree } from '../../redux/refree';
 
-const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, setIsEditRefree}) => {
+const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, setIsEditRefree, editRefreeId,setEditRefreeId}) => {
 
     const [addRefreePhNo,setAddRefreePhNo] = useState("")
     const [addRefreeName,setAddRefreeName] = useState("")
     const [addRefreepw,setAddRefreepw] = useState("")
     const [addRefreeConfirmpw,setAddRefreeConfirmpw] = useState("")
 
+    // const refreeName = editRefreeData.name
+
+    const {refree_list} = useSelector(state => state.refree)
+
+    const dispatch = useDispatch()
+
     const [editRefreePhNo,setEditRefreePhNo] = useState("")
     const [editRefreeName,setEditRefreeName] = useState("")
     const [editRefreepw,setEditRefreepw] = useState("")
     const [editRefreeConfirmpw,setEditRefreeConfirmpw] = useState("")
 
+    useEffect(() => {
+        const editRefree = refree_list.find((refree) => refree.id === editRefreeId)
+        setEditRefreeName(editRefree?.name)
+        setEditRefreePhNo(editRefree?.PhNo)
+        // console.log(editRefree)
+
+    },[editRefreeId])
+
     const refreeAddClose = () => {
         setIsAddRefree(false)
         setTitle("")
+       
     }
 
     const refreeEditClose = () => {
         setIsEditRefree(false)
         setTitle("")
+        // setEditRefreeData({})
+        // setEditRefreeData({})
+        // setEditRefreeName("")
+        // setEditRefreePhNo("")
     }
 
     const submitAddRefree = (e) => {
         e.preventDefault()
-        console.log(addRefreePhNo,addRefreeName,addRefreepw,addRefreeConfirmpw)
+        // console.log(addRefreePhNo,addRefreeName,addRefreepw,addRefreeConfirmpw)
+        const newRefree = {
+            name:addRefreeName,
+            PhNo:addRefreePhNo,
+            refId:"ref-001",
+            joinedOn:"08/15/2022"
+        }
+
+        dispatch(addRefree(newRefree))
     }
 
     const submitEditRefree = (e) => {
         e.preventDefault()
-        console.log(editRefreePhNo,editRefreeName,editRefreepw,editRefreeConfirmpw)
+        // console.log(editRefreePhNo,editRefreeName,editRefreepw,editRefreeConfirmpw)
+
+        const newRefree = {
+            id: editRefreeId,
+            name:editRefreeName,
+            PhNo:editRefreePhNo,
+
+        }
+
+        dispatch(editRefree(newRefree))
     }
 
 
@@ -70,7 +108,11 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
           )
     }
     if(title === "Edit Refree"){
-        // console.log("edit")
+        // console.log(editRefreeData)
+        // console.log(typeof(refreeName))
+        // setEditRefreeName(refree.name)
+        // setEditRefreePhNo(refree.PhNo)
+        // console.log(editRefreeName,editRefreePhNo)
         return (
             <div className={isEditRefree ? "refree-crud-overlay refree-crud-open" : "refree-crud-overlay refree-crud-close"}>
                 <form className='refree-crud-form' onSubmit={(e) => submitEditRefree(e)}>
@@ -89,13 +131,13 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
                     </div>
 
                     <div className='refree-crud-pw-input-container'>
-                        <input value={editRefreepw} onChange={(e) => setEditRefreepw(e.target.value)} required  type="password" className="refree-crud-pw-input"></input>
+                        <input value={editRefreepw} onChange={(e) => setEditRefreepw(e.target.value)}   type="password" className="refree-crud-pw-input"></input>
                         <Icon icon="ant-design:lock-outlined" className='refree-crud-pw-icon'/>
                         
                     </div>
         
                     <div className='refree-crud-confirm-pw-container'>
-                        <input value={editRefreeConfirmpw} onChange={(e) => setEditRefreeConfirmpw(e.target.value)} required  type="password" className='refree-crud-confirm-pw-input'></input>
+                        <input value={editRefreeConfirmpw} onChange={(e) => setEditRefreeConfirmpw(e.target.value)}   type="password" className='refree-crud-confirm-pw-input'></input>
                         <p>Confirm Password</p>
                     </div>
         

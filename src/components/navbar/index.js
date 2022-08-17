@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 
 import { Link } from 'react-router-dom'
 import RequestPromotion from '../requestPromotion'
+// import Transaction from '../../pages/transaction'
 import "./styles.css"
 import {useSelector} from "react-redux"
 
@@ -26,6 +27,12 @@ const Navbar = () => {
               <>
               <Link to="/2d">2D</Link>
               <Link to="/3d">3D</Link>
+              {
+                user_login.role === "agent" ? <> 
+                <Link to ="/transaction">Transaction</Link> 
+                <Link to="/sale">Sale</Link>
+                </>: null
+              }
               </>
           }
           

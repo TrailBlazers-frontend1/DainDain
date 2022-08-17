@@ -1,9 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from "./user"
+import refreeReducer from "./refree"
+import agentReducer from "./agent"
 
 export const store = configureStore({
   reducer: {
-    user : userReducer
+    user : userReducer,
+    refree : refreeReducer,
+    agent : agentReducer,
   },
 })
 

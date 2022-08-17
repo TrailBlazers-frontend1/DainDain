@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useRef} from 'react'
 import "./styles.css"
 import avatar from "../../imgs/avatar.png"
 import { Icon } from '@iconify/react';
@@ -10,9 +10,31 @@ import {useSelector} from "react-redux"
 
 const AgentProfile = () => {
 
+    const [profileImage,setProfileImage] = useState("")
+    const [agentName,setAgentName] = useState("User Name")
+
+    const [isChangeUsername,setIsChangeUsername] = useState(false)
+    const profileimgRef = useRef()
+
     const {user_login} = useSelector(state => state.user)
 
-    if(user_login.isLoggedIn){
+    // const handleProfileChange = (e) => {
+    //     const imgurl = URL.createObjectURL(e.target.files[0])
+    //     profileimgRef.src = imgurl
+    //     console.log()
+    // }
+
+    const handleUserNameChangeCancel = () => {
+        setIsChangeUsername(false)
+        setAgentName("User Name")
+    }
+
+    const handleUserNameChangeConfirm = () => {
+        setIsChangeUsername(false)
+        // setAgentName()
+    }
+
+    if(user_login.isLoggedIn && user_login.role === "agent"){
         return (
           <>
             <Header/>
@@ -24,12 +46,32 @@ const AgentProfile = () => {
                         <img src={avatar} alt="agent profile image"/>
                     </div>
 
-                    <Icon icon="ant-design:setting-filled" className='agent-profile-img-icon'/>
+                    
+                        {/* <Icon icon="ant-design:setting-filled" className='agent-profile-img-icon'/> */}
+                        <form className='agent-change-profile-form'>
+                            <label className='agent-change-profile-input-container' htmlFor='change-profile'>
+                                Change Profile Imge
+                                <input className='agent-change-profile-input' type="file" id="change-profile"  accept="image/png, image/jpeg"></input>
+                            </label>
+
+                        </form>
+
+                    
                 </div>
 
                 <div className='agent-name-container'>
-                    <p>User Name</p>
-                    <Icon icon="ant-design:setting-filled" className='agent-profile-name-icon'/>
+                    {
+                        isChangeUsername ?<>
+                        <input value={agentName} onChange={(e) => setAgentName(e.target.value)} type="text" className='change-username-input'></input>
+                        <button className='confirm-username-btn' onClick={() => handleUserNameChangeConfirm()}>Confirm</button>
+                        <button className='cancel-username-btn' onClick={() => handleUserNameChangeCancel()}>Cancel</button>
+                        </> : 
+                        <>
+                        <p>{agentName}</p>
+                        <Icon icon="ant-design:setting-filled" className='agent-profile-name-icon' onClick={() => setIsChangeUsername(true)}/>
+                        </>
+                    }
+                    
                 </div>
 
                 <p className='agent-id'>ag-001</p>

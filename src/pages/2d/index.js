@@ -29,7 +29,7 @@ const TwoD = () => {
 
   const {user_login} = useSelector(state => state.user)
 
-  if(user_login.isLoggedIn){
+  if(user_login.isLoggedIn && user_login.role === "agent"){
     return (
       <>
           <Header/>

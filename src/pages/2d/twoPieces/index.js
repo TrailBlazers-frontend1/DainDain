@@ -1,9 +1,13 @@
 import React,{useState, useRef, useEffect} from 'react'
 import {useSelector} from "react-redux"
 
+import BetNowModal from '../../../components/betnowmodal'
+
 import "./styles.css"
 
 const TwoPieces = () => {
+    const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
+
     const [customerName,setCustomerName] = useState("")
     const [customerPhno,setCustomerPhno] = useState("")
     const [customerType,setCustomerType] = useState("guest")
@@ -29,7 +33,7 @@ const TwoPieces = () => {
       // dispatch(setTwoPiecesCustomerName(customerNameInput.current.value))
       setCustomerPhno(customerPhnoInput.current.value)
       // setCustomerType
-      console.log(customerType)
+      // console.log(customerType)
       // setCustomerName('')
       // setCustomerPhno('')
       customerNameInput.current.value=""
@@ -96,7 +100,7 @@ const TwoPieces = () => {
   
     //submit number amount details start
     const submitBetNow = () => {
-      if(customerName == "" && customerPhno == ""){
+      if(customerName == "" || customerPhno == ""){
         alert("Please Provide Customer name and phone number")
       }
       else if(twodNumbers.length === 0){
@@ -104,8 +108,9 @@ const TwoPieces = () => {
       }
       else{
         
-        console.log(customerName,customerPhno,customerType,twodNumbers)
-        setTwodNumbers([])
+        // console.log(customerName,customerPhno,customerType,twodNumbers)
+        // setTwodNumbers([])
+        setIsBetNowModalOpen(true)
       }
     }
     //submit number amount details end
@@ -227,6 +232,12 @@ const TwoPieces = () => {
 
     return (
       <>
+      <BetNowModal isBetNowModalOpen={isBetNowModalOpen} setIsBetNowModalOpen={setIsBetNowModalOpen}
+       customerName= {customerName}
+       customerPhno= {customerPhno}
+       customerType={customerType}
+       twodNumbers = {twodNumbers}
+       setTwodNumbers={setTwodNumbers}/>
       <div className='twopieces-parent-container'>
         <div className='select-directly-container'>
           <p className='select-directly-label'>Select Directly:</p>

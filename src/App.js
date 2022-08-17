@@ -13,6 +13,8 @@ import user from './redux/user';
 import Login from './components/login';
 import RefreeRequests from './pages/refreeRequests';
 import AgentProfile from './pages/agentProfile';
+import Transaction from './pages/transaction';
+import Sale from './pages/sale';
 // import DashBoad from './pages/admin/pages/dashboard';
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
       <Route path="/3d" element={<ThreeD/>}/>
       <Route path="/refreerequests" element={<RefreeRequests/>}/>
       <Route path="/profile" element={<AgentProfile/>}/>
+      <Route path="/transaction" element={<Transaction/>}/>
+      <Route path="/sale" element={<Sale/>}/>
       {/* <Route path="/admin" element={<DashBoad/>}/> */}
     </Routes>
     

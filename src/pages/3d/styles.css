@@ -1,6 +1,6 @@
 .threed-parent-container{
     display: grid;
-    grid-template-columns: 75% 25%;
+    grid-template-columns: 80% 20%;
     grid-gap: 10px;
     /* grid-template-rows: 1fr; */
 }

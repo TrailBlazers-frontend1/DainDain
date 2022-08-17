@@ -1,0 +1,101 @@
+.betnow-modal-outer-overlay{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(72, 81, 102, 0.8);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.betnow-open{
+    display: block;
+}
+.betnow-close{
+    display: none;
+}
+
+.betnow-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.875rem;
+}
+
+.betnow-cross-btn{
+    font-size: 30px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.betnow-details-container{
+    width: 27.5rem;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: white;
+    z-index: 2;
+    border-radius: 15px;
+}
+
+.betnow-agent-details-container, .betnow-customer-details-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.betnow-numbers-details-container{
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+.betnow-numbers-labels-container{
+    display: flex;
+    margin-left: 10px;
+}
+
+.betnow-numbers-labels-container p:nth-child(2){
+    margin-left: 50px;
+}
+
+.betnow-numbers-labels-container p:nth-child(3){
+    margin-left: 90px;
+}
+
+.betnow-number-details-rows-container{
+    width: 100%;
+    height: 170px;
+    border-radius: 15px;
+    border: 2px solid var(--primary-color);
+    padding: 10px;
+    overflow-y: scroll;
+    
+}
+
+.betnow-number-details-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.betnow-number-details-row:not(:last-child){
+    margin-bottom: 15px;
+}
+
+.betnow-modal-btn{
+    padding: 10px 65px;
+    border: none;
+    background-color: var(--secondary-color);
+    font-size: 1.125rem;
+    color: white;
+    border-radius: 5px;
+    /* text-align: center; */
+    display: block;
+    margin: auto;
+}
+

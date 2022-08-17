@@ -40,10 +40,27 @@
 
 }
 
+.agent-remaining-amount{
+    display: flex;
+    align-items: center;
+    font-size: 1.125rem;
+    color: white;
+    margin-right: 5rem;
+}
+
+.agent-remaining-amount .agent-remaining-header-coin-icon{
+    margin-left: 5px;
+}
+
 .user-name{
     font-size: 1.125rem;
     color: white;
     text-decoration: none;
+}
+
+.user-name span{
+    font-size: 0.9rem;
+    color: var(--secondary-color);
 }
 
 .log-out-btn{

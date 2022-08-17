@@ -62,7 +62,17 @@
     border-radius: 5px;
 }
 
-.dai-register-phno-input-container p{
+.valid-message{
+    font-size: 0.8rem;
+    color: green;
+}
+
+.warning-message{
+    font-size: 0.8rem;
+    color: red;
+}
+
+.dai-register-phno-input-container > p{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -71,6 +81,35 @@
     font-weight: 500;
     color: #676974;
     pointer-events: none;
+}
+
+.dai-register-otp-input-container{
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.875rem;
+}
+
+.dai-register-otp-input-container p{
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #676974;
+    pointer-events: none;
+    margin-right: 10px;
+}
+
+.dai-otp-input{
+    height: 40px;
+    border: 3px solid var(--primary-color);
+    border-radius: 5px;
+}
+
+.otp-request-btn{
+    height: 40px;
+    padding: 0 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid var(--primary-color);
+    margin-left: auto;
 }
 
 .dai-register-name-input-container{

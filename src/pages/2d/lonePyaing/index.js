@@ -1,18 +1,37 @@
-import React,{useState} from 'react'
+import React,{useState, useRef} from 'react'
+import BetNowModal from '../../../components/betnowmodal'
 import "./styles.css"
 
 const LonePyaing = () => {
-    let whichLone
-    const [firstNumbers,setFirstNumbers] = useState({
-        numbers:[],
-        washrate:"",
-        amount:"1000"
-    })
-    const [lastNumbers,setLastNumbers] = useState({
-        numbers:[],
-        washrate:"",
-        amount:"1000"
-    })
+    // let whichLone
+
+    const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
+
+    const customerNameInput = useRef("")
+    const customerPhNoInput = useRef("")
+    const [customerName,setCustomerName] = useState("")
+    const [customerPhNo,setCustomerPhNo] = useState("")
+    const [customerType,setCustomerType] = useState("guest")
+    const [firstNumbers,setFirstNumbers] = useState([])
+    const [lastNumbers,setLastNumbers] = useState([])
+
+    const submitCustomerInfo = (e) => {
+        e.preventDefault()
+        setCustomerName(customerNameInput.current.value)
+        setCustomerPhNo(customerPhNoInput.current.value)
+        customerNameInput.current.value=""
+        customerPhNoInput.current.value = ""
+    }
+
+    const totalAmount = () => {
+        let amountArr1 = firstNumbers.map((number) => parseInt(number.amount))
+        let amountArr2 = lastNumbers.map((number) => parseInt(number.amount))
+      // console.log(amountArr)
+      let totalAmount1 = amountArr1.reduce((previous,current) => previous+current,0)
+      let totalAmount2 = amountArr2.reduce((previous,current) => previous+current,0)
+      const totalAmount = totalAmount1 + totalAmount2
+      return totalAmount
+    }
 
     const changeFirstNumbers = (e) => {
         const numberString = e.target.value.toString()
@@ -21,8 +40,8 @@ const LonePyaing = () => {
         
         let found = false
 
-        let filteredArray = firstNumbers.numbers.filter((number) => {
-            if(number === numberString){
+        let filteredArray = firstNumbers.filter((number) => {
+            if(number.number === numberString){
                 found = true
             }
             else{
@@ -30,14 +49,20 @@ const LonePyaing = () => {
             }
         })
 
-        setFirstNumbers({...firstNumbers,numbers: filteredArray})
-        firstNumbers.numbers = filteredArray
+        setFirstNumbers(filteredArray)
+        // firstNumbers.numbers = filteredArray
         if(found === false){
-            let newarr = firstNumbers.numbers
-            newarr?.push(numberString)
-            setFirstNumbers({...firstNumbers,numbers : newarr})
+            // let newarr = firstNumbers.numbers
+            // newarr?.push(numberString)
+            // setFirstNumbers({...firstNumbers,numbers : newarr})
+            const newNumber = {
+                number:numberString,
+                compensation:"1.9",
+                amount:"1000"
+            }
+            setFirstNumbers([...firstNumbers,newNumber])
         }
-        console.log(firstNumbers)
+        // console.log(firstNumbers)
         // setFirstNumbers(firstNumbers)
     }
 
@@ -46,8 +71,8 @@ const LonePyaing = () => {
         
         let found = false
 
-        let filteredArray = lastNumbers.numbers.filter((number) => {
-            if(number === numberString){
+        let filteredArray = lastNumbers.filter((number) => {
+            if(number.number === numberString){
                 found = true
             }
             else{
@@ -55,14 +80,17 @@ const LonePyaing = () => {
             }
         })
 
-        setLastNumbers({...lastNumbers,numbers: filteredArray})
-        lastNumbers.numbers = filteredArray
+        setLastNumbers(filteredArray)
+        // lastNumbers.numbers = filteredArray
         if(found === false){
-            let newarr = lastNumbers.numbers
-            newarr?.push(numberString)
-            setLastNumbers({...lastNumbers,numbers : newarr})
+            const newNumber = {
+                number:numberString,
+                compensation:"1.9",
+                amount:"1000"
+            }
+            setLastNumbers([...lastNumbers,newNumber])
         }
-        console.log(lastNumbers)
+        // console.log(lastNumbers)
     }
 
     const bigBtnFirst = () => {
@@ -132,8 +160,11 @@ const LonePyaing = () => {
                     <p>{i}</p>
                     <input value={i} onClick={(e) => { changeFirstNumbers(e)}} type="checkbox" name="onenumber number"
                     className={
-                        firstNumbers.numbers &&
-                        firstNumbers.numbers.includes(i.toString())  ? "checked" : null
+                        firstNumbers.some((number) => {
+                          if(number.number === i.toString()) {
+                            return true
+                          }
+                        }) ? "checked" : null
                       }
                     ></input>
                 </div>
@@ -149,8 +180,11 @@ const LonePyaing = () => {
                     <p>{i}</p>
                     <input value={i} onClick={(e) =>  changeSecondNumbers(e)} type="checkbox" name="onenumber number"
                     className={
-                        lastNumbers.numbers &&
-                        lastNumbers.numbers.includes(i.toString())  ? "checked" : null
+                        lastNumbers.some((number) => {
+                          if(number.number === i.toString()) {
+                            return true
+                          }
+                        }) ? "checked" : null
                       }
                     ></input>
                 </div>
@@ -160,9 +194,118 @@ const LonePyaing = () => {
     }
 
     const submitLonePyaing = () => {
-        console.log(firstNumbers,lastNumbers)
+
+        if(customerName === "" || customerPhNo === ""){
+            alert("Please Provide Customer Name and Phone Number")
+        }else if(firstNumbers.length === 0 && lastNumbers.length === 0){
+            alert("Please Bet on a number")
+        }else{
+            // console.log(firstNumbers,lastNumbers)
+            setIsBetNowModalOpen(true)
+        }
+        
+        
     }
+
+    const decreaseAmount = (e,item,firstOrLast) => {
+        if(firstOrLast === "first"){
+            const newarr = firstNumbers.map((number) => {
+                if(item.number === number.number){
+                  return {...number, amount : (parseInt(item.amount)-100).toString()}
+                }
+                return number
+              })
+          
+              setFirstNumbers(newarr)
+        }
+        if(firstOrLast === "last"){
+            const newarr = lastNumbers.map((number) => {
+                if(item.number === number.number){
+                  return {...number, amount : (parseInt(item.amount)-100).toString()}
+                }
+                return number
+              })
+          
+              setLastNumbers(newarr)
+        }
+        
+    }
+
+    const handleAmountfinalChange = (e,item,firstOrLast) => {
+        if(firstOrLast === "first"){
+
+            const newarr = firstNumbers.map((number) => {
+                if(item.number === number.number){
+                  return {...number, amount: e.target.value}
+                }
+                return number
+              })
+          
+              setFirstNumbers(newarr)
+        }
+        if(firstOrLast === "last"){
+            const newarr = lastNumbers.map((number) => {
+                if(item.number === number.number){
+                  return {...number, amount: e.target.value}
+                }
+                return number
+              })
+          
+              setLastNumbers(newarr)
+        }
+    }
+
+    const increaseAmount = (e,item,firstOrLast) => {
+        if(firstOrLast === "first"){
+            const newarr = firstNumbers.map((number) => {
+                if(item.number === number.number){
+                  return {...number, amount : (parseInt(item.amount)+100).toString()}
+                }
+                return number
+              })
+          
+              setFirstNumbers(newarr)
+        }
+        if(firstOrLast === "last"){
+            const newarr = lastNumbers.map((number) => {
+                if(item.number === number.number){
+                  return {...number, amount : (parseInt(item.amount)+100).toString()}
+                }
+                return number
+              })
+          
+              setLastNumbers(newarr)
+        }
+        
+    }
+
+    const deleteNumber = (item,firstOrLast) => {
+        // console.log(firstOrLast)
+        if(firstOrLast === "first"){
+            let filteredArray = firstNumbers.filter((number) => {
+                return number.number !== item.number
+              })
+            //   console.log(filteredArray)
+          
+              setFirstNumbers(filteredArray)
+        }
+        if(firstOrLast === "last"){
+            let filteredArray = lastNumbers.filter((number) => {
+                return number.number !== item.number
+              })
+          
+              setLastNumbers(filteredArray)
+        }
+        
+      }
   return (
+    <>
+    <BetNowModal isBetNowModalOpen={isBetNowModalOpen} setIsBetNowModalOpen={setIsBetNowModalOpen}
+    customerName={customerName} customerPhno={customerPhNo} customerType={customerType}
+    firstNumbers={firstNumbers} setFirstNumbers={setFirstNumbers}
+    lastNumbers={lastNumbers} setLastNumbers={setLastNumbers}
+
+    />
     <div className='onenumber-parent-container'>
         <div className='select-directly-container'>
             <p className='select-directly-label'>Select Directly:</p>
@@ -186,7 +329,7 @@ const LonePyaing = () => {
                     </div>
                 </div>
                 <div className='onenumber-1stone-btns-container'>
-                    <div className='onenumber-1stone-btn-container'>
+                    {/* <div className='onenumber-1stone-btn-container'>
                         <p>big</p>
                         <input className={
                             firstNumbers.numbers.join() == ["5","6","7","8","9"].join() ?
@@ -211,7 +354,7 @@ const LonePyaing = () => {
                         <input className={
                             firstNumbers.numbers.join() == ["0","2","4","6","8"].join() ?
                             "lonepyaing-btn-checked" : null } onClick = {() => setBtnFirst()} type="checkbox" name="onenumber btn"></input>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className='onenumber-numbers-container'>
@@ -222,7 +365,7 @@ const LonePyaing = () => {
                     </div>
                 </div>
                 <div className='onenumber-1stone-btns-container'>
-                    <div className='onenumber-1stone-btn-container'>
+                    {/* <div className='onenumber-1stone-btn-container'>
                         <p>big</p>
                         <input className={
                             lastNumbers.numbers.join() == ["5","6","7","8","9"].join() ?
@@ -245,18 +388,71 @@ const LonePyaing = () => {
                         <input className={
                             lastNumbers.numbers.join() == ["0","3","4","6","8"].join() ?
                             "lonepyaing-btn-checked" : null } onClick = {() => setBtnLast()} type="checkbox" name="onenumber btn"></input>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
 
         <div className='onenumber-line'></div>
+        {/* onSubmit={(e) => submitCustomerInfo(e)}  */}
+        <div className='onenumber-name-phno-parent-container'>
+
+        
+        <form onSubmit={(e) => submitCustomerInfo(e)} className='onenumber-name-phno-input-container'>
+            <div className='onenumber-name-phno-container'>
+                <div className='onenumber-name-input-container'>
+                <p>Name:</p>
+                {/* disabled={user_login.role==="guest" ? true:false} */}
+                <input ref={customerNameInput} required type="text" name="onenumber name" ></input>
+                </div>
+                <div className='onenumber-phno-input-container'>
+                <p>Ph No:</p>
+                {/* disabled={user_login.role==="guest" ? true:false} */}
+                <input ref={customerPhNoInput} required type="text" name="onenumber phno" ></input>
+                </div>
+            </div>
+            
+                <div className='onenumber-customer-type-submit-container'>
+                    <div   className='onenumber-customer-type-container'>
+                        <p>Choose the type of customer:</p>
+                        <div className='onenumber-customer-type-radios-container'>
+        
+                            <div className='onenumber-customer-type-radio-container'>
+                            {/* disabled={user_login.role==="guest" ? true:false} */}
+                            <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} ></input>
+                            <label htmlFor='guest'>Guest</label>
+                            </div>
+                            <div className='onenumber-customer-type-radio-container'>
+                            {/* disabled={user_login.role==="guest" ? true:false} */}
+                            <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} ></input>
+                            <label htmlFor='royal'>Royal</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type='submit' className='onenumber-name-phno-btn'>Add</button>
+                </div>
+            
+  
+          </form>
+
+          <div className='onenumber-customer-info-detail-container'>
+            <div className='onenumber-customer-info-detail-name-container'>
+                <p>Name:</p>
+                <p>{customerName}</p>
+            </div>
+            <div className='onenumber-customer-info-detail-phno-container'>
+                <p>PhNo:</p>
+                <p>{customerPhNo}</p>
+            </div>
+          </div>
+          </div>
 
         <div className='twod-details-parent-container'>
             <div className='twod-details-container'>
-                <div className='twod-details-header-container'>
+                <div className='lonepyaing-details-header-container'>
                     <p>Number</p>
-                    <p>Wash Rate</p>
+                    <p>Compensation</p>
                     <p>Amount</p>
                 </div>
 
@@ -276,8 +472,48 @@ const LonePyaing = () => {
                                 <button className='twod-details-delete-btn'>Delete</button>
                         </div>: null */}
 
-                <div className='twod-details-table-container'>
+                <div className='lonepyaing-details-table-container'>
                     {
+                        firstNumbers.map((number,index) => (
+                            <div key={index} className='lonepyaing-details-row'>
+                                <p className='onenumber-details-number'>first({`${number.number}∞`})</p>
+                                <p>{number.compensation}</p>
+                            <div className='lonepyaing-details-amount-container'>
+                                <button onClick={(e,firstOrLast="first") => {
+                                    if(number.amount > 100){
+                                        // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
+                                     decreaseAmount(e,number,firstOrLast)
+                                    }
+                                }}>-</button>
+                                <input type="number" onChange={(e,firstOrLast="first") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
+                                <button onClick={(e,firstOrLast="first") => increaseAmount(e,number,firstOrLast)}>+</button>
+                            </div>
+                                <button className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="first") => deleteNumber(number,firstOrLast)}>Delete</button>
+                            </div>
+                            
+                        ))
+                    }
+                    {
+                        lastNumbers.map((number,index) => (
+                            <div key={index} className='lonepyaing-details-row'>
+                                <p className='onenumber-details-number'>last({`∞${number.number}`})</p>
+                                <p>{number.compensation}</p>
+                            <div className='lonepyaing-details-amount-container'>
+                                <button onClick={(e,firstOrLast="last") => {
+                                    if(number.amount > 100){
+                                        // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
+                                     decreaseAmount(e,number,firstOrLast)
+                                    }
+                                }}>-</button>
+                                <input type="number" onChange={(e,firstOrLast="last") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
+                                <button onClick={(e,firstOrLast="last") => increaseAmount(e,number,firstOrLast)}>+</button>
+                            </div>
+                                <button className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="last") => deleteNumber(number,firstOrLast)}>Delete</button>
+                            </div>
+                            
+                        ))
+                    }
+                    {/* {
                         firstNumbers.numbers && firstNumbers.numbers.length > 0 ? 
                          <div className='twod-details-row'>
                         <p className='onenumber-details-number'>first({
@@ -318,7 +554,7 @@ const LonePyaing = () => {
                             </div>
                                 <button className='twod-details-delete-btn' onClick={() => setLastNumbers({...lastNumbers,numbers:[]})}>Delete</button>
                         </div>: null 
-                    }
+                    } */}
                     
                 </div>
             </div>
@@ -326,11 +562,11 @@ const LonePyaing = () => {
             <div className='twod-overall-details-container'>
                 <div className='twod-overall-detail-container'>
                     <p>Program Information</p>
-                    <p>0</p>
+                    <p>{firstNumbers.length + lastNumbers.length}</p>
                 </div>
                 <div className='twod-overall-detail-container'>
                     <p>Punch Fee</p>
-                    <p>0</p>
+                    <p>{totalAmount()}</p>
                 </div>
                 <div className='twod-overall-detail-container'>
                     <p>Lottery Closing Time</p>
@@ -341,6 +577,7 @@ const LonePyaing = () => {
             </div>
         </div>
     </div>
+    </>
   )
 }
 
