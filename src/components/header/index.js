@@ -19,6 +19,7 @@ const Header = () => {
 
     const {user_login} = useSelector(state => state.user)
     const {agent_list} = useSelector(state => state.agent)
+    
 
     const dispatch = useDispatch()
 
@@ -70,11 +71,31 @@ const Header = () => {
                     {
                         user_login.isLoggedIn ? <>
                         {
-                            user_login.role === "agent" ? <>
-                            <p className='agent-remaining-amount'>{agentRemaining}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
-                            <Link to ="/profile" className='user-name'>{user_login.name}<span>({user_login.role})</span></Link></> : 
-                            <p className='user-name'>{user_login.name}<span>({user_login.role})</span></p>
+                            user_login.role === "agent" && <>
+                            <p className='agent-remaining-amount'>{agentRemaining ? agentRemaining : 0}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
+                            <p className='user-name'>
+                                {user_login.name}
+                                <span>({user_login.role})</span>
+                                <Link className='profile-link' to="/agentprofile">
+                                    <Icon icon="ant-design:setting-filled" className='profile-link-icon'/>
+                                </Link>
+                                </p></> 
                             
+                            
+                        }
+                        {
+                            user_login.role === "operation staff" && <>
+                                <p to = "/opprofile" className='user-name'>
+                                    {user_login.name}
+                                    <span>({user_login.role})</span>
+                                    <Link className='profile-link'  to="/opprofile">
+                                        <Icon icon="ant-design:setting-filled" className='profile-link-icon'/>
+                                    </Link>
+                                    </p>
+                            </>
+                        }
+                        {
+                            user_login === "guest" && <p className='user-name'>{user_login.name}<span>({user_login.role1})</span></p>
                         }
                             
                             <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>

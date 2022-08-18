@@ -2,6 +2,7 @@ import React,{useState, useRef, useEffect} from 'react'
 import {useSelector} from "react-redux"
 
 import BetNowModal from '../../../components/betnowmodal'
+import { isMorningOrEvening } from '../../../redux/countdown'
 
 import "./styles.css"
 
@@ -20,6 +21,7 @@ const TwoPieces = () => {
     // const [twopiecesData, setTwoPiecesData] = useState({})
 
     const {user_login} = useSelector(state => state.user)
+    const {morning_evening} = useSelector(state => state.countdown)
     
     // const twoPieces = useSelector((state) => state)
 
@@ -196,7 +198,7 @@ const TwoPieces = () => {
               }
             }) ? "checked" : null
           }
-           value={i <= 9 ? `0${i}` : i} onClick={(e) => changeNumberArray(e,twodNumbers,setTwodNumbers)} type="checkbox" name='twopieces number' disabled={user_login.role==="guest" ? true:false}></input>
+           value={i <= 9 ? `0${i}` : i} onClick={(e) => changeNumberArray(e,twodNumbers,setTwodNumbers)} type="checkbox" name='twopieces number' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
         </div>
         <div className='twopieces-details-container'>
           {
@@ -317,11 +319,11 @@ const TwoPieces = () => {
           <form onSubmit={(e) => submitCustomerInfo(e)} className='twopieces-name-phno-input-container'>
             <div className='twopieces-name-input-container'>
               <p>Name:</p>
-              <input ref={customerNameInput} required type="text" name="twopieces name" disabled={user_login.role==="guest" ? true:false}></input>
+              <input ref={customerNameInput} required type="text" name="twopieces name" disabled={user_login.role==="guest"  || (!morning_evening.morning && !morning_evening.evening)  ?true:false}></input>
             </div>
             <div className='twopieces-phno-input-container'>
               <p>Ph No:</p>
-              <input ref={customerPhnoInput} required type="text" name="twopieces phno" disabled={user_login.role==="guest" ? true:false}></input>
+              <input ref={customerPhnoInput} required type="text" name="twopieces phno" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
             </div>
   
             <div   className='customer-type-container'>
@@ -329,11 +331,11 @@ const TwoPieces = () => {
               <div className='customer-type-radios-container'>
   
                 <div className='customer-type-radio-container'>
-                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} disabled={user_login.role==="guest" ? true:false}></input>
+                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
                   <label htmlFor='guest'>Guest</label>
                 </div>
                 <div className='customer-type-radio-container'>
-                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} disabled={user_login.role==="guest" ? true:false}></input>
+                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
                   <label htmlFor='royal'>Royal</label>
                 </div>
               </div>
@@ -351,25 +353,26 @@ const TwoPieces = () => {
             </div>
             <div className='twopieces-number-input-container'>
               <p>Number:</p>
-              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" min="0" max="99" disabled={user_login.role==="guest" ? true:false}></input>
+              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" min="0" max="99" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
             </div>
   
             <div className='twopieces-amount-input-container'>
               <p>Amount:</p>
               <div className='twopieces-amount-input'>
-                <button type='button' className='twopieces-minus-btn' onClick={()=>{
+                <button  type='button' className='twopieces-minus-btn' onClick={()=>{
                   if(amount > 100){
                     setAmount(parseInt(amount)-100)
                   }
-                  }} disabled={user_login.role==="guest" ? true:false}>-</button>
-              <input value={amount} onWheel={(e) => e.target.blur()}   onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount" disabled={user_login.role==="guest" ? true:false}>
+                  }} 
+                  disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false}>-</button>
+              <input value={amount} onWheel={(e) => e.target.blur()}   onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}>
               </input>
   
-                <button type='button' className='twopieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest" ? true:false}>+</button>
+                <button type='button' className='twopieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest"  || (!morning_evening.morning && !morning_evening.evening) ? true:false}>+</button>
               </div>
             </div>
   
-            <button type='submit' className='twopieces-number-amount-btn'>Add</button>
+            <button type='submit' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false}  className='twopieces-number-amount-btn'>Add</button>
           </form>
   
         </div>
@@ -420,7 +423,7 @@ const TwoPieces = () => {
                     <p>98:00:00</p>
                   </div>
   
-                  <button className='twod-betnow-btn' onClick={submitBetNow}>Bet Now</button>
+                  <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false} className='twod-betnow-btn' onClick={submitBetNow}>Bet Now</button>
                   
                 </div>
       </div>

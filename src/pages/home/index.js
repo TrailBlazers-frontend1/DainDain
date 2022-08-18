@@ -134,7 +134,7 @@ const Home = () => {
 
             <div className='App line-hori'></div>
             
-            <section className='App check-voucher-section'>
+            {/* <section className='App check-voucher-section'>
                 <div className='check-voucher-container'>
                     <p className='check-voucher-title'>Check Voucher</p>
                     <label className='check-voucher-input-container' htmlFor='voucher-input'>
@@ -172,7 +172,7 @@ const Home = () => {
                         <button className='voucher-detailes-btn'>Check Details</button>
                     </div>
                 </div>
-            </section>
+            </section> */}
 
 
             <section className='App lai-container'>

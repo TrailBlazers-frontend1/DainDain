@@ -56,11 +56,22 @@
     font-size: 1.125rem;
     color: white;
     text-decoration: none;
+    display: flex;
+    align-items: center;
 }
 
 .user-name span{
     font-size: 0.9rem;
     color: var(--secondary-color);
+}
+
+.profile-link{
+    margin-left: 5px;
+}
+
+.profile-link .profile-link-icon{
+    font-size: 20px;
+    color: white;
 }
 
 .log-out-btn{

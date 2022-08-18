@@ -29,7 +29,7 @@ const Navbar = () => {
               <Link to="/3d">3D</Link>
               {
                 user_login.role === "agent" ? <> 
-                <Link to ="/transaction">Transaction</Link> 
+                {/* <Link to ="/transaction">Transaction</Link>  */}
                 <Link to="/sale">Sale</Link>
                 </>: null
               }

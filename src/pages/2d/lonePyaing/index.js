@@ -1,11 +1,15 @@
 import React,{useState, useRef} from 'react'
 import BetNowModal from '../../../components/betnowmodal'
+import {useSelector} from "react-redux"
 import "./styles.css"
 
 const LonePyaing = () => {
     // let whichLone
 
     const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
+
+    const {user_login} = useSelector(state => state.user)
+    const {morning_evening} = useSelector(state => state.countdown)
 
     const customerNameInput = useRef("")
     const customerPhNoInput = useRef("")
@@ -158,14 +162,14 @@ const LonePyaing = () => {
             rowarray.push(
                 <div className='onenumber-1stone-number-btn-container'>
                     <p>{i}</p>
-                    <input value={i} onClick={(e) => { changeFirstNumbers(e)}} type="checkbox" name="onenumber number"
+                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} value={i} onClick={(e) => { changeFirstNumbers(e)}} type="checkbox" name="onenumber number"
                     className={
                         firstNumbers.some((number) => {
                           if(number.number === i.toString()) {
                             return true
                           }
                         }) ? "checked" : null
-                      }
+                      } 
                     ></input>
                 </div>
             )
@@ -178,7 +182,7 @@ const LonePyaing = () => {
             rowarray.push(
                 <div className='onenumber-1stone-number-btn-container'>
                     <p>{i}</p>
-                    <input value={i} onClick={(e) =>  changeSecondNumbers(e)} type="checkbox" name="onenumber number"
+                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} value={i} onClick={(e) =>  changeSecondNumbers(e)} type="checkbox" name="onenumber number"
                     className={
                         lastNumbers.some((number) => {
                           if(number.number === i.toString()) {
@@ -403,12 +407,12 @@ const LonePyaing = () => {
                 <div className='onenumber-name-input-container'>
                 <p>Name:</p>
                 {/* disabled={user_login.role==="guest" ? true:false} */}
-                <input ref={customerNameInput} required type="text" name="onenumber name" ></input>
+                <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} ref={customerNameInput} required type="text" name="onenumber name" ></input>
                 </div>
                 <div className='onenumber-phno-input-container'>
                 <p>Ph No:</p>
                 {/* disabled={user_login.role==="guest" ? true:false} */}
-                <input ref={customerPhNoInput} required type="text" name="onenumber phno" ></input>
+                <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} ref={customerPhNoInput} required type="text" name="onenumber phno" ></input>
                 </div>
             </div>
             
@@ -419,12 +423,12 @@ const LonePyaing = () => {
         
                             <div className='onenumber-customer-type-radio-container'>
                             {/* disabled={user_login.role==="guest" ? true:false} */}
-                            <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} ></input>
+                            <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} ></input>
                             <label htmlFor='guest'>Guest</label>
                             </div>
                             <div className='onenumber-customer-type-radio-container'>
                             {/* disabled={user_login.role==="guest" ? true:false} */}
-                            <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} ></input>
+                            <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} ></input>
                             <label htmlFor='royal'>Royal</label>
                             </div>
                         </div>
@@ -479,16 +483,16 @@ const LonePyaing = () => {
                                 <p className='onenumber-details-number'>first({`${number.number}∞`})</p>
                                 <p>{number.compensation}</p>
                             <div className='lonepyaing-details-amount-container'>
-                                <button onClick={(e,firstOrLast="first") => {
+                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => {
                                     if(number.amount > 100){
                                         // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
                                      decreaseAmount(e,number,firstOrLast)
                                     }
                                 }}>-</button>
-                                <input type="number" onChange={(e,firstOrLast="first") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
-                                <button onClick={(e,firstOrLast="first") => increaseAmount(e,number,firstOrLast)}>+</button>
+                                <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} type="number" onChange={(e,firstOrLast="first") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
+                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => increaseAmount(e,number,firstOrLast)}>+</button>
                             </div>
-                                <button className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="first") => deleteNumber(number,firstOrLast)}>Delete</button>
+                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="first") => deleteNumber(number,firstOrLast)}>Delete</button>
                             </div>
                             
                         ))
@@ -499,16 +503,16 @@ const LonePyaing = () => {
                                 <p className='onenumber-details-number'>last({`∞${number.number}`})</p>
                                 <p>{number.compensation}</p>
                             <div className='lonepyaing-details-amount-container'>
-                                <button onClick={(e,firstOrLast="last") => {
+                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => {
                                     if(number.amount > 100){
                                         // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
                                      decreaseAmount(e,number,firstOrLast)
                                     }
                                 }}>-</button>
-                                <input type="number" onChange={(e,firstOrLast="last") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
-                                <button onClick={(e,firstOrLast="last") => increaseAmount(e,number,firstOrLast)}>+</button>
+                                <input type="number" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e,firstOrLast="last") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
+                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => increaseAmount(e,number,firstOrLast)}>+</button>
                             </div>
-                                <button className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="last") => deleteNumber(number,firstOrLast)}>Delete</button>
+                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="last") => deleteNumber(number,firstOrLast)}>Delete</button>
                             </div>
                             
                         ))
@@ -573,7 +577,7 @@ const LonePyaing = () => {
                     <p>98:00:00</p>
                 </div>
 
-                <button className='twod-betnow-btn' onClick={() => submitLonePyaing()}>Bet Now</button>
+                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='twod-betnow-btn' onClick={() => submitLonePyaing()}>Bet Now</button>
             </div>
         </div>
     </div>
