@@ -29,7 +29,7 @@ const TwoD = () => {
 
   const {user_login} = useSelector(state => state.user)
 
-  if(user_login.isLoggedIn && user_login.role === "agent"){
+  if(user_login.isLoggedIn){
     return (
       <>
           <Header/>
@@ -44,7 +44,7 @@ const TwoD = () => {
 
             <div className='twod-view-container'>
               <div className='twod-navbar'>
-                <p className={twodCategory === "2pieces" ? 'twod-2pieces-link active' : 'twod-2pieces-link'} onClick={() => setTwodCategory("2pieces")}>2pieces</p>
+                <p className={twodCategory === "2pieces" ? 'twod-2pieces-link active' : 'twod-2pieces-link'} onClick={() => setTwodCategory("2pieces")}>Two Pieces</p>
                 <p className={twodCategory === "lonepyaing" ? 'twod-lonepyaing-link active' : 'twod-lonepyaing-link'} onClick={() => setTwodCategory("lonepyaing")}>Lone Pyaing</p>
               </div>
   

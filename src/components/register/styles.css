@@ -97,10 +97,19 @@
     margin-right: 10px;
 }
 
+.otp-count-down{
+    font-size: 16px;
+    margin-left: 20px;
+}
+
 .dai-otp-input{
     height: 40px;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
+}
+
+.otp-icon{
+    margin-left: 5px;
 }
 
 .otp-request-btn{

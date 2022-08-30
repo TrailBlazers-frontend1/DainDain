@@ -33,7 +33,59 @@
 }
 
 .agent-change-profile-form{
-    text-align: center;
+    /* text-align: center; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+
+/* .agent-change-profile-form{
+    display: inline-block;
+   
+} */
+
+.agent-change-profile-input-container{
+    cursor: pointer;
+}
+
+.agent-change-profile-input{
+    /* padding: 5px 10px; */
+    display: none;
+    opacity: 0;
+    z-index: -1;
+    width: 0.1px;
+    height: 0.1px;
+    position: absolute;
+}
+
+.chosen-img{
+    color: rgb(0, 207, 0);
+}
+
+.profile-change-btn-container{
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.profile-change-btn-container button{
+    display: inline-block;
+}
+
+.profile-change-btn-container :nth-child(1){
+    padding: 5px 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid var(--secondary-color);
+    margin-right: 5px;
+}
+
+.profile-change-btn-container :nth-child(2){
+    padding: 5px 10px;
+    background-color: white;
+    border-radius: 5px;
+    border: 2px solid var(--primary-color);
 }
 
 /* .agent-profile-img-icon-container input{
@@ -53,9 +105,9 @@
 }
 
 .agent-change-profile-input{
-    position: absolute;
-    opacity: 0;
-    z-index: -1;
+    /* position: absolute; */
+    /* opacity: 0; */
+    /* z-index: -1; */
     left: 0;
     display: inline-block;
     width: 100%;
@@ -66,6 +118,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-top: 120px;
 }
 
 .agent-name-container p{
@@ -138,16 +191,25 @@
 
 
 .agent-transaction-history-labels-container p:nth-child(2){
-    margin-left: 200px;
-}
-.agent-transaction-history-labels-container p:nth-child(3){
     margin-left: 150px;
 }
+.agent-transaction-history-labels-container p:nth-child(3){
+    margin-left: 110px;
+}
 .agent-transaction-history-labels-container p:nth-child(4){
-    margin-left: 90px;
+    margin-left: 30px;
 }
 .agent-transaction-history-labels-container p:nth-child(5){
+    margin-left: 20px;
+}
+.agent-transaction-history-labels-container p:nth-child(6){
     margin-left: 90px;
+}
+
+.agent-transaction-history-header{
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 10px;
 }
 .agent-transaction-history-rows-container{
     width: 100%;
@@ -172,6 +234,30 @@
 .agent-transaction-history-row p:nth-child(1){
     width: 100px;
 }
+.agent-transaction-history-row p:nth-child(2){
+    width: 90px;
+}
+.agent-transaction-history-row p:nth-child(3){
+    width: 20px;
+}
+.agent-transaction-history-row p:nth-child(4){
+    width: 20px;
+}
+.agent-transaction-history-row p:nth-child(5){
+    width: 60px;
+}
+.agent-transaction-history-row p:nth-child(6){
+    width: 70px;
+}
+
+.agent-transaction-accepted{
+    color: rgb(0, 207, 0);
+}
+.agent-transaction-declined{
+    color: red;
+}
+
+
 
 .change-username-input{
     height: 40px;
@@ -193,4 +279,22 @@
 
 .cancel-username-btn{
     border: 2px solid var(--primary-color);
+}
+
+@media screen and (max-width:1600px){
+    .agent-transaction-history-labels-container p:nth-child(2){
+        margin-left: 150px;
+    }
+    .agent-transaction-history-labels-container p:nth-child(3){
+        margin-left: 110px;
+    }
+    .agent-transaction-history-labels-container p:nth-child(4){
+        margin-left: 30px;
+    }
+    .agent-transaction-history-labels-container p:nth-child(5){
+        margin-left: 40px;
+    }
+    .agent-transaction-history-labels-container p:nth-child(6){
+        margin-left: 95px;
+    }
 }

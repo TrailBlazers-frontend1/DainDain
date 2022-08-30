@@ -80,6 +80,11 @@
     margin-right: 3px;
 }
 
+.days-label, .hours-label{
+    font-size: 25px;
+    color: white;
+}
+
 .livecounter-lotteryopnum-2nd{
     margin-right: 10px;
 }

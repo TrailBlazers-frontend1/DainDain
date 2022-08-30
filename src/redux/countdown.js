@@ -8,10 +8,17 @@ import { createSlice } from '@reduxjs/toolkit'
 export const isMorningOrEvening = () => {
     var dt = new Date();//current Date that gives us current Time also
 
+    
     var startTime1 = '06:00:00';
-    var endTime1 = '12:00:00';
+    var endTime1 = '11:30:00';
     var startTime2 = "12:30:00";
     var endTime2 = "16:00:00"
+
+    if(dt.getDay() === 6 || dt.getDay() === 7){
+      isMorningRound = false
+      isEveningRound = false
+      return ({isEveningRound,isEveningRound})
+    }
 
     var s1 =  startTime1.split(':');
     var dt1 = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(),
@@ -29,9 +36,32 @@ export const isMorningOrEvening = () => {
     var dt4 = new Date(dt.getFullYear(), dt.getMonth(),
                     dt.getDate(),parseInt(e2[0]), parseInt(e2[1]), parseInt(e2[2]));
 
-    const isMorningRound = dt >= dt1 && dt <= dt2
-    const isEveningRound = dt >= dt3 && dt <= dt4
+    var isMorningRound = dt >= dt1 && dt <= dt2
+    var isEveningRound = dt >= dt3 && dt <= dt4
     return ({isMorningRound,isEveningRound})
+}
+
+export const threeDCountDown = () => {
+  const now = new Date()
+  const date1 = new Date(now.getFullYear(),now.getMonth(),16)
+  const date2 = new Date(now.getFullYear(),now.getMonth() + 1,0)
+  // console.log(date1,date2)
+  let diffInTime
+  if(now.getDate() < 16){
+    diffInTime = date1.getTime() - now.getTime()
+    // console.log(diffInTime)
+  }
+  if(now.getDate() > 16){
+    diffInTime = date2.getTime() - now.getTime()
+    // console.log(diffInTime)
+  }
+  let diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24))
+  let diffinHours = Math.floor((diffInTime / (1000* 3600)) % 24)
+  // console.log(Math.floor(diffInDays),Math.floor(diffinHours))
+  // console.log(diffinHours)
+  // console.log(Math.floor(diffInDays))
+  // console.log(diffInTime / (1000 * 3600))
+  return ({diffInDays,diffinHours})
 }
 
 const initialState = {
@@ -43,6 +73,12 @@ const initialState = {
     morning_evening:{
         morning:false,
         evening:false
+    },
+    remaining_days:{
+      days:"",
+      hours:"",
+      minutes:"",
+      seconds:""
     }
    
 }
@@ -57,10 +93,12 @@ export const countdownSlice = createSlice({
       changeRound:(state,action) => {
         if(action.payload === "morning"){
             state.morning_evening.morning = true
+            state.morning_evening.evening = false
         } 
-        if(action.payload){
-          console.log(action.payload === "evening")
+        if(action.payload === "evening"){
+          // console.log(action.payload === "evening")
             state.morning_evening.evening = true
+            state.morning_evening.morning = false
         } 
       },
       resetRound:(state,action) => {

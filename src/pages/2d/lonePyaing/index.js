@@ -417,22 +417,22 @@ const LonePyaing = () => {
             </div>
             
                 <div className='onenumber-customer-type-submit-container'>
-                    <div   className='onenumber-customer-type-container'>
+                    {/* <div   className='onenumber-customer-type-container'>
                         <p>Choose the type of customer:</p>
                         <div className='onenumber-customer-type-radios-container'>
         
                             <div className='onenumber-customer-type-radio-container'>
-                            {/* disabled={user_login.role==="guest" ? true:false} */}
+                            
                             <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} ></input>
                             <label htmlFor='guest'>Guest</label>
                             </div>
                             <div className='onenumber-customer-type-radio-container'>
-                            {/* disabled={user_login.role==="guest" ? true:false} */}
+                           
                             <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} ></input>
                             <label htmlFor='royal'>Royal</label>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     
                     <button type='submit' className='onenumber-name-phno-btn'>Add</button>
                 </div>

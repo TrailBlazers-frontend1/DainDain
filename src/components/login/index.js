@@ -7,6 +7,8 @@ import englandflag from "../../imgs/england-flag.webp"
 import { useSelector , useDispatch } from 'react-redux'
 import { Icon } from '@iconify/react';
 import { login } from '../../redux/user'
+import { axiosInstance } from '../../urlConfig';
+// import axios from 'axios'
 
 const Login = ({isLoginOpen,setIsLoginOpen}) => {
 
@@ -27,29 +29,60 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
         setLanguage(e.target.value)
     }
 
-    const handleLoginSubmit =(e) => {
+    const handleLoginSubmit = async (e) => {
         e.preventDefault()
 
         const userData = {
-            name : "Thurein Win",
-            phNo: phNo,
-            role : "guest",
-            isLoggedIn : true
+            phone: phNo,
+            password:password
         }
 
-        dispatch(login(userData))
+        try {
+            const res = await axiosInstance.post("/login",userData)
+            // const data = await res.data
+            console.log(res)
+            if(res.data.status === 200){
+                alert("login successful")
+                // console.log(data)
+                const data = res.data.user
+
+                //save token in local storage
+
+                // localStorage.setItem("auth" , res.data.access_token)
+                // localStorage.setItem("isLoggedIn" , true)
+
+                const user = {
+                    id: data.id,
+                    name : data.name,
+                    phNo : data.phone,
+                    role: data.status,
+                    token:res.data.access_token,
+                    isLoggedIn:true,
+                }
+
+                localStorage.setItem("auth",JSON.stringify(user))
+                dispatch(login(user))
+            }else{
+                alert("Something went wrong")
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
         setPhNo("")
         setPassword("")
         setIsLoginOpen(false)
     }
 
-    // if(!user_login.isLoggedIn){
-    //     setIsLoginOpen(true)
-    // }
     
     useEffect(() => {
-        if(!user_login.isLoggedIn){
+        const auth = localStorage.getItem("auth")
+        let isLoggedIn
+        if(auth){
+            isLoggedIn = JSON.parse(auth).isLoggedIn
+        }
+        // console.log(isLoggedIn)
+        if(!isLoggedIn){
             setIsLoginOpen(true)
         }
     },[])

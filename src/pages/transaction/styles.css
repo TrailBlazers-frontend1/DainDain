@@ -1,0 +1,359 @@
+.winners-parent-container{
+    /* margin: 30px 0; */
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+
+.winners-header-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.winners-filters-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.winners-generate-btn{
+    padding: 10px 15px;
+    font-weight: 600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--secondary-color);
+}
+
+.winners-header-container > p{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+
+.winners-name-container input{
+    width: 200px;
+    height: 40px;
+    border: 3px solid var(--primary-color);
+    border-radius: 5px;
+}
+
+.winners-date-filter{
+    width: 200px;
+    height: 40px;
+    border: 3px solid var(--primary-color);
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.winners-round-filter{
+    width: 200px;
+    height: 40px;
+    border: 3px solid var(--primary-color);
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.winners-details-labels-container{
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.winners-details-labels-container p{
+    font-weight: 500;
+}
+
+.winners-details-labels-container p:nth-child(1){
+    margin-left: 20px;
+}
+.winners-details-labels-container p:nth-child(2){
+    margin-left: 200px;
+}
+.winners-details-labels-container p:nth-child(3){
+    margin-left: 100px;
+}
+.winners-details-labels-container p:nth-child(4){
+    margin-left: 100px;
+}
+.winners-details-labels-container p:nth-child(5){
+    margin-left: 60px;
+}
+.winners-details-labels-container p:nth-child(6){
+    margin-left: 130px;
+}
+.winners-details-labels-container p:nth-child(7){
+    margin-left: 180px;
+}
+
+.winners-details-container{
+    width: 100%;
+    height: 300px;
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    overflow-y: scroll;
+    padding: 15px;
+}
+
+
+
+.winners-details-rows{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.winners-details-rows p:not(:first-child){
+    margin-top: 20px;
+}
+
+.winners-details-rows p:nth-child(1){
+    width: 140px;
+}
+
+.winners-details-rows p:nth-child(2){
+    width: 25px;
+}
+.winners-details-rows p:nth-child(3){
+    width: 70px;
+}
+.winners-details-rows p:nth-child(4){
+    width: 30px;
+}
+.winners-details-rows p:nth-child(5){
+    width: 70px;
+}
+.winners-details-rows p:nth-child(6){
+    width: 100px;
+}
+.winners-details-rows p:nth-child(7){
+    width: 70px;
+}
+
+
+.transaction-parent-container{
+    width: 100%;
+    box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
+    border-radius: 15px;
+    /* padding: 20px; */
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.transaction-header-container{
+    /* height: 3.125rem; */
+    display: flex;
+    align-items: center;
+}
+
+.transaction-header-item{
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.transaction-header-active{
+    background-color: var(--primary-color-light);
+    border-top: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    font-weight: 600;
+}
+
+.transaction-category-container{
+    padding-left: 60px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: var(--primary-color-light);
+}
+
+.transaction-category-btn{
+    padding: 3px 10px;
+    background-color: transparent;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    border-radius: 5px;
+}
+
+.transaction-category-btn:nth-child(2){
+    margin-left: 20px;
+}
+
+.transaction-category-btn-active{
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.twod-sale-day-book-parent-container{
+    padding: 0 15px;
+    margin-top: 40px;
+}
+
+.twod-sale-day-book-parent-container > p{
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.twod-day-sale-book-row-container:not(:first-child){
+    margin-top: 30px;
+}
+
+.twod-sale-day-book-label-container{
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+    margin-bottom: 10px;
+    padding: 0 15px;
+}
+
+.twod-sale-day-book-label-container p{
+    font-weight: 500;
+}
+
+.twod-sale-day-book-label-container p:nth-child(2){
+    margin-left: 90px;
+}
+.twod-sale-day-book-label-container p:nth-child(3){
+    margin-left: 100px;
+}
+.twod-sale-day-book-label-container p:nth-child(4){
+    margin-left: 80px;
+}
+.twod-sale-day-book-label-container p:nth-child(5){
+    margin-left: 120px;
+}
+.twod-sale-day-book-label-container p:nth-child(6){
+    margin-left: 40px;
+}
+.twod-sale-day-book-label-container p:nth-child(7){
+    margin-left: 50px;
+}
+.twod-sale-day-book-label-container p:nth-child(8){
+    margin-left: 90px;
+}
+.twod-sale-day-book-label-container p:nth-child(9){
+    margin-left: 120px;
+}
+
+.twod-day-sale-book-rows-container{
+    width: 100%;
+    height: 400px;
+    padding: 20px 15px;
+    border: 3px solid var(--primary-color);
+    border-radius: 15px;
+    overflow-y: scroll;
+}
+
+.twod-day-sale-book-row{
+    display: flex;
+    justify-content: space-between;
+}
+
+.twod-day-sale-book-row p:nth-child(1){
+    width: 15px;
+}
+.twod-day-sale-book-row p:nth-child(2){
+    width: 90px;
+}
+.twod-day-sale-book-row p:nth-child(3){
+    width: 30px;
+}
+
+.twod-day-sale-book-row-detail-column p:not(:first-child, .twod-day-sale-book-seperate-row){
+    margin-top: 10px;
+}
+
+.twod-day-sale-book-row p:nth-child(5){
+    width: 60px;
+}
+
+.twod-day-sale-book-row-name-column{
+    width: 120px;
+    
+}
+
+/* .twod-day-sale-book-row-name-column p{
+    white-space: wrap;
+} */
+
+.twod-day-sale-book-seperate-row{
+    margin-top: 20px;
+}
+
+.twod-day-sale-book-row > p:last-child{
+    align-self: flex-end;
+}
+
+.twod-day-sale-book-row-line{
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+    margin-top: 10px;
+}
+
+.towd-voucher-parent-container{
+    /* height: 300px; */
+    padding: 0 15px;
+    margin-top: 40px;
+    /* padding-bottom: 20px; */
+    /* margin-bottom: 20px; */
+}
+
+.twod-day-voucher-rows-container{
+    width: 100%;
+    height: 400px;
+    padding: 20px 15px;
+    border: 3px solid var(--primary-color);
+    border-radius: 15px;
+    overflow-y: scroll;
+    /* margin-bottom: 20px; */
+}
+
+@media screen and (max-width:1600px){
+    
+
+
+    .twod-sale-day-book-label-container p:nth-child(5){
+        margin-left: 130px;
+    }
+    .twod-sale-day-book-label-container p:nth-child(6){
+        margin-left: 45px;
+    }
+    .twod-sale-day-book-label-container p:nth-child(7){
+        margin-left: 80px;
+    }
+    .twod-sale-day-book-label-container p:nth-child(8){
+        margin-left: 95px;
+    }
+    .twod-sale-day-book-label-container p:nth-child(9){
+        margin-left: 120px;
+    }
+
+
+
+    .winners-details-labels-container p:nth-child(1){
+        margin-left: 20px;
+    }
+    .winners-details-labels-container p:nth-child(2){
+        margin-left: 200px;
+    }
+    .winners-details-labels-container p:nth-child(3){
+        margin-left: 115px;
+    }
+    .winners-details-labels-container p:nth-child(4){
+        margin-left: 100px;
+    }
+    .winners-details-labels-container p:nth-child(5){
+        margin-left: 70px;
+    }
+    .winners-details-labels-container p:nth-child(6){
+        margin-left: 150px;
+    }
+    .winners-details-labels-container p:nth-child(7){
+        margin-left: 180px;
+    }
+}

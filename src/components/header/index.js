@@ -2,37 +2,64 @@ import React,{useState, useEffect} from 'react'
 import "./styles.css"
 import myanmarflag from "../../imgs/myanmar-flag.jpg"
 import englandflag from "../../imgs/england-flag.webp"
+import refreeprofile from "../../imgs/avatar.png"
 import Dropdown from '../../components/dropdown'
 import Login from '../../components/login'
 import Register from '../../components/register'
 import { Link } from 'react-router-dom'
 import { useSelector , useDispatch } from 'react-redux'
 import { logout } from '../../redux/user'
+import { setAgentProfile } from '../../redux/agent' 
+
+import {useNavigate} from "react-router-dom"
 
 import { Icon } from '@iconify/react';
+import { axiosInstance } from '../../urlConfig'
 
 const Header = () => {
     const [language,setLanguage] = useState("myanmar")
     const [isLoginOpen,setIsLoginOpen] = useState(false)
     const [isDaiRegOpen,setIsDaiRegOpen] = useState(false)
+    const [isProfileLinkIconOpen,setIsProfileLinkIconOpen] = useState(false)
     const [agentRemaining,setAgentRemaining] = useState("")
 
     const {user_login} = useSelector(state => state.user)
-    const {agent_list} = useSelector(state => state.agent)
+    const {profile} = useSelector(state => state.agent)
+
+    const navigate = useNavigate()
     
 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        if(user_login.role === "agent"){
-            const foundAgent = agent_list.find((agent) => {
-                if(agent.phNo === user_login.phNo){
-                    return agent
+        if(user_login.isLoggedIn && user_login.role === "agent"){
+
+        
+        const fetchAgentProfile = async () => {
+            const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
+
+            console.log(res)
+            if(res.data.status === 200){
+                const agent = {
+                    image:res.data.user.image,
+                    coin_amount:res.data.user.coin_amount,
+                    commission:res.data.user.commision,
+                    twod_sale_list:res.data.twod_saleLists,
+                    threed_sale_list:res.data.threed_salelists,
+                    lonepyine_sale_list:res.data.lonepyaing_salelists,
                 }
-            })
-            // console.log(foundAgent.remainingAmount)
-            setAgentRemaining(foundAgent?.remainingAmount)
+
+                dispatch(setAgentProfile(agent))
+
+                console.log(profile)
+            }
         }
+
+        fetchAgentProfile()
+
+    }
+    
+            
     },[user_login])
 
     const options = [
@@ -44,8 +71,29 @@ const Header = () => {
         setLanguage(e.target.value)
     }
 
-    const handleUserLogout = () => {
-        dispatch(logout())
+    const handleUserLogout = async () => {
+        // {headers:{Authorization:`Bearer ${user_login.token}`}}
+        const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
+
+        // console.log(res)
+        if(res.data.status === 200){
+            alert(res.data.message)
+            dispatch(logout())
+            localStorage.removeItem("auth")
+            
+            navigate("/")
+        }
+        
+    }
+
+    const handleProfileCLicked = () => {
+        if(isProfileLinkIconOpen){
+            setIsProfileLinkIconOpen(false)
+        }else{
+            setIsProfileLinkIconOpen(true)
+        }
+
+        // console.log(isProfileLinkIconOpen)
     }
 
   return (
@@ -73,13 +121,24 @@ const Header = () => {
                         {
                             user_login.role === "agent" && <>
                             <p className='agent-remaining-amount'>{agentRemaining ? agentRemaining : 0}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
+                            <p className='agent-comission'>Comission : {profile?.commission}</p>
                             <p className='user-name'>
                                 {user_login.name}
-                                <span>({user_login.role})</span>
-                                <Link className='profile-link' to="/agentprofile">
-                                    <Icon icon="ant-design:setting-filled" className='profile-link-icon'/>
-                                </Link>
-                                </p></> 
+                                <span>(agent)</span>
+                                <div className= "profile-link" >
+                                    <Icon icon="ant-design:setting-filled" className='profile-link-icon' onClick={() => handleProfileCLicked()}/>
+
+                                    <div className={isProfileLinkIconOpen ? "profile-dropdown-container profile-link-open" : "profile-dropdown-container profile-link-close"}>
+                                        <Link to="/agentprofile">Profile</Link>
+                                        <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                                    </div>
+                                </div>
+                            </p>
+                            <Link to="/viewreferee" className='agent-refree-profile-icon-container'>
+                                <img src={refreeprofile}/>
+                                <div className='active-dot'></div>
+                            </Link>
+                            </> 
                             
                             
                         }
@@ -92,13 +151,17 @@ const Header = () => {
                                         <Icon icon="ant-design:setting-filled" className='profile-link-icon'/>
                                     </Link>
                                     </p>
+                                    <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
                             </>
                         }
                         {
-                            user_login === "guest" && <p className='user-name'>{user_login.name}<span>({user_login.role1})</span></p>
+                            user_login.role === "guest" &&<div className='align-center'>
+                             <p className='user-name'>{user_login.name}<span>({user_login.role})</span></p>
+                             <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                             </div>
                         }
                             
-                            <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                            {/* <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button> */}
                         </> : <>
                         <button className='login-btn' onClick={() => setIsLoginOpen(true)}>Log in</button>
                         <button className='signup-btn' onClick={() => setIsDaiRegOpen(true)}>Sign up</button>

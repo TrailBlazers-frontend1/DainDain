@@ -1,38 +1,73 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
+import { useSelector } from 'react-redux'
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
+import { axiosInstance } from '../../urlConfig'
 import "./styles.css"
 
 const Sale = () => {
 
-  const [headerCategory,setHeaderCategory] = useState("2d")
-  const [transactionCategory,setTransactionCategory] = useState("sale voucher")
+  const [accepted2dTransactions,setAccepted2dTransactions] = useState([])
+  const [acceptedLonePyineTransactions,setAcceptedLonePyineTransactions] = useState([])
+  const [accepted3dTransactions, setAccepted3dTransactions] = useState([])
 
-  const saleDetailsRows = () => {
-    const rowArr = []
-    for(let i = 0;i <= 20;i++) {
-      rowArr.push(<div className='sale-details-row'>
-      <p>Thurein Win</p>
-      <p>08/13/2022</p>
-      <p>Morning</p>
-      <p>22</p>
-      <p>10000ks</p>
-    </div>)
+ const {user_login} = useSelector(state => state.user)
+
+  useEffect(() => {
+    const fetchAcceptedTransactions = async () => {
+      const twod = await axiosInstance.get("/2d-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      const lonepyine = await axiosInstance.get("/lonepyaing-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      const threed = await axiosInstance.get("/3d-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      // console.log(res)
+
+      if(twod.data.status === 200 && lonepyine.data.status === 200 && threed.data.status === 200){
+        setAccepted2dTransactions(twod.data.twod_sale_lists)
+        setAcceptedLonePyineTransactions(lonepyine.data.lonepyaing_sale_lists)
+        setAccepted3dTransactions(threed.data.threed_sale_lists)
+      }
+
+      // console.log(twod.data.twod_sale_lists)
+      console.log(accepted2dTransactions)
+      console.log(acceptedLonePyineTransactions)
+      console.log(accepted3dTransactions)
+
     }
-    return rowArr
-  }
+
+    fetchAcceptedTransactions()
+    
+  },[])
+  // const saleDetailsRows = () => {
+  //   const rowArr = []
+  //   for(let i = 0;i <= 20;i++) {
+  //     rowArr.push(<div className='sale-details-row'>
+  //     <p>Thurein Win</p>
+  //     <p>08/13/2022</p>
+  //     <p>Morning</p>
+  //     <p>22</p>
+  //     <p>10000ks</p>
+  //   </div>)
+  //   }
+  //   return rowArr
+  // }
   return (
     <>
         <Header/>
         <Navbar/>
 
         <div className='App sale-parent-container'>
-          <div className='sale-filters-container'>
-            <input className='sale-filter-date-input' type="date"></input>
-            <select className='sale-filter-customer-filter'>
-              <option>Customer</option>
-              <option>Thurein Win</option>
-            </select>
+
+          <div className='sale-2pieces-container'>
+            <p className='sale-header'>2Pieces Accepted Transactions</p>
+            <div className='sale-filters-container'>
+              <input className='sale-filter-date-input' type="date"></input>
+              <div className='sale-filter-customer-filter'>
+                <input list='customers' type="text" placeholder='Customer Name'/>
+                <datalist id="customers">
+                  <option value="Customer Name1"></option>
+                  <option value="Customer Name2"></option>
+                  <option value="Customer Name3"></option>
+                </datalist>
+              </div>
 
             <select className='sale-filter-round-filter'>
               <option>Round</option>
@@ -50,220 +85,112 @@ const Sale = () => {
 
             <div className='sale-details-rows-container'>
               {
-                saleDetailsRows()
+                accepted2dTransactions.map((item) => (
+                  <div className='sale-details-row'>
+                    <p>{item.customer_name}</p>
+                    <p>{(item.created_at).split(" ")[0]}</p>
+                    <p>Morning</p>
+                    <p>{item.number}</p>
+                    <p>{item.sale_amount}ks</p>
+                  </div>
+                ))
+                // saleDetailsRows()
               }
               
             </div>
           </div>
+          </div>
+          <div className='sale-lonepyine-container'>
+            <p className='sale-header'>Lone Pyine Accepted Transactions</p>
+            <div className='sale-filters-container'>
+              <input className='sale-filter-date-input' type="date"></input>
+              <div className='sale-filter-customer-filter'>
+                <input list='customers' type="text" placeholder='Customer Name'/>
+                <datalist id="customers">
+                  <option value="Customer Name1"></option>
+                  <option value="Customer Name2"></option>
+                  <option value="Customer Name3"></option>
+                </datalist>
+              </div>
+
+            <select className='sale-filter-round-filter'>
+              <option>Round</option>
+            </select>
+          </div>
+
+          <div className='sale-details-parent-container'>
+            <div className='sale-details-labels-container'>
+              <p>Name</p>
+              <p>Date</p>
+              <p>Round</p>
+              <p>Number</p>
+              <p>Amount</p>
+            </div>
+
+            <div className='sale-details-rows-container'>
+              {
+                acceptedLonePyineTransactions.map((item) => (
+                  <div className='sale-details-row'>
+                    <p>{item.customer_name}</p>
+                    <p>{(item.created_at).split(" ")[0]}</p>
+                    <p>Morning</p>
+                    <p>{item.number}</p>
+                    <p>{item.sale_amount}ks</p>
+                  </div>
+                ))
+              }
+              
+            </div>
+          </div>
+          </div>
+          <div className='sale-3pieces-container'>
+            <p className='sale-header'>3Pieces Accepted Transactions</p>
+            <div className='sale-filters-container'>
+              <input className='sale-filter-date-input' type="date"></input>
+              <div className='sale-filter-customer-filter'>
+                <input list='customers' type="text" placeholder='Customer Name'/>
+                <datalist id="customers">
+                  <option value="Customer Name1"></option>
+                  <option value="Customer Name2"></option>
+                  <option value="Customer Name3"></option>
+                </datalist>
+              </div>
+
+            <select className='sale-filter-round-filter'>
+              <option>Round</option>
+            </select>
+          </div>
+
+          <div className='sale-details-parent-container'>
+            <div className='sale-details-labels-container'>
+              <p>Name</p>
+              <p>Date</p>
+              <p>Round</p>
+              <p>Number</p>
+              <p>Amount</p>
+            </div>
+
+            <div className='sale-details-rows-container'>
+              {
+                accepted3dTransactions.map((item) => (
+                  <div className='sale-details-row'>
+                    <p>{item.customer_name}</p>
+                    <p>{(item.created_at).split(" ")[0]}</p>
+                    <p>Morning</p>
+                    <p>{item.number}</p>
+                    <p>{item.sale_amount}ks</p>
+                  </div>
+                ))
+              }
+              
+            </div>
+          </div>
+          </div>
+         
           
         </div>
 
-        <div className='App transaction-parent-container'>
-          <div className='transaction-header-container'>
-            <p onClick={() => setHeaderCategory("2d")} className={headerCategory === "2d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>2D</p>
-            <p onClick={() => setHeaderCategory("3d")} className={headerCategory === "3d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>3D</p>
-          </div>
-
-          <div className='transaction-category-container'>
-            <button onClick={() => setTransactionCategory("sale voucher")} className={transactionCategory === "sale voucher" ? 'transaction-category-btn transaction-category-btn-active' : "transaction-category-btn"}>Sale Voucher</button>
-            <button onClick={() => setTransactionCategory("sale day book")} className={transactionCategory === "sale day book" ? 'transaction-category-btn transaction-category-btn-active' : "transaction-category-btn"}>Sale Day Book</button>
-          </div>
-
-          {
-            headerCategory === "2d" && transactionCategory ==="sale voucher" ? 
-            <div className='towd-voucher-parent-container'>
-              <div className='twod-day-voucher-rows-container'></div>
-            </div> : null
-          }
-          {
-            headerCategory === "2d" && transactionCategory ==="sale day book" ? 
-              <div className='twod-sale-day-book-parent-container'>
-                <div className='twod-sale-day-book-label-container'>
-                  <p>No</p>
-                  <p>Date</p>
-                  <p>Time</p>
-                  <p>Name</p>
-                  <p>Game Type</p>
-                  <p>Number</p>
-                  <p>Compensation</p>
-                  <p>Amount</p>
-                  <p>Total</p>
-                </div>
-
-                <div className='twod-day-sale-book-rows-container'>
-                  <div className='twod-day-sale-book-row-container'>
-
-                    <div className='twod-day-sale-book-row'>
-                      <p>1</p>
-                      <p>08/18/2022</p>
-                      <p>9:51</p>
-                      <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
-                        <p>Customer Name</p>
-                        <p>0912345678</p>
-                      </div>
-
-                      <p>2Pieces</p>
-
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>34</p>
-                        <p>48</p>
-                        <p>67</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>85</p>
-                        <p>80</p>
-                        <p>83</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>10000ks</p>
-                        <p>100000ks</p>
-                        <p>20000ks</p>
-                        <p className='twod-day-sale-book-seperate-row'>
-                          130000ks
-                        </p>
-                      </div>
-                      <p>130000ks</p> 
-                    </div>
-                    <div className='twod-day-sale-book-row-line'></div>
-                  </div>
-                  <div className='twod-day-sale-book-row-container'>
-
-                    <div className='twod-day-sale-book-row'>
-                      <p>1</p>
-                      <p>01/11/2022</p>
-                      <p>9:51</p>
-                      <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
-                        <p>Customer Name name</p>
-                        <p>0912345678</p>
-                      </div>
-
-                      <p>2Pieces</p>
-
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>34</p>
-                        <p>48</p>
-                        <p>67</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>85</p>
-                        <p>80</p>
-                        <p>83</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>10000ks</p>
-                        <p>100000ks</p>
-                        <p>20000ks</p>
-                        <p className='twod-day-sale-book-seperate-row'>
-                          130000ks
-                        </p>
-                      </div>
-                      <p>130000ks</p> 
-                    </div>
-                    <div className='twod-day-sale-book-row-line'></div>
-                  </div>
-                  
-                </div>
-              </div>
-           
-            : null
-          }
-          {
-            headerCategory === "3d" && transactionCategory ==="sale voucher" ? 
-            <div className='towd-voucher-parent-container'>
-              <div className='twod-day-voucher-rows-container'></div>
-            </div> : null
-          }
-          {
-            headerCategory === "3d" && transactionCategory ==="sale day book" ? 
-            <div className='twod-sale-day-book-parent-container'>
-                <div className='twod-sale-day-book-label-container'>
-                  <p>No</p>
-                  <p>Date</p>
-                  <p>Time</p>
-                  <p>Name</p>
-                  <p>Game Type</p>
-                  <p>Number</p>
-                  <p>Compensation</p>
-                  <p>Amount</p>
-                  <p>Total</p>
-                </div>
-
-                <div className='twod-day-sale-book-rows-container'>
-                  <div className='twod-day-sale-book-row-container'>
-
-                    <div className='twod-day-sale-book-row'>
-                      <p>1</p>
-                      <p>08/18/2022</p>
-                      <p>9:51</p>
-                      <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
-                        <p>Customer Name</p>
-                        <p>0912345678</p>
-                      </div>
-
-                      <p>3Pieces</p>
-
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>34</p>
-                        <p>48</p>
-                        <p>67</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>85</p>
-                        <p>80</p>
-                        <p>83</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>10000ks</p>
-                        <p>100000ks</p>
-                        <p>20000ks</p>
-                        <p className='twod-day-sale-book-seperate-row'>
-                          130000ks
-                        </p>
-                      </div>
-                      <p>130000ks</p> 
-                    </div>
-                    <div className='twod-day-sale-book-row-line'></div>
-                  </div>
-                  <div className='twod-day-sale-book-row-container'>
-
-                    <div className='twod-day-sale-book-row'>
-                      <p>1</p>
-                      <p>01/11/2022</p>
-                      <p>9:51</p>
-                      <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
-                        <p>Customer Name name</p>
-                        <p>0912345678</p>
-                      </div>
-
-                      <p>3Pieces</p>
-
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>134</p>
-                        <p>548</p>
-                        <p>767</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>85</p>
-                        <p>80</p>
-                        <p>83</p>
-                      </div>
-                      <div className='twod-day-sale-book-row-detail-column'>
-                        <p>10000ks</p>
-                        <p>100000ks</p>
-                        <p>20000ks</p>
-                        <p className='twod-day-sale-book-seperate-row'>
-                          130000ks
-                        </p>
-                      </div>
-                      <p>130000ks</p> 
-                    </div>
-                    <div className='twod-day-sale-book-row-line'></div>
-                  </div>
-                  
-                </div>
-              </div> : null
-          }
-        </div>
+        
     </>
   )
 }

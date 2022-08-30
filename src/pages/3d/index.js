@@ -17,7 +17,7 @@ const ThreeD = () => {
   const {user_login} = useSelector(state => state.user)
   const [threedCategory,setThreedCategory] = useState("threepieces")
 
-  if(user_login.isLoggedIn && user_login.role === "agent"){
+  if(user_login.isLoggedIn){
     return (
       <>
           <Header/>

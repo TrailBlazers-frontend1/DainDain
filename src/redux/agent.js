@@ -6,21 +6,30 @@ import { createSlice } from '@reduxjs/toolkit'
 // }
 
 const initialState = {
-    agent_list:[
-        {name:"Agent 1",phNo:'0976682966',remainingAmount:"100000"},
-        {name:"Agent 2",phNo:'0922589988',remainingAmount:"200000"},
-    ]   
+    profile : {
+      image:"",
+      coin_amount:"",
+      commission:"",
+      twod_sale_list:[],
+      threed_sale_list:[],
+      lonepyine_sale_list:[],
+    }
 }
 
 export const agentSlice = createSlice({
   name: 'agent',
   initialState,
   reducers: {
-    
+    setAgentProfile : (state,action) => {
+      state.profile = action.payload
+    },
+    changeName: (state,action) => {
+      state.profile.name = action.payload
+    }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const {  } = agentSlice.actions
+export const { setAgentProfile, changeName } = agentSlice.actions
 
 export default agentSlice.reducer

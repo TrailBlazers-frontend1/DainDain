@@ -1,0 +1,30 @@
+.view-referee-phno-container{
+    /* font-size: 1.563rem; */
+    display: flex;
+    align-items: center;
+    /* text-align: center; */
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.view-referee-phno-container p{
+    font-size: 1.563rem;
+    /* text-align: center; */
+}
+
+.view-referee-phno{
+    margin-left: 30px;
+}
+
+.view-referee-remark-container{
+    width: 500px;
+    height: 200px;
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    margin: auto;
+    padding: 10px;
+}
+
+.view-referee-remark-container p{
+
+}

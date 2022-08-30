@@ -3,32 +3,136 @@ import "./styles.css"
 import { Icon } from '@iconify/react';
 import {useSelector, useDispatch } from 'react-redux/es/exports';
 import { signup } from '../../redux/user';
+import { axiosInstance } from '../../urlConfig';
 
 const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 
+
+
   const [name,setName]  = useState("")
   const [phno,setphno] = useState("")
+  const [otpInput,setOtpInput] = useState("")
+  const [otpFromApi,setOtpFromApi] = useState("")
+  const [otpRequestId, setOtpRequestId] = useState("")
   const [password,setPassword] = useState("")
   const [confirmPassword,setConfirmPassword] = useState("")
 
   const [isPhnoValid,setIsPhnoValid] = useState(false)
+  const [isOTPValid,setIsOTPValid] = useState(false)
+  const [countDownstarted,setCountDownStarted] = useState(false)
+  const [countDown, setCountDown] = useState(60)
+  // const [otpCountdown,setOtpCountdown] = useState("")
 
   const {user_register} = useSelector(state => state.user)
 
   const dispatch = useDispatch()
+  
+  const handleDaiRegClose = () => {
+    setIsDaiRegOpen(false)
+    setName("")
+    setphno("")
+    setOtpInput("")
+    setOtpFromApi("")
+    setPassword("")
+    setConfirmPassword("")
+    setIsPhnoValid(false)
+    setIsOTPValid(false)
+  }
 
   useEffect(() => {
-    if(phno.length === 11){
+    if(phno.length >= 5 && phno.length <= 11){
       setIsPhnoValid(true)
     }else{
       setIsPhnoValid(false)
     }
   },[phno])
 
+  useEffect(() => {
+    setCountDown(60)
+    if(countDownstarted){
+      let i = 60
+      const interval = setInterval(() => {
+        i = i -1
+        setCountDown(i)
+        if(i === 0){
+          console.log("countdown end")
+          setCountDown(60)
+          clearInterval(interval);
+          return
+        }
+        // console.log(countDown)
+      },1000)
+      return () => clearInterval(interval);
+    }
+  },[countDownstarted])
+
+  const getOtp = async () => {
+
+    const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
+
+    console.log(isPhRegistered)
+  
+    if(isPhnoValid && isPhRegistered.status === 200){
+      setCountDown(60)
+      setCountDownStarted(true)
+      
+      setTimeout(() => {
+        setCountDownStarted(false)
+      },1000 * 60)
+
+      const OtpRequest = {
+        "access-token" : "vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-",
+        "to" : phno,
+        "brand_name" : "TrailBlazers",
+        "channel" : "sms",
+        "sender_name":"MC888"
+      }
+  
+      const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${phno}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
+      OtpRequest})
+
+      setOtpRequestId(otp.data.request_id)
+
+      // if(otp.status === 200){
+      //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otp.data.request_id}&code=${otpInput}`)
+      //   console.log(res)
+      //   isOTPValid(true)
+      // }
+     
+    }else{
+      alert("Phone Number is not valid.")
+    }
+    
+    // console.log(res)
+  }
+
+
+  useEffect(() => {
+    if(otpInput === ""){
+      setIsOTPValid(false)
+    }else{
+      const verifyOTP =  async () => {
+        if(otpInput.length === 4){
+          const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
+          console.log(res)
+          if(res.status ===  200){
+            setIsOTPValid(true)
+          }
+        }
+      }
+  
+      verifyOTP()
+    }
+    
+},[otpInput])
+
   const signUp = (e) => {
     e.preventDefault()
     if(password !== confirmPassword){
       alert("Passwords are not eqaul. Please reconfirm them.")
+    }
+    else if(!isOTPValid){
+      alert("This OTP is not valid")
     }
     else{
 
@@ -36,9 +140,18 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 
       const userData = {
         name : name,
-        phno : phno,
+        phone : phno,
         password : password,
-        confirmPassword : confirmPassword
+        password_confirmation : confirmPassword
+      }
+
+      try {
+        const res = axiosInstance.post("/register",userData)
+        if(res.status === 200) {
+          console.log(res)
+        }
+      } catch (error) {
+        console.log(error)
       }
 
       dispatch(signup(userData))
@@ -47,6 +160,9 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
       setphno("")
       setPassword("")
       setConfirmPassword("")
+      setOtpFromApi("")
+      setOtpInput("")
+      setIsDaiRegOpen(false)
     }
   }
 
@@ -57,7 +173,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 
         <div className='dai-register-header'>
           <p className='dai-register-title'>Sign Up</p>
-          <Icon icon="emojione-monotone:cross-mark-button" className='dai-register-cross-btn' onClick={() => setIsDaiRegOpen(false)}/>
+          <Icon icon="emojione-monotone:cross-mark-button" className='dai-register-cross-btn' onClick={() => handleDaiRegClose()}/>
         </div>
 
         <div className='dai-register-phno-input-container'>
@@ -67,19 +183,25 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         </div>
         <div className='dai-register-otp-input-container'>
           <p>OTP:</p>
-          <input required  type="number" className="dai-otp-input"></input>
-          <button className='otp-request-btn'>Get OTP</button>
+          <input value={otpInput} onChange={(e) => setOtpInput(e.target.value)} required   type="number" className="dai-otp-input"></input>
+          <span className={isOTPValid? "valid-message" : 'warning-message'}>{isOTPValid? <Icon icon="icon-park-solid:correct" className='otp-icon'/> : <Icon icon="fluent-emoji-high-contrast:cross-mark" className='otp-icon'/>}</span>
+          {
+            countDownstarted ? 
+            <p className='otp-count-down'>{countDown}</p> :
+            <button className='otp-request-btn' type='button' onClick={() => getOtp()}>Get OTP</button>
+          }
+          
         </div>
         <div className='dai-register-name-input-container'>
-          <input required value={name} onChange={(e) => setName(e.target.value)} type="text" className="dai-name-input"></input>
+          <input disabled={isOTPValid ? false : true} required value={name} onChange={(e) => setName(e.target.value)} type="text" className="dai-name-input"></input>
           <p>Name</p>
         </div>
         <div className='dai-register-pw-input-container'>
-          <input required value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="dai-pw-input"></input>
+          <input disabled={isOTPValid ? false : true} required value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="dai-pw-input"></input>
           <Icon icon="ant-design:lock-outlined" className='dairegister-pw-icon'/>
         </div>
         <div className='register-confirm-pw-container'>
-          <input required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" className='confirm-pw-input'></input>
+          <input disabled={isOTPValid ? false : true} required value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} type="password" className='confirm-pw-input'></input>
           <p>Confirm Password</p>
         </div>
         {/* <div className='dai-register-remark-input-container'>

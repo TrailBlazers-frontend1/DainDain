@@ -2,6 +2,7 @@ import React,{useState} from 'react'
 
 import { Link } from 'react-router-dom'
 import RequestPromotion from '../requestPromotion'
+import { Icon } from '@iconify/react';
 // import Transaction from '../../pages/transaction'
 import "./styles.css"
 import {useSelector} from "react-redux"
@@ -9,6 +10,7 @@ import {useSelector} from "react-redux"
 const Navbar = () => {
 
   const [isRequestPromoOpen,setIsRequestPromoOpen] = useState(false)
+  const [isNotiOpen,setIsNotiOpen] = useState(false)
 
   const {user_login} = useSelector(state => state.user)
   
@@ -29,7 +31,7 @@ const Navbar = () => {
               <Link to="/3d">3D</Link>
               {
                 user_login.role === "agent" ? <> 
-                {/* <Link to ="/transaction">Transaction</Link>  */}
+                <Link to ="/transaction">Transaction</Link> 
                 <Link to="/sale">Sale</Link>
                 </>: null
               }
@@ -45,6 +47,34 @@ const Navbar = () => {
             
             {/* <button className='dai-rgs-btn' onClick={() => setIsDaiRegOpen(true)}>Dai Register</button>
             <button className='agent-admin-rgs-btn'>Agent Register</button> */}
+          {
+            user_login.isLoggedIn && user_login.role === "agent" ? 
+            <div className='notification-bell-container'>
+              <Icon onClick={() => setIsNotiOpen(!isNotiOpen)} className='notification-bell' icon="akar-icons:bell" />
+              <div className='noti-active-dot'></div>
+              <div className={isNotiOpen ? 'noti-dropdown-container noti-open' : "noti-dropdown-container noti-close"}>
+                <div className='noti-dropdown-header'>
+                  <p>Notifications</p>
+                  <Link to="/notifications">See All</Link>
+                </div>
+                <div className='noti-dropdown-row'>
+                  <p className='noti-dropdown-label'>Referee 01</p>
+                  <p className='noti-dropdown-message'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi.</p>
+                </div>
+                <div className='noti-dropdown-row'>
+                  <p className='noti-dropdown-label'>Referee 01</p>
+                  <p className='noti-dropdown-message'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi.</p>
+                </div>
+                <div className='noti-dropdown-row'>
+                  <p className='noti-dropdown-label'>Referee 01</p>
+                  <p className='noti-dropdown-message'>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis tristique sollicitudin nibh sit amet commodo nulla facilisi.</p>
+                </div>
+              </div>
+
+            </div>
+             : 
+            null
+          }
         </div>
     </div>
     </>

@@ -12,12 +12,29 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
 }) => {
 
     const {user_login} = useSelector(state => state.user)
+    const {morning_evening} = useSelector(state => state.countdown)
+
+    let round
+    if(morning_evening.morning){
+        round = "Morning"
+       
+    }
+    if(morning_evening.evening){
+        round = "Evening"
+    }
+
+    // console.log(morning_evening)
 
     const handleBetNow = () => {
         
         setIsBetNowModalOpen(false)
         if(twodNumbers){
-            console.log(user_login.name,user_login.phNo,customerName,customerPhno,customerType,twodNumbers)
+            
+            const twoPiecesData = twodNumbers.map((number) => {
+                return {...number,agientId:user_login.id,customerName,customerPhno,round}
+            })
+            // console.log(user_login.name,user_login.phNo,customerName,customerPhno,customerType,twodNumbers)
+            console.log(twoPiecesData)
             setTwodNumbers([])
         }
         if(threePiecesNumbers){
@@ -101,7 +118,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 </div>
             </div>
 
-            <button className='betnow-modal-btn' onClick={() => handleBetNow()}>Bet Now</button>
+            <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>Bet Now</button>
         </div>
         
     </div>

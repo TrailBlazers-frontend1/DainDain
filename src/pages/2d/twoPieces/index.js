@@ -1,5 +1,6 @@
 import React,{useState, useRef, useEffect} from 'react'
 import {useSelector} from "react-redux"
+import Pusher from 'pusher-js';
 
 import BetNowModal from '../../../components/betnowmodal'
 import { isMorningOrEvening } from '../../../redux/countdown'
@@ -29,6 +30,21 @@ const TwoPieces = () => {
 
     // const {customerName} = twoPieces
     // console.log(twoPieces)
+
+    useEffect(() => {
+    //   Pusher.logToConsole = true;
+
+    //   var pusher = new Pusher('88190f086954aa7ddb96', {
+    //     cluster: 'us2'
+    //   });
+
+    // var channel = pusher.subscribe('notify-channel');
+    // channel.bind('App\\Events\\Notify', function(data) {
+    //   alert(JSON.stringify(data));
+    // });
+    },[])
+
+
     const submitCustomerInfo = (e) => {
       e.preventDefault()
       setCustomerName(customerNameInput.current.value)
@@ -249,7 +265,7 @@ const TwoPieces = () => {
       
         <div className='twopieces-header-container'>
           <div className='twopieces-header-washrate'>
-            <p className='twopieces-header'>2pieces</p>
+            <p className='twopieces-header'>Two Pieces</p>
             <p className='twopieces-washrate'>wash rate   95</p>
           </div>
           <p className='twopieces-description'>Description</p>
@@ -326,7 +342,7 @@ const TwoPieces = () => {
               <input ref={customerPhnoInput} required type="text" name="twopieces phno" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
             </div>
   
-            <div   className='customer-type-container'>
+            {/* <div   className='customer-type-container'>
               <p>Choose the type of customer</p>
               <div className='customer-type-radios-container'>
   
@@ -339,7 +355,7 @@ const TwoPieces = () => {
                   <label htmlFor='royal'>Royal</label>
                 </div>
               </div>
-            </div>
+            </div> */}
             
             <button type='submit' className='twopieces-name-phno-btn'>Add</button>
   

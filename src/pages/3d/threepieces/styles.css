@@ -93,7 +93,7 @@
 
 .threepieces-name-input-container input{
     height: 2.5rem;
-    width: 19.375rem;
+    width:  18rem;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
@@ -113,7 +113,7 @@
 
 .threepieces-phno-input-container input{
     height: 2.5rem;
-    width: 19.375rem;
+    width:  18rem;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
@@ -196,7 +196,7 @@
 
 .threepieces-number-input-container input{
     height: 2.5rem;
-    width: 17.938rem;
+    width: 17rem;
     border: 3px solid var(--primary-color);
     border-radius: 5px;
 }
@@ -244,6 +244,8 @@
     border: none;
     border-top: 3px solid var(--primary-color);
     border-bottom: 3px solid var(--primary-color);
+    width: 11rem;
+    padding-left: 5px;
 }
 
 .threepieces-number-amount-btn{

@@ -17,7 +17,7 @@ const ThreePieces = () => {
     const [amount,setAmount] = useState("1000")
     const [threePiecesNumbers,setThreePiecesNumbers] = useState([])
 
-    const {morning_evening} = useSelector(state => state.countdown)
+    // const {morning_evening} = useSelector(state => state.countdown)
 
     const {user_login} = useSelector(state => state.user)
 
@@ -160,11 +160,11 @@ const ThreePieces = () => {
           <form onSubmit={(e) => submitCustomerInfo(e)} className='threepieces-name-phno-input-container'>
             <div className='threepieces-name-input-container'>
               <p>Name:</p>
-              <input ref={customerNameInput} required type="text" name="threepieces name" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+              <input ref={customerNameInput} required type="text" name="threepieces name" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
             <div className='threepieces-phno-input-container'>
               <p>Ph No:</p>
-              <input ref={customerPhnoInput} required type="text" name="threepieces phno" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+              <input ref={customerPhnoInput} required type="text" name="threepieces phno" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
   
             <div   className='customer-type-container'>
@@ -172,17 +172,17 @@ const ThreePieces = () => {
               <div className='customer-type-radios-container'>
   
                 <div className='customer-type-radio-container'>
-                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="guest" checked={customerType === "guest"} disabled={user_login.role==="guest"  ? true:false}></input>
                   <label htmlFor='guest'>Guest</label>
                 </div>
                 <div className='customer-type-radio-container'>
-                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+                  <input onChange={(e) => setCustomerType(e.target.value)}  type="radio"  name="customer type" value="royal" checked={customerType === "royal"} disabled={user_login.role==="guest"  ? true:false}></input>
                   <label htmlFor='royal'>Royal</label>
                 </div>
               </div>
             </div>
             
-            <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} type='submit' className='threepieces-name-phno-btn'>Add</button>
+            <button disabled={user_login.role==="guest" ? true:false} type='submit' className='threepieces-name-phno-btn'>Add</button>
   
           </form>
   
@@ -194,7 +194,7 @@ const ThreePieces = () => {
             </div>
             <div className='threepieces-number-input-container'>
               <p>Number:</p>
-              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
   
             <div className='threepieces-amount-input-container'>
@@ -204,15 +204,15 @@ const ThreePieces = () => {
                   if(amount > 100){
                     setAmount(parseInt(amount)-100)
                   }
-                  }} disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}>-</button>
-              <input value={amount} onWheel={(e) => e.target.blur()}  onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}>
+                  }} disabled={user_login.role==="guest"  ? true:false}>-</button>
+              <input value={amount} onWheel={(e) => e.target.blur()}  onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount" disabled={user_login.role==="guest"  ? true:false}>
               </input>
   
-                <button type='button' className='threepieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}>+</button>
+                <button type='button' className='threepieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest"  ? true:false}>+</button>
               </div>
             </div>
   
-            <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} type='submit' className='threepieces-number-amount-btn'>Add</button>
+            <button disabled={user_login.role==="guest"  ? true:false} type='submit' className='threepieces-number-amount-btn'>Add</button>
           </form>
   
         </div>
@@ -233,17 +233,17 @@ const ThreePieces = () => {
                           <p>85</p>
                           <div className='twod-details-amount-container'>
                             <button
-                            disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}
+                            disabled={user_login.role==="guest"  ? true:false}
                              onClick={(e) => 
                             {if(item.amount > 100){
                               decreaseAmount(e,item)} 
   
                             }}
                               >-</button>
-                            <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
-                            <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e) => increaseAmount(e,item)}>+</button>
+                            <input disabled={user_login.role==="guest"  ? true:false} type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
+                            <button disabled={user_login.role==="guest"  ? true:false} onClick={(e) => increaseAmount(e,item)}>+</button>
                           </div>
-                          <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
+                          <button disabled={user_login.role==="guest"  ? true:false} className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
                           </div>
                       ))
                     }
@@ -264,7 +264,7 @@ const ThreePieces = () => {
                     <p>98:00:00</p>
                   </div>
   
-                  <button className='twod-betnow-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={submitBetNow}>Bet Now</button>
+                  <button className='twod-betnow-btn' disabled={user_login.role==="guest"  ? true:false} onClick={submitBetNow}>Bet Now</button>
                   
                 </div>
       </div>
