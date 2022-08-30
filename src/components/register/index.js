@@ -68,11 +68,13 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 
   const getOtp = async () => {
 
-    const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
+    // const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
 
-    console.log(isPhRegistered)
+    // console.log(isPhRegistered)
+
+    // && isPhRegistered.status === 200
   
-    if(isPhnoValid && isPhRegistered.status === 200){
+    if(isPhnoValid ){
       setCountDown(60)
       setCountDownStarted(true)
       
@@ -88,10 +90,10 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         "sender_name":"MC888"
       }
   
-      const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${phno}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
-      OtpRequest})
+      // const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${phno}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
+      // OtpRequest})
 
-      setOtpRequestId(otp.data.request_id)
+      // setOtpRequestId(otp.data.request_id)
 
       // if(otp.status === 200){
       //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otp.data.request_id}&code=${otpInput}`)
@@ -107,24 +109,24 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
   }
 
 
-  useEffect(() => {
-    if(otpInput === ""){
-      setIsOTPValid(false)
-    }else{
-      const verifyOTP =  async () => {
-        if(otpInput.length === 4){
-          const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
-          console.log(res)
-          if(res.status ===  200){
-            setIsOTPValid(true)
-          }
-        }
-      }
+//   useEffect(() => {
+//     if(otpInput === ""){
+//       setIsOTPValid(false)
+//     }else{
+//       const verifyOTP =  async () => {
+//         if(otpInput.length === 4){
+//           const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
+//           console.log(res)
+//           if(res.status ===  200){
+//             setIsOTPValid(true)
+//           }
+//         }
+//       }
   
-      verifyOTP()
-    }
+//       verifyOTP()
+//     }
     
-},[otpInput])
+// },[otpInput])
 
   const signUp = (e) => {
     e.preventDefault()
@@ -145,14 +147,14 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         password_confirmation : confirmPassword
       }
 
-      try {
-        const res = axiosInstance.post("/register",userData)
-        if(res.status === 200) {
-          console.log(res)
-        }
-      } catch (error) {
-        console.log(error)
-      }
+      // try {
+      //   const res = axiosInstance.post("/register",userData)
+      //   if(res.status === 200) {
+      //     console.log(res)
+      //   }
+      // } catch (error) {
+      //   console.log(error)
+      // }
 
       dispatch(signup(userData))
 

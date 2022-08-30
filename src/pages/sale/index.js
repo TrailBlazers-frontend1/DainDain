@@ -15,16 +15,18 @@ const Sale = () => {
 
   useEffect(() => {
     const fetchAcceptedTransactions = async () => {
-      const twod = await axiosInstance.get("/2d-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
-      const lonepyine = await axiosInstance.get("/lonepyaing-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
-      const threed = await axiosInstance.get("/3d-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      // const twod = await axiosInstance.get("/2d-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      // const lonepyine = await axiosInstance.get("/lonepyaing-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      // const threed = await axiosInstance.get("/3d-accepted-transition",{headers:{Authorization:`Bearer ${user_login.token}`}})
       // console.log(res)
 
-      if(twod.data.status === 200 && lonepyine.data.status === 200 && threed.data.status === 200){
-        setAccepted2dTransactions(twod.data.twod_sale_lists)
-        setAcceptedLonePyineTransactions(lonepyine.data.lonepyaing_sale_lists)
-        setAccepted3dTransactions(threed.data.threed_sale_lists)
-      }
+      // if(twod.data.status === 200 && lonepyine.data.status === 200 && threed.data.status === 200){
+        // setAccepted2dTransactions(twod.data.twod_sale_lists)
+        // setAcceptedLonePyineTransactions(lonepyine.data.lonepyaing_sale_lists)
+        // setAccepted3dTransactions(threed.data.threed_sale_lists)
+      // }
+
+      
 
       // console.log(twod.data.twod_sale_lists)
       console.log(accepted2dTransactions)

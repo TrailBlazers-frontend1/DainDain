@@ -35,24 +35,33 @@ const Header = () => {
         if(user_login.isLoggedIn && user_login.role === "agent"){
 
         
-        const fetchAgentProfile = async () => {
-            const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
+        const fetchAgentProfile =  () => {
+            // const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
 
-            console.log(res)
-            if(res.data.status === 200){
+            // console.log(res)
+            // if(res.data.status === 200){
+                // const agent = {
+                //     image:res.data.user.image,
+                //     coin_amount:res.data.user.coin_amount,
+                //     commission:res.data.user.commision,
+                //     twod_sale_list:res.data.twod_saleLists,
+                //     threed_sale_list:res.data.threed_salelists,
+                //     lonepyine_sale_list:res.data.lonepyaing_salelists,
+                // }
+
                 const agent = {
-                    image:res.data.user.image,
-                    coin_amount:res.data.user.coin_amount,
-                    commission:res.data.user.commision,
-                    twod_sale_list:res.data.twod_saleLists,
-                    threed_sale_list:res.data.threed_salelists,
-                    lonepyine_sale_list:res.data.lonepyaing_salelists,
-                }
+                        image:"",
+                        coin_amount:"10000",
+                        commission:"5",
+                        twod_sale_list:[],
+                        threed_sale_list:[],
+                        lonepyine_sale_list:[],
+                    }
 
                 dispatch(setAgentProfile(agent))
 
                 console.log(profile)
-            }
+            // }
         }
 
         fetchAgentProfile()
@@ -73,16 +82,16 @@ const Header = () => {
 
     const handleUserLogout = async () => {
         // {headers:{Authorization:`Bearer ${user_login.token}`}}
-        const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
+        // const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
 
         // console.log(res)
-        if(res.data.status === 200){
-            alert(res.data.message)
+        // if(res.data.status === 200){
+            // alert(res.data.message)
             dispatch(logout())
             localStorage.removeItem("auth")
             
             navigate("/")
-        }
+        // }
         
     }
 

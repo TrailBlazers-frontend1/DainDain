@@ -25,19 +25,19 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
       
 
       // dispatch(promoteRole(role))
-      const res = await axiosInstance.post("/request-promotion",{
-        phone: user_login.phNo,
-        request_type: role,
-        remark : remark,
-        referee_id : refreeId,
-        operationstaff_id : opstaffId,
-      },{headers:{Authorization:`Bearer ${user_login.token}`}})
+      // const res = await axiosInstance.post("/request-promotion",{
+      //   phone: user_login.phNo,
+      //   request_type: role,
+      //   remark : remark,
+      //   referee_id : refreeId,
+      //   operationstaff_id : opstaffId,
+      // },{headers:{Authorization:`Bearer ${user_login.token}`}})
 
-      console.log(res)
+      // console.log(res)
 
-      if(res.status === 200){
+      // if(res.status === 200){
         dispatch(promoteRole(role))
-      }
+      // }
 
       // setPhno("")
       setRemark("")

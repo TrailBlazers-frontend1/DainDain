@@ -48,25 +48,25 @@ const AgentProfile = () => {
 
     const onProfileCancelClicked = () => {
         profileimgRef.current.value = null
-        // setProfileImage()
-        console.log(profileimgRef)
+        setProfileImage()
+        // console.log(profileimgRef)
     }
 
     const handleUserNameChangeConfirm = async () => {
         setIsChangeUsername(false)
         // setAgentName()
-        const res =await  axiosInstance.post("/profile-update",{
-            name : agentName
-        },{headers:{Authorization:`Bearer ${user_login.token}`}})
+        // const res =await  axiosInstance.post("/profile-update",{
+        //     name : agentName
+        // },{headers:{Authorization:`Bearer ${user_login.token}`}})
 
         // console.log(res)
-        if(res.data.status === 200){
-            alert(res.data.message)
-            const newName = res.data.data.name
+        // if(res.data.status === 200){
+            // alert(res.data.message)
+            const newName = agentName
             // console.log(newName)
             // dispatch(changeName(newName))
             dispatch(changeUserName(newName))
-        }
+        // }
         setAgentName(user_login.name)
     }
 
