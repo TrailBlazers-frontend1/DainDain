@@ -1,14 +1,21 @@
 import React,{useState, useRef, useEffect} from 'react'
-import {useSelector} from "react-redux"
-import Pusher from 'pusher-js';
+import {useDispatch, useSelector} from "react-redux"
+// import Pusher from 'pusher-js';
+import { pusher } from '../../../pusher'
 
 import BetNowModal from '../../../components/betnowmodal'
 import { isMorningOrEvening } from '../../../redux/countdown'
+
+import {axiosInstance} from "../../../urlConfig"
+
+import { setTwodList } from '../../../redux/2d3dList'
 
 import "./styles.css"
 
 const TwoPieces = () => {
     const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
+
+    // const [twodSaleList,setTwodSaleList] = useState([])
 
     const [customerName,setCustomerName] = useState("")
     const [customerPhno,setCustomerPhno] = useState("")
@@ -21,28 +28,52 @@ const TwoPieces = () => {
     const [twodNumbers,setTwodNumbers] = useState([])
     // const [twopiecesData, setTwoPiecesData] = useState({})
 
+    const dispatch = useDispatch()
+
     const {user_login} = useSelector(state => state.user)
     const {morning_evening} = useSelector(state => state.countdown)
+    const {profile} = useSelector(state => state.agent)
+    const {twodList} = useSelector(state => state.twodThreed)
     
-    // const twoPieces = useSelector((state) => state)
+    const fetch2dList = async () => {
+      try {
+        if(morning_evening.morning){
+          const morning2d = await axiosInstance.get("/getTwoDsAM",{headers:{Authorization:`Bearer ${user_login.token}`}})
+        if(morning2d.data.status === 200){
+          // console.log(res)
+          dispatch(setTwodList(morning2d.data.twods))
+        }
+        }
 
-    // const dispatch = useDispatch()
-
-    // const {customerName} = twoPieces
-    // console.log(twoPieces)
+        if(morning_evening.evening){
+          const evening2d = await axiosInstance.get("/getTwoDsPM",{headers:{Authorization:`Bearer ${user_login.token}`}})
+          if(evening2d.data.status === 200){
+            // console.log(res)
+            dispatch(setTwodList(evening2d.data.twods))
+          }
+        }
+        
+      } catch (error) {
+        alert(error.message)
+      }
+    }
 
     useEffect(() => {
-    //   Pusher.logToConsole = true;
+      if(user_login.isLoggedIn && user_login.role === "agent"){
 
-    //   var pusher = new Pusher('88190f086954aa7ddb96', {
-    //     cluster: 'us2'
-    //   });
-
-    // var channel = pusher.subscribe('notify-channel');
-    // channel.bind('App\\Events\\Notify', function(data) {
-    //   alert(JSON.stringify(data));
-    // });
-    },[])
+      fetch2dList()
+        // var pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+        //   cluster: process.env.REACT_APP_PUSHER_CLUSTER
+        // });
+  
+        const channel = pusher.subscribe(`${process.env.REACT_APP_PUSHER_CHANNEL}.${profile.refereeId}`);
+        channel.bind('App\\Events\\testing', function(data) {
+          // console.log(JSON.stringify(data));
+          dispatch(setTwodList(data.salesList))
+        });
+      }
+      
+    }, [])
 
 
     const submitCustomerInfo = (e) => {
@@ -118,11 +149,15 @@ const TwoPieces = () => {
   
     //submit number amount details start
     const submitBetNow = () => {
+      const totalAmount = twoPiecesTotalAmount()
+      console.log(profile.coin_amount)
       if(customerName == "" || customerPhno == ""){
         alert("Please Provide Customer name and phone number")
       }
       else if(twodNumbers.length === 0){
         alert("Please Bet on a number")
+      }else if(profile.coin_amount < totalAmount){
+        alert("Not Enough Coins")
       }
       else{
         
@@ -144,15 +179,27 @@ const TwoPieces = () => {
               return true
             }
             return false
-          })
+        })
     
           if(doesNumberExist){
             alert("Number Already Exists")
           }
           else{
+            const compensationId = twodList.find((item) => {
+              if(item.number === number){
+                return item
+              }
+            })
+            // const id = twodSaleList.find((item) => {
+            //   if(item.number === number){
+            //     return item
+            //   }
+            // })
+            console.log(compensationId)
             const newNumber = {
+              id:compensationId?.id,
               number: number,
-              washrate:"",
+              compensation:compensationId? compensationId.compensation : '0',
               amount: amount.toString()
             }
             setTwodNumbers([...twodNumbers,newNumber])
@@ -169,7 +216,7 @@ const TwoPieces = () => {
 
 
     //update number amount array start
-    const changeNumberArray = (e,twodNumbers,setTwodNumbers) => {
+    const changeNumberArray = (e, twod) => {
       
       const numberString = e.target.value.toString()
       // console.log(e.target.value.toString())
@@ -187,8 +234,9 @@ const TwoPieces = () => {
   
       if(found === false){
         const newNumber = {
+                id: twod?.id,
                 number:numberString,
-                washrate:"",
+                compensation: twod? twod.compensation : '0',
                 amount:"1000"
             }
         setTwodNumbers([...twodNumbers,newNumber])
@@ -200,7 +248,7 @@ const TwoPieces = () => {
     //update number amount array end
   
     //twod Number row start
-    const row = (start,end,twodNumbers,setTwodNumbers) => {
+    const row = (start,end) => {
       const rowarray = []
       for(let i = start;i <= end;i++){
         rowarray.push(<div className='twopieces-number-container'>
@@ -214,14 +262,14 @@ const TwoPieces = () => {
               }
             }) ? "checked" : null
           }
-           value={i <= 9 ? `0${i}` : i} onClick={(e) => changeNumberArray(e,twodNumbers,setTwodNumbers)} type="checkbox" name='twopieces number' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+           value={i <= 9 ? `0${i}` : i} onClick={(e) => changeNumberArray(e,twodList[i])} type="checkbox" name='twopieces number' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
         </div>
         <div className='twopieces-details-container'>
           {
             user_login.role==="guest" ? null :
           <div className='twopieces-rate-container'>
             <p className='twopieces-rate-label'>Rate:</p>
-            <p className='twopieces-rate-num'>85</p>
+            <p className='twopieces-rate-num'>{twodList[i]? twodList[i].compensation : "0"}</p>
           </div>
           }
           {/* <div className='twopieces-max-container'>
@@ -245,7 +293,12 @@ const TwoPieces = () => {
       // console.log(amountArr)
       const totalAmount = amountArr.reduce((previous,current) => previous+current,0)
       return totalAmount
-        }
+      }
+
+      const handleNumberInputChange = (e) => {
+        setNumber(e.target.value)
+        console.log(e.target.value)
+      }
 
 
     return (
@@ -255,7 +308,8 @@ const TwoPieces = () => {
        customerPhno= {customerPhno}
        customerType={customerType}
        twodNumbers = {twodNumbers}
-       setTwodNumbers={setTwodNumbers}/>
+       setTwodNumbers={setTwodNumbers}
+       twodList={twodList}/>
       <div className='twopieces-parent-container'>
         <div className='select-directly-container'>
           <p className='select-directly-label'>Select Directly:</p>
@@ -266,7 +320,7 @@ const TwoPieces = () => {
         <div className='twopieces-header-container'>
           <div className='twopieces-header-washrate'>
             <p className='twopieces-header'>Two Pieces</p>
-            <p className='twopieces-washrate'>wash rate   95</p>
+            {/* <p className='twopieces-washrate'>Compensation   80</p> */}
           </div>
           <p className='twopieces-description'>Description</p>
         </div>
@@ -275,49 +329,49 @@ const TwoPieces = () => {
           <div className='twopieces-numbers-container'>
   
             <div className='twopieces-numbers-row'>
-              {row(0,6,twodNumbers,setTwodNumbers)}
+              {row(0,6)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(7,13,twodNumbers,setTwodNumbers)}
+              {row(7,13)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(14,20,twodNumbers,setTwodNumbers)}
+              {row(14,20)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(21,27,twodNumbers,setTwodNumbers)}
+              {row(21,27)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(28,34,twodNumbers,setTwodNumbers)}
+              {row(28,34)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(35,41,twodNumbers,setTwodNumbers)}
+              {row(35,41)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(42,48,twodNumbers,setTwodNumbers)}
+              {row(42,48)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(49,55,twodNumbers,setTwodNumbers)}
+              {row(49,55)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(56,62,twodNumbers,setTwodNumbers)}
+              {row(56,62)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(63,69,twodNumbers,setTwodNumbers)}
+              {row(63,69)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(70,76,twodNumbers,setTwodNumbers)}
+              {row(70,76)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(77,83,twodNumbers,setTwodNumbers)}
+              {row(77,83)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(84,90,twodNumbers,setTwodNumbers)}
+              {row(84,90)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(91,97,twodNumbers,setTwodNumbers)}
+              {row(91,97)}
             </div>
             <div className='twopieces-numbers-row'>
-              {row(98,99,twodNumbers,setTwodNumbers)}
+              {row(98,99)}
             </div>
             {/* <div className='twopieces-numbers-row'>
               {row(85,92)}
@@ -369,7 +423,8 @@ const TwoPieces = () => {
             </div>
             <div className='twopieces-number-input-container'>
               <p>Number:</p>
-              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" min="0" max="99" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => handleNumberInputChange(e)} type="number" id="number" name="number" min="0" max="99" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+             
             </div>
   
             <div className='twopieces-amount-input-container'>
@@ -398,7 +453,7 @@ const TwoPieces = () => {
                 <div className='twod-details-container'>
                   <div className='twod-details-header-container'>
                     <p>Number</p>
-                    <p>Wash Rate</p>
+                    <p>Compensation</p>
                     <p>Amount</p>
                   </div>
   
@@ -407,7 +462,7 @@ const TwoPieces = () => {
                       twodNumbers.map((item,index) => (
                           <div key = {index} className='twod-details-row'>
                           <p>{item.number}</p>
-                          <p>85</p>
+                          <p>{item.compensation}</p>
                           <div className='twod-details-amount-container'>
                             <button onClick={(e) => 
                             {if(item.amount > 100){

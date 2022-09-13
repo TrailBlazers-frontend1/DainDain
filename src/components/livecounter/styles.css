@@ -61,6 +61,7 @@
 .livecounter-time-container{
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .livecounter-hour-container, .livecounter-minute-container, .livecounter-second-container{

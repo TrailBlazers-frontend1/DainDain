@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect, useRef} from 'react'
 import {Link} from "react-router-dom"
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
@@ -7,10 +7,75 @@ import hotgameimg from "../../imgs/hotgame-img.png"
 import lotteryimage from "../../imgs/2d.png"
 import { Icon } from '@iconify/react';
 import "./styles.css"
+import { axiosInstance } from '../../urlConfig'
 
 
 const Home = () => {
     const [twoOrThree,setTwoOrThree] = useState("two")
+    const [morningResult,setMorningResult] = useState()
+    const [eveningResult,setEveningResult] = useState()
+    // const [isFilteringDate,setIsFilteringDate] = useState(false)
+    const [live,setLive] = useState()
+
+    const [date,setDate] = useState('')
+
+    let isFilteringDate = false
+
+    const fetchLive = async () => {
+        try {
+            const res =await  axiosInstance.get("https://api.thaistock2d.com/live")
+            // console.log(res.data.result[1], res.data.result[3])
+            setMorningResult(res.data.result[1])
+            setEveningResult(res.data.result[3])
+            setLive(res.data.live.twod)
+        } catch (error) {
+            
+        }
+        
+    }
+
+    const handleDateChange = async (e) => {
+        setDate(e.target.value)
+        // console.log(e.target.value)
+        try {
+            // console.log(e.target.value)
+            const res = await axiosInstance.get(`https://api.thaistock2d.com/2d_result?date=${e.target.value}`)
+            // console.log(res.data[0])
+            setMorningResult(res.data[0].child[1])
+            setEveningResult(res.data[0].child[3])
+            // setLive(res.data.live.twod)
+
+        } catch (error) {
+            alert(error.message)
+        }
+    } 
+
+    useEffect(() => {
+        console.log(date)
+        if(date.length){
+            // setIsFilteringDate(true)
+            isFilteringDate = true
+            console.log(isFilteringDate)
+        }else{
+            // setIsFilteringDate(false)
+            isFilteringDate = false
+            console.log(isFilteringDate)
+        }
+       
+    },[date])
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if(isFilteringDate === false){
+                fetchLive()
+            }
+          
+          }, 1000);
+          return () => clearInterval(interval);
+
+
+    },[date])
     return(
         <>
             <Header/>
@@ -35,9 +100,9 @@ const Home = () => {
                         <button onClick={() => setTwoOrThree("two")} className={twoOrThree === "two" ? 'hot-game-2d-btn hot-game-active' : 'hot-game-2d-btn'}>
                             2D
                         </button>
-                        <button onClick={() => setTwoOrThree("three")} className={twoOrThree === "three" ? 'hot-game-3d-btn hot-game-active' : 'hot-game-3d-btn'}>
+                        {/* <button onClick={() => setTwoOrThree("three")} className={twoOrThree === "three" ? 'hot-game-3d-btn hot-game-active' : 'hot-game-3d-btn'}>
                             3D
-                        </button>
+                        </button> */}
                     </div>
 
                     <div className='hot-game-outer'>
@@ -74,14 +139,14 @@ const Home = () => {
                 <div className='live-content-container'>
                     <div className='live-btn-container'>
                         <button className='live-2d-btn'>2D</button>
-                        <button className='live-3d-btn'>3D</button>
+                        {/* <button className='live-3d-btn'>3D</button> */}
                     </div>
 
                     <div className='live-view'>
-                        44
+                        {live}
                     </div>
 
-                    <input className='live-date' type="date" id="live-date" name="live-date"></input>
+                    <input value={date}  className='live-date' type="date" id="live-date" name="live-date" onChange={(e) => handleDateChange(e)}></input>
 
                     <div className='live-numbers-container'>
                         <div className='won-number-container'>
@@ -91,17 +156,17 @@ const Home = () => {
 
                             <div className='won-number-content-container'>
                                 <div className='won-number'>
-                                    33
+                                    {morningResult?.twod}
                                 </div>
 
                                 <div className='live-setvalue-container'>
                                     <div className='live-set-container'>
                                         <p className='live-set-label'>Set:</p>
-                                        <p className='live-set-number'>1553.18</p>
+                                        <p className='live-set-number'>{morningResult?.set}</p>
                                     </div>
                                     <div className='live-value-container'>
                                         <p className='live-value-label'>Value:</p>
-                                        <p className='live-value-number'>1553.18</p>
+                                        <p className='live-value-number'>{morningResult?.value}</p>
                                     </div>
                                 </div>
                             </div>
@@ -113,17 +178,17 @@ const Home = () => {
 
                             <div className='won-number-content-container'>
                                 <div className='won-number'>
-                                    48
+                                    {eveningResult?.twod}
                                 </div>
 
                                 <div className='live-setvalue-container'>
                                     <div className='live-set-container'>
                                         <p className='live-set-label'>Set:</p>
-                                        <p className='live-set-number'>1553.18</p>
+                                        <p className='live-set-number'>{eveningResult?.set}</p>
                                     </div>
                                     <div className='live-value-container'>
                                         <p className='live-value-label'>Value:</p>
-                                        <p className='live-value-number'>1553.18</p>
+                                        <p className='live-value-number'>{eveningResult?.value}</p>
                                     </div>
                                 </div>
                             </div>

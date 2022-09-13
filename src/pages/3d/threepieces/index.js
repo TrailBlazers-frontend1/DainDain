@@ -1,5 +1,7 @@
-import React,{useState, useRef} from 'react'
+import React,{useState, useRef, useEffect} from 'react'
+import { pusher } from '../../../pusher'
 import "./styles.css"
+import { axiosInstance } from '../../../urlConfig'
 
 import BetNowModal from '../../../components/betnowmodal'
 import {useSelector} from "react-redux"
@@ -15,11 +17,64 @@ const ThreePieces = () => {
     const customerPhnoInput = useRef('')
     const [number,setNumber] = useState("")
     const [amount,setAmount] = useState("1000")
+    const [Rchecked,setRchecked] = useState(false)
     const [threePiecesNumbers,setThreePiecesNumbers] = useState([])
+
+    const [threedCompensation,setThreedCompensation] = useState("")
 
     // const {morning_evening} = useSelector(state => state.countdown)
 
     const {user_login} = useSelector(state => state.user)
+    const {profile} = useSelector(state => state.agent)
+
+    const fetch3dCompensation = async () => {
+      try {
+        const res = await axiosInstance.get("/3ds",{headers:{Authorization:`Bearer ${user_login.token}`}})
+        if(res.data.status === 200){
+          console.log(res.data.threeds.compensation)
+          setThreedCompensation(res.data.threeds.compensation)
+        }
+      } catch (error) {
+        alert(error.message)
+      }
+      
+
+    }
+
+    useEffect(() => {
+      if(user_login.isLoggedIn && user_login.role === "agent"){
+        fetch3dCompensation()
+  
+      const channel = pusher.subscribe(`threed-channel.${profile.refereeId}`);
+        channel.bind('App\\Events\\sendthreed', function(data) {
+          // alert(JSON.stringify(data));
+          // console.log(data[0].compensation)
+          setThreedCompensation(data[0].compensation)
+          // console.log(data)
+          // console.log("use effect ran")
+        });
+      }
+    },[])
+
+    //get permutations
+    function permut(string) {
+      if (string.length < 2) return string; // This is our break condition
+    
+      var permutations = []; // This array will hold our permutations
+      for (var i = 0; i < string.length; i++) {
+        var char = string[i];
+    
+        // Cause we don't want any duplicates:
+        if (string.indexOf(char) != i) // if char was used already
+          continue; // skip it this time
+    
+        var remainingString = string.slice(0, i) + string.slice(i + 1, string.length); //Note: you can concat Strings via '+' in JS
+    
+        for (var subPermutation of permut(remainingString))
+          permutations.push(char + subPermutation)
+      }
+      return permutations;
+    }
 
     const submitNumberAmount = (e) => {
       e.preventDefault()
@@ -30,18 +85,35 @@ const ThreePieces = () => {
               return true
             }
             return false
-          })
+        })
     
           if(doesNumberExist){
             alert("Number Already Exists")
           }
           else{
-            const newNumber = {
-              number: number,
-              washrate:"",
-              amount: amount.toString()
+            if(!Rchecked){
+              const newNumber = {
+                number: number,
+                compensation: threedCompensation,
+                amount: amount.toString()
+              }
+              setThreePiecesNumbers([...threePiecesNumbers,newNumber])
+            }else{
+              const arr = permut(number)
+              // console.log(arr)
+              const newNumbers = arr.map((item) => {
+                const newNumer = {
+                  number : item,
+                  compensation: threedCompensation,
+                  amount: amount.toString()
+                }
+                return newNumer
+              })
+
+              setThreePiecesNumbers([...threePiecesNumbers,...newNumbers])
+              
             }
-            setThreePiecesNumbers([...threePiecesNumbers,newNumber])
+            
           }
       }else{
         alert("Number should have three digits")
@@ -66,11 +138,14 @@ const ThreePieces = () => {
     }
 
     const submitBetNow = () => {
+      const totalAmount = twoPiecesTotalAmount()
       if(customerName == "" && customerPhno == ""){
         alert("Please Provide Customer name and phone number")
       }
       else if(threePiecesNumbers.length === 0){
         alert("Please Bet on a number")
+      }else if(profile.coin_amount < totalAmount){
+        alert("Not Enough Coins")
       }
       else{
         
@@ -129,6 +204,11 @@ const ThreePieces = () => {
       setThreePiecesNumbers(newarr)
       // console.log(twodNumbers)
     }
+
+    const handleRCheck = () => {
+      setRchecked(!Rchecked)
+      console.log(Rchecked)
+    }
   return (
     <>
     <BetNowModal isBetNowModalOpen={isBetNowModalOpen} setIsBetNowModalOpen={setIsBetNowModalOpen}
@@ -136,7 +216,9 @@ const ThreePieces = () => {
        customerPhno= {customerPhno}
        customerType={customerType}
        threePiecesNumbers = {threePiecesNumbers}
-       setThreePiecesNumbers={setThreePiecesNumbers}/>
+       setThreePiecesNumbers={setThreePiecesNumbers}
+       threedCompensation = {threedCompensation}
+       />
     <div className='threepieces-parent-container'>
       <div className='threepieces-select-container'>
         <div className='threepieces-select-competiton-container'>
@@ -150,7 +232,7 @@ const ThreePieces = () => {
       <div className='threepieces-header-container'>
           <div className='threepieces-header-washrate'>
             <p className='threepieces-header'>Three Pieces</p>
-            <p className='threepieces-washrate'>wash rate   1.9</p>
+            <p className='threepieces-washrate'>Compensation   {threedCompensation}</p>
           </div>
           <p className='threepieces-description'>Description</p>
       </div>
@@ -167,7 +249,7 @@ const ThreePieces = () => {
               <input ref={customerPhnoInput} required type="text" name="threepieces phno" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
   
-            <div   className='customer-type-container'>
+            {/* <div   className='customer-type-container'>
               <p>Choose the type of customer</p>
               <div className='customer-type-radios-container'>
   
@@ -180,7 +262,7 @@ const ThreePieces = () => {
                   <label htmlFor='royal'>Royal</label>
                 </div>
               </div>
-            </div>
+            </div> */}
             
             <button disabled={user_login.role==="guest" ? true:false} type='submit' className='threepieces-name-phno-btn'>Add</button>
   
@@ -195,6 +277,11 @@ const ThreePieces = () => {
             <div className='threepieces-number-input-container'>
               <p>Number:</p>
               <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest"  ? true:false}></input>
+            </div>
+
+            <div className='threepieces-R-counter'>
+              <p>R:</p>
+              <input onChange={() => handleRCheck()} type="checkbox"></input>
             </div>
   
             <div className='threepieces-amount-input-container'>
@@ -211,6 +298,8 @@ const ThreePieces = () => {
                 <button type='button' className='threepieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest"  ? true:false}>+</button>
               </div>
             </div>
+
+            
   
             <button disabled={user_login.role==="guest"  ? true:false} type='submit' className='threepieces-number-amount-btn'>Add</button>
           </form>
@@ -221,7 +310,7 @@ const ThreePieces = () => {
                 <div className='twod-details-container'>
                   <div className='twod-details-header-container'>
                     <p>Number</p>
-                    <p>Wash Rate</p>
+                    <p>Compensation</p>
                     <p>Amount</p>
                   </div>
   
@@ -230,7 +319,7 @@ const ThreePieces = () => {
                       threePiecesNumbers.map((item,index) => (
                           <div key = {index} className='twod-details-row'>
                           <p>{item.number}</p>
-                          <p>85</p>
+                          <p>{threedCompensation}</p>
                           <div className='twod-details-amount-container'>
                             <button
                             disabled={user_login.role==="guest"  ? true:false}

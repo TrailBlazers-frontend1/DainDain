@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useRef, useEffect} from 'react'
 import avatar from "../../imgs/avatar.png"
 import { Icon } from '@iconify/react';
 import Header from '../../components/header'
@@ -6,22 +6,93 @@ import Navbar from '../../components/navbar'
 import {useSelector} from "react-redux"
 import {Navigate} from "react-router-dom"
 import "./styles.css"
+import { axiosInstance } from '../../urlConfig';
 
 const OpProfile = () => {
     const [isChangeUsername,setIsChangeUsername] = useState(false)
-    const [agentName,setAgentName] = useState("User Name")
+    const [agentName,setAgentName] = useState("")
+    const [profileImage,setProfileImage] =useState()
+
+    const profileimgRef = useRef()
     const {user_login} = useSelector(state => state.user)
+
+
+
+    const fetchOpProfile = async () => {
+        try {
+            const res = await axiosInstance.get('/opstaff-profile',{headers:{Authorization:`Bearer ${user_login.token}`}})
+            console.log(res)
+            if(res.data.status === 200){
+                setAgentName(res.data.data.name)
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+       
+    }
+
+    useEffect(() => {
+        fetchOpProfile()
+    },[])
+
+
 
     const handleUserNameChangeCancel = () => {
         setIsChangeUsername(false)
         setAgentName("User Name")
     }
 
-    const handleUserNameChangeConfirm = () => {
+    const handleUserNameChangeConfirm = async () => {
+        try {
+            const res = await axiosInstance.post("opstaffProfile-update",{
+                name: agentName
+            }, {headers:{Authorization:`Bearer ${user_login.token}`}})
+            console.log(res)
+            if(res.data.status === 200){
+                
+            }
+        } catch (error) {
+            
+        }
         setIsChangeUsername(false)
-        // setAgentName()
+        // setAgentName('')
     }
-    if(user_login.isLoggedIn && user_login.role === "operation staff"){
+
+    const onProfileChange = (e) => {
+        const file = e.target.files[0];
+        setProfileImage(file);
+        // console.log(profileImage)
+    }
+
+    const onProfileCancelClicked = () => {
+        profileimgRef.current.value = null
+        setProfileImage()
+    }
+
+    const onProfileChangeSubmit =async (e) => {
+        e.preventDefault()
+        console.log(profileImage)
+        const formData = new FormData();
+        formData.append("profile_image" , profileImage)
+        formData.append("name" , agentName)
+       try {
+            const res =await  axiosInstance.post("/opstaffProfile-update",
+            formData,
+            {headers:{Authorization:`Bearer ${user_login.token}`}})
+            console.log(res)
+            if(res.data.status === 200){
+
+            }
+       } catch (error) {
+        
+       }
+
+       setProfileImage()
+       agentName()
+       
+        // console.log(res)
+    }
+    if(user_login.isLoggedIn && user_login.role === "operationstaff"){
         return (
             <>
                     <Header/>
@@ -35,12 +106,19 @@ const OpProfile = () => {
         
                             
                                 {/* <Icon icon="ant-design:setting-filled" className='agent-profile-img-icon'/> */}
-                                <form className='agent-change-profile-form'>
-                                    <label className='agent-change-profile-input-container' htmlFor='change-profile'>
+                                <form onSubmit={(e) => onProfileChangeSubmit(e)} className='op-change-profile-form' encType='multipart/form-data'> 
+                                    <label className='op-change-profile-input-container' htmlFor='change-profile'>
                                         Change Profile Imge
-                                        <input className='agent-change-profile-input' type="file" id="change-profile"  accept="image/png, image/jpeg"></input>
+                                        <input ref={profileimgRef}  onChange={(e) => onProfileChange(e)} className='op-change-profile-input' type="file" name="profile_image"  accept="image/png, image/jpeg"></input>
+                                        <p className='chosen-img'>{profileImage && profileImage.name}</p>
                                     </label>
-        
+                                    {
+                                        profileImage ?  <div className='profile-change-btn-container'>
+                                            <button type='submit'>Change Profile</button>
+                                            <button type='button' onClick={() => onProfileCancelClicked()}>Cancel</button>
+                                            </div> : null
+                                    }
+                                
                                 </form>
         
                             

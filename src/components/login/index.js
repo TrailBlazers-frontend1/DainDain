@@ -8,16 +8,30 @@ import { useSelector , useDispatch } from 'react-redux'
 import { Icon } from '@iconify/react';
 import { login } from '../../redux/user'
 import { axiosInstance } from '../../urlConfig';
+import { Navigate, useNavigate } from 'react-router-dom'
 // import axios from 'axios'
 
 const Login = ({isLoginOpen,setIsLoginOpen}) => {
 
     const [phNo,setPhNo] = useState("")
     const [password,setPassword] = useState("")
+    const [isForgotPwOpen,setIsForgotPwOpen] = useState(false)
+
+
+    const [forgotPwPhNo,setForgotPwPhNo] = useState("")
+    const [forgotPw,setForgotPw] = useState("")
+    const [forgotConfirmPw,setForgotConfirmPw] = useState("")
+    const [isPhnoValid,setIsPhnoValid] = useState(false)
+    const [otpInput,setOtpInput] = useState("")
+    const [isOTPValid,setIsOTPValid] = useState(false)
+    const [countDownstarted,setCountDownStarted] = useState(false)
+    const [countDown, setCountDown] = useState(60)
+    const [otpRequestId, setOtpRequestId] = useState("")
 
     const {user_login} = useSelector(state => state.user)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const [language,setLanguage] = useState("myanmar")
     const options = [
@@ -40,28 +54,29 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
         try {
             const res = await axiosInstance.post("/login",userData)
             // const data = await res.data
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 200){
                 alert("login successful")
                 // console.log(data)
                 const data = res.data.user
 
-                //save token in local storage
-
-                // localStorage.setItem("auth" , res.data.access_token)
-                // localStorage.setItem("isLoggedIn" , true)
-
                 const user = {
                     id: data.id,
                     name : data.name,
                     phNo : data.phone,
-                    role: data.status,
-                    token:res.data.access_token,
+                    role: data.request_type ? data.request_type : "guest",
+                    token:res.data.token,
                     isLoggedIn:true,
                 }
 
-                localStorage.setItem("auth",JSON.stringify(user))
-                dispatch(login(user))
+                if(data.request_type === "referee"){
+                  navigate("https://www.google.com/")
+                }else{
+                  localStorage.setItem("auth",JSON.stringify(user))
+                  dispatch(login(user))
+                }
+
+               
             }else{
                 alert("Something went wrong")
             }
@@ -74,6 +89,83 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
         setIsLoginOpen(false)
     }
 
+    const getOtp = async () => {
+
+        const isPhRegistered = await axiosInstance.post("/hasPhone", {forgotPwPhNo})
+    
+        // console.log(isPhRegistered)
+      
+        if(isPhnoValid && isPhRegistered.status === 200){
+          setCountDown(60)
+          setCountDownStarted(true)
+          
+          setTimeout(() => {
+            setCountDownStarted(false)
+          },1000 * 60)
+    
+          const OtpRequest = {
+            "access-token" : "vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-",
+            "to" : forgotPwPhNo,
+            "brand_name" : "TrailBlazers",
+            "channel" : "sms",
+            "sender_name":"MC888"
+          }
+      
+          const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${forgotPwPhNo}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
+          OtpRequest})
+    
+          setOtpRequestId(otp.data.request_id)
+    
+          // if(otp.status === 200){
+          //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otp.data.request_id}&code=${otpInput}`)
+          //   console.log(res)
+          //   isOTPValid(true)
+          // }
+         
+        }else{
+          alert("Phone Number is not valid.")
+        }
+        
+        // console.log(res)
+      }
+
+      useEffect(() => {
+        if(otpInput === ""){
+          setIsOTPValid(false)
+        }else{
+          const verifyOTP =  async () => {
+            if(otpInput.length === 4){
+              const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
+              // console.log(res)
+              if(res.status ===  200){
+                setIsOTPValid(true)
+              }
+            }
+          }
+      
+          verifyOTP()
+        }
+        
+    },[otpInput])
+
+    useEffect(() => {
+    setCountDown(60)
+    if(countDownstarted){
+        let i = 60
+        const interval = setInterval(() => {
+        i = i -1
+        setCountDown(i)
+        if(i === 0){
+            // console.log("countdown end")
+            setCountDown(60)
+            clearInterval(interval);
+            return
+        }
+        // console.log(countDown)
+        },1000)
+        return () => clearInterval(interval);
+    }
+    },[countDownstarted])
     
     useEffect(() => {
         const auth = localStorage.getItem("auth")
@@ -86,6 +178,54 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             setIsLoginOpen(true)
         }
     },[])
+
+    useEffect(() => {
+        if(forgotPwPhNo.length >= 5 && forgotPwPhNo.length <= 11){
+          setIsPhnoValid(true)
+        }else{
+          setIsPhnoValid(false)
+        }
+      },[forgotPwPhNo])
+
+    const handleForgotPwSubmit = (e) => {
+        e.preventDefault()
+        // e.preventDefault()
+        if(forgotPw !== forgotConfirmPw){
+          alert("Passwords are not eqaul. Please reconfirm them.")
+        }
+        else if(!isOTPValid){
+          alert("This OTP is not valid")
+        }
+        else{
+    
+          // console.log({name,phno,password,confirmPassword})
+    
+          const userData = {
+            phone : forgotPwPhNo,
+            password : forgotPw,
+            password_confirmation : forgotConfirmPw
+          }
+    
+          try {
+            const res = axiosInstance.post("/forget-password",userData)
+            if(res.data.status === 200) {
+            //   console.log(res)
+            alert(res.data.message)
+            }
+          } catch (error) {
+            // console.log(error)
+            alert(error.message)
+          }
+    
+        //   setName("")
+          setForgotPwPhNo("")
+          setForgotPw("")
+          setForgotConfirmPw("")
+        //   setOtpFromApi("")
+          setOtpInput("")
+          setIsForgotPwOpen(false)
+        }
+    }
   return (
     <div className={isLoginOpen ? `login-outer-overlay login-open` : "login-outer-overlay login-close"}>
         <div className='login-container'>
@@ -93,7 +233,9 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                 <img src={loginimg} alt="login image" className='login-image'></img>
             </div>
 
-            <div className='login-form-container'>
+            {
+                isLoginOpen && !isForgotPwOpen && 
+                <div className='login-form-container'>
 
                 {/* <div className='login-form-header'>
                     <p className='login-logo'>LOGO</p>
@@ -126,12 +268,12 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                     </div>
 
                     <div className='remember-fogotpw-container'>
-                        <label className="remember-me-label" htmlFor='remember me'>
+                        {/* <label className="remember-me-label" htmlFor='remember me'>
                             <input type="checkbox" name='remember me'></input>
                             Remember Me
-                        </label>
+                        </label> */}
 
-                        <a href="#" className='forgotpw'>Forgot Password?</a>
+                        <p className='forgotpw' onClick={() => setIsForgotPwOpen(true)}>Forgot Password?</p>
 
                     </div>
 
@@ -140,6 +282,45 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                 </form>
 
             </div>
+            }
+
+            {
+                isLoginOpen && isForgotPwOpen &&
+                <div className='forgotpw-form-container'>
+                    <Icon icon="emojione-monotone:cross-mark-button" className='login-cross-btn forgotpw-cross-btn' onClick={() => setIsForgotPwOpen(false)}/>
+
+                    <form onSubmit={(e) => handleForgotPwSubmit(e)} className='forgotpw-form'>
+                        <div className='dai-register-phno-input-container'>
+                            <input required  value={forgotPwPhNo} onChange={(e) => setForgotPwPhNo(e.target.value)} type="tel" className="dai-phno-input"></input>
+                            <p>+95</p>
+                            <span className={isPhnoValid? "valid-message" : 'warning-message'}>{isPhnoValid? "This Phone Number is valid" : "This Phone Number is not valid"}</span>
+                        </div>
+
+                        <div className='dai-register-otp-input-container'>
+                            <p>OTP:</p>
+                            <input value={otpInput} onChange={(e) => setOtpInput(e.target.value)} required   type="number" className="dai-otp-input"></input>
+                            <span className={isOTPValid? "valid-message" : 'warning-message'}>{isOTPValid? <Icon icon="icon-park-solid:correct" className='otp-icon'/> : <Icon icon="fluent-emoji-high-contrast:cross-mark" className='otp-icon'/>}</span>
+                            {
+                                countDownstarted ? 
+                                <p className='otp-count-down'>{countDown}</p> :
+                                <button className='otp-request-btn' type='button' onClick={() => getOtp()}>Get OTP</button>
+                            }
+                            
+                        </div>
+
+                        <div className='dai-register-pw-input-container'>
+                            <input disabled={isOTPValid ? false : true} required value={forgotPw} onChange={(e) => setForgotPw(e.target.value)} type="password" className="dai-pw-input"></input>
+                            <Icon icon="ant-design:lock-outlined" className='dairegister-pw-icon'/>
+                        </div>
+                        <div className='register-confirm-pw-container'>
+                            <input disabled={isOTPValid ? false : true} required value={forgotConfirmPw} onChange={(e) => setForgotConfirmPw(e.target.value)} type="password" className='confirm-pw-input'></input>
+                            <p>Confirm Password</p>
+                        </div>
+                        <button type="submit" className='dai-register-btn'>Change Password</button>
+                    </form>
+                </div>
+            }
+           
         </div>
     </div>
   )

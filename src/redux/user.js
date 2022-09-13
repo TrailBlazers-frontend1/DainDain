@@ -8,12 +8,6 @@ import { createSlice } from '@reduxjs/toolkit'
 
 
 const initialState = {
-    user_register:{
-        name:"",
-        phNo:"",
-        password:"",
-        confirmPassword:""
-    },
     user_login:{
       id:"",
       name:"",
@@ -30,9 +24,6 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    signup: (state, action) => {
-       state.user_register = action.payload
-    },
     login:(state,action) => {
       // console.log(action.payload)
       // localStorage.setItem("auth" , JSON.stringify(action.payload))
@@ -51,6 +42,6 @@ export const userSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { signup, login, logout, promoteRole, changeUserName } = userSlice.actions
+export const { login, logout, promoteRole, changeUserName } = userSlice.actions
 
 export default userSlice.reducer

@@ -162,6 +162,7 @@
 .forgotpw{
     font-size: 0.875rem;
     color: #676974;
+    cursor: pointer;
 }
 
 .login-submit-btn{
@@ -175,4 +176,12 @@
     display: block;
     margin: auto;
     margin-top: 3.125rem;
+}
+
+.forgotpw-form-container{
+    padding: 20px;
+}
+
+.forgotpw-cross-btn{
+    margin-bottom: 40px;
 }

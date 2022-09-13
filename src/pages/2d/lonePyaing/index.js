@@ -1,6 +1,10 @@
-import React,{useState, useRef} from 'react'
+import React,{useState, useRef, useEffect} from 'react'
 import BetNowModal from '../../../components/betnowmodal'
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
+// import Pusher from 'pusher-js';
+import { pusher } from '../../../pusher'
+import {setLonePyineList} from "../../../redux/2d3dList"
+import { axiosInstance } from '../../../urlConfig'
 import "./styles.css"
 
 const LonePyaing = () => {
@@ -16,8 +20,15 @@ const LonePyaing = () => {
     const [customerName,setCustomerName] = useState("")
     const [customerPhNo,setCustomerPhNo] = useState("")
     const [customerType,setCustomerType] = useState("guest")
+
+    // const [lonePyineList,setLonePyineList] = useState([])
     const [firstNumbers,setFirstNumbers] = useState([])
     const [lastNumbers,setLastNumbers] = useState([])
+
+    const {profile} = useSelector(state => state.agent)
+    const {lonePyineList} =  useSelector(state => state.twodThreed)
+
+    const dispatch = useDispatch()
 
     const submitCustomerInfo = (e) => {
         e.preventDefault()
@@ -37,8 +48,52 @@ const LonePyaing = () => {
       return totalAmount
     }
 
-    const changeFirstNumbers = (e) => {
-        const numberString = e.target.value.toString()
+    const fetchLonePyineList = async () => {
+        try {
+            if(morning_evening.morning){
+              const morningLonePyine = await axiosInstance.get("/getLonePyaingsAM",{headers:{Authorization:`Bearer ${user_login.token}`}})
+            if(morningLonePyine.data.status === 200){
+              // console.log(res)
+              dispatch(setLonePyineList(morningLonePyine.data.lonepyines))
+            }
+            }
+    
+            if(morning_evening.evening){
+              const eveningLonepyine = await axiosInstance.get("/getLonePyaingsPM",{headers:{Authorization:`Bearer ${user_login.token}`}})
+              if(eveningLonepyine.data.status === 200){
+                // console.log(res)
+                dispatch(setLonePyineList(eveningLonepyine.data.lonepyines))
+              }
+            }
+            
+          } catch (error) {
+            alert(error.message)
+          }
+        
+  
+      }
+
+    useEffect(() => {
+        if(user_login.isLoggedIn && user_login.role === "agent"){
+
+            fetchLonePyineList()
+        // var pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+        //     cluster: process.env.REACT_APP_PUSHER_CLUSTER
+        //     });
+    
+          const channel = pusher.subscribe(`lonepyine-channel.${profile.refereeId}`);
+          channel.bind('App\\Events\\lonepyine', function(data) {
+            // alert(JSON.stringify(data));
+            dispatch(setLonePyineList(data.salesList))
+            
+            // console.log(lonePyineList)
+            // console.log("use effect ran")
+          });
+        }
+    },[])
+
+    const changeFirstNumbers = (e,lonePyine) => {
+        const numberString = e.target.value?.toString()
 
         // console.log(firstNumbers.numbers.length > 0)
         
@@ -60,8 +115,9 @@ const LonePyaing = () => {
             // newarr?.push(numberString)
             // setFirstNumbers({...firstNumbers,numbers : newarr})
             const newNumber = {
+                id:lonePyine?.id,
                 number:numberString,
-                compensation:"1.9",
+                compensation: lonePyine?.compensation,
                 amount:"1000"
             }
             setFirstNumbers([...firstNumbers,newNumber])
@@ -70,8 +126,9 @@ const LonePyaing = () => {
         // setFirstNumbers(firstNumbers)
     }
 
-    const changeSecondNumbers = (e) => {
-        const numberString = e.target.value.toString()
+    const changeSecondNumbers = (e,lonePyine) => {
+        const numberString = e.target.value.toString().split("")[1]
+        console.log(numberString)
         
         let found = false
 
@@ -88,8 +145,9 @@ const LonePyaing = () => {
         // lastNumbers.numbers = filteredArray
         if(found === false){
             const newNumber = {
+                id:lonePyine?.id,
                 number:numberString,
-                compensation:"1.9",
+                compensation:lonePyine?.compensation,
                 amount:"1000"
             }
             setLastNumbers([...lastNumbers,newNumber])
@@ -97,63 +155,63 @@ const LonePyaing = () => {
         // console.log(lastNumbers)
     }
 
-    const bigBtnFirst = () => {
-        let btnValues = ["5","6","7","8","9"]
+    // const bigBtnFirst = () => {
+    //     let btnValues = ["5","6","7","8","9"]
 
-        // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
-        setFirstNumbers({...firstNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
+    //     setFirstNumbers({...firstNumbers,numbers: btnValues})  
 
-    }
-    const smallBtnFirst = () => {
-        let btnValues = ["0","1","2","3","4"]
+    // }
+    // const smallBtnFirst = () => {
+    //     let btnValues = ["0","1","2","3","4"]
 
-        // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
-        setFirstNumbers({...firstNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
+    //     setFirstNumbers({...firstNumbers,numbers: btnValues})  
 
-    }
-    const maBtnFirst = () => {
-        let btnValues = ["1","3","5","7","9"]
+    // }
+    // const maBtnFirst = () => {
+    //     let btnValues = ["1","3","5","7","9"]
 
-        // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
-        setFirstNumbers({...firstNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
+    //     setFirstNumbers({...firstNumbers,numbers: btnValues})  
 
-    }
-    const setBtnFirst = () => {
-        let btnValues = ["0","2","4","6","8"]
+    // }
+    // const setBtnFirst = () => {
+    //     let btnValues = ["0","2","4","6","8"]
 
-        // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
-        setFirstNumbers({...firstNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !firstNumbers.numbers.includes(val))
+    //     setFirstNumbers({...firstNumbers,numbers: btnValues})  
 
-    }
+    // }
 
-    const bigBtnLast = () => {
-        let btnValues = ["5","6","7","8","9"]
+    // const bigBtnLast = () => {
+    //     let btnValues = ["5","6","7","8","9"]
 
-        // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
-        setLastNumbers({...lastNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
+    //     setLastNumbers({...lastNumbers,numbers: btnValues})  
 
-    }
-    const smallBtnLast = () => {
-        let btnValues = ["0","1","2","3","4"]
+    // }
+    // const smallBtnLast = () => {
+    //     let btnValues = ["0","1","2","3","4"]
 
-        // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
-        setLastNumbers({...lastNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
+    //     setLastNumbers({...lastNumbers,numbers: btnValues})  
 
-    }
-    const maBtnLast = () => {
-        let btnValues = ["1","3","5","7","9"]
+    // }
+    // const maBtnLast = () => {
+    //     let btnValues = ["1","3","5","7","9"]
 
-        // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
-        setLastNumbers({...lastNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
+    //     setLastNumbers({...lastNumbers,numbers: btnValues})  
 
-    }
-    const setBtnLast = () => {
-        let btnValues = ["0","2","4","6","8"]
+    // }
+    // const setBtnLast = () => {
+    //     let btnValues = ["0","2","4","6","8"]
 
-        // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
-        setLastNumbers({...lastNumbers,numbers: btnValues})  
+    //     // btnValues = btnValues.filter(val => !lastNumbers.numbers.includes(val))
+    //     setLastNumbers({...lastNumbers,numbers: btnValues})  
 
-    }
+    // }
 
     //one number row start
     const firstNumberRow = () => {
@@ -162,7 +220,7 @@ const LonePyaing = () => {
             rowarray.push(
                 <div className='onenumber-1stone-number-btn-container'>
                     <p>{i}</p>
-                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} value={i} onClick={(e) => { changeFirstNumbers(e)}} type="checkbox" name="onenumber number"
+                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} value={i} onClick={(e) => { changeFirstNumbers(e,lonePyineList[i])}} type="checkbox" name="onenumber number"
                     className={
                         firstNumbers.some((number) => {
                           if(number.number === i.toString()) {
@@ -178,14 +236,14 @@ const LonePyaing = () => {
     }
     const lastNumberRow = () => {
         const rowarray = []
-        for(let i = 0;i <= 9; i++){
+        for(let i = 10;i <= 19; i++){
             rowarray.push(
                 <div className='onenumber-1stone-number-btn-container'>
-                    <p>{i}</p>
-                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} value={i} onClick={(e) =>  changeSecondNumbers(e)} type="checkbox" name="onenumber number"
+                    <p>{i.toString().split("")[1]}</p>
+                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} value={i} onClick={(e) =>  changeSecondNumbers(e,lonePyineList[i])} type="checkbox" name="onenumber number"
                     className={
                         lastNumbers.some((number) => {
-                          if(number.number === i.toString()) {
+                          if(number.number === i.toString().split("")[1]) {
                             return true
                           }
                         }) ? "checked" : null
@@ -198,12 +256,15 @@ const LonePyaing = () => {
     }
 
     const submitLonePyaing = () => {
-
+        const totalLonePyineAmount = totalAmount()
         if(customerName === "" || customerPhNo === ""){
             alert("Please Provide Customer Name and Phone Number")
         }else if(firstNumbers.length === 0 && lastNumbers.length === 0){
             alert("Please Bet on a number")
-        }else{
+        }else if(profile.coin_amount < totalLonePyineAmount){
+            alert("Not Enough Coins")
+          }
+        else{
             // console.log(firstNumbers,lastNumbers)
             setIsBetNowModalOpen(true)
         }
@@ -308,6 +369,7 @@ const LonePyaing = () => {
     customerName={customerName} customerPhno={customerPhNo} customerType={customerType}
     firstNumbers={firstNumbers} setFirstNumbers={setFirstNumbers}
     lastNumbers={lastNumbers} setLastNumbers={setLastNumbers}
+    lonePyineList={lonePyineList}
 
     />
     <div className='onenumber-parent-container'>
@@ -319,7 +381,7 @@ const LonePyaing = () => {
         <div className='onenumber-header-container'>
             <div className='onenumber-header-washrate'>
                 <p className='onenumber-header'>Lone Pyaing</p>
-                <p className='onenumber-washrate'>wash rate   1.9</p>
+                <p className='onenumber-washrate'>Compensation   8.0</p>
             </div>
             <p className='onenumber-description'>Description</p>
         </div>

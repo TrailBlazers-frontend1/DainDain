@@ -10,14 +10,17 @@ import { Link } from 'react-router-dom'
 import { useSelector , useDispatch } from 'react-redux'
 import { logout } from '../../redux/user'
 import { setAgentProfile } from '../../redux/agent' 
+import { pusher } from '../../pusher'
 
 import {useNavigate} from "react-router-dom"
 
 import { Icon } from '@iconify/react';
 import { axiosInstance } from '../../urlConfig'
+import { changeLangauge } from '../../redux/langauge'
+import { setRefereeProfile } from '../../redux/refereeProfile'
 
 const Header = () => {
-    const [language,setLanguage] = useState("myanmar")
+    // const [language,setLanguage] = useState("english")
     const [isLoginOpen,setIsLoginOpen] = useState(false)
     const [isDaiRegOpen,setIsDaiRegOpen] = useState(false)
     const [isProfileLinkIconOpen,setIsProfileLinkIconOpen] = useState(false)
@@ -25,42 +28,70 @@ const Header = () => {
 
     const {user_login} = useSelector(state => state.user)
     const {profile} = useSelector(state => state.agent)
+    const {refereeProfile} = useSelector(state => state.refereeProfile)
+    const {current_language} = useSelector(state => state.language)
 
     const navigate = useNavigate()
     
 
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        if(user_login.isLoggedIn && user_login.role === "agent"){
-
-        
-        const fetchAgentProfile = async () => {
+    const fetchAgentProfile = async () => {
+        try {
             const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
 
+                // console.log(res)
+                if(res.data.status === 200){
+                    const agent = {
+                        id:res.data.agent.id,
+                        image:res.data.agent.image,
+                        coin_amount:res.data.agent.cashincashout.coin_amount,
+                        commission:res.data.agent.commision,
+                        refereeId: res.data.agent.referee_id,
+                        twod_sale_list:res.data.twod_lists,
+                        threed_sale_list:res.data.threed_lists,
+                        lonepyine_sale_list:res.data.lonepyaing_lists,
+                    }
+
+                    dispatch(setAgentProfile(agent))
+
+                    // console.log(profile)
+                }
+        } catch (error) {
+            alert(error.message)
+        }
+        
+    }
+
+    const fetchRefereeProfile =  async ()=>{
+        try {
+            const res = await axiosInstance.get("/referee",{headers:{Authorization:`Bearer ${user_login.token}`}})
             console.log(res)
             if(res.data.status === 200){
-                const agent = {
-                    image:res.data.user.image,
-                    coin_amount:res.data.user.coin_amount,
-                    commission:res.data.user.commision,
-                    twod_sale_list:res.data.twod_saleLists,
-                    threed_sale_list:res.data.threed_salelists,
-                    lonepyine_sale_list:res.data.lonepyaing_salelists,
-                }
-
-                dispatch(setAgentProfile(agent))
-
-                console.log(profile)
+                dispatch(setRefereeProfile(res.data.referee))
             }
+        } catch (error) {
+            alert(error.message)
         }
+     
+    }
+
+    useEffect(() => {
+        if(user_login.isLoggedIn && user_login.role === "agent"){        
 
         fetchAgentProfile()
+        fetchRefereeProfile()
+
+        const channel = pusher.subscribe(`channel-name.${profile.refereeId}`);
+        channel.bind('App\\Events\\Notify', function(data) {
+        
+          alert(data)
+         
+        });
 
     }
-    
             
-    },[user_login])
+    },[])
 
     const options = [
         {label : "Myanmar", value:"myanmar"},
@@ -68,21 +99,27 @@ const Header = () => {
     ]
 
     const handleChange = (e) => {
-        setLanguage(e.target.value)
+        // setLanguage(e.target.value)
+        // console.log(language)
+        dispatch(changeLangauge(e.target.value))
     }
 
     const handleUserLogout = async () => {
         // {headers:{Authorization:`Bearer ${user_login.token}`}}
-        const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
+        try {
+            const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
 
-        // console.log(res)
-        if(res.data.status === 200){
-            alert(res.data.message)
-            dispatch(logout())
-            localStorage.removeItem("auth")
-            
-            navigate("/")
+            if(res.data.status === 200){
+                alert(res.data.message)
+                dispatch(logout())
+                localStorage.removeItem("auth")
+                
+                navigate("/")
+            }
+        } catch (error) {
+            alert(error.message)
         }
+        
         
     }
 
@@ -105,11 +142,11 @@ const Header = () => {
             <div className='header-content-container'>
                 <div className='language-container'>
                     <div className='flag-container'>
-                        <img src={language === "myanmar" ? myanmarflag : englandflag} alt="myanmar"/>
+                        <img src={current_language === "myanmar" ? myanmarflag : englandflag} alt="myanmar"/>
                     </div>
                     <Dropdown
                     options={options}
-                    value={language}
+                    value={current_language}
                     handleChange={handleChange}
                     color={"white"}
                     />
@@ -120,7 +157,7 @@ const Header = () => {
                         user_login.isLoggedIn ? <>
                         {
                             user_login.role === "agent" && <>
-                            <p className='agent-remaining-amount'>{agentRemaining ? agentRemaining : 0}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
+                            <p className='agent-remaining-amount'>{profile.coin_amount}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
                             <p className='agent-comission'>Comission : {profile?.commission}</p>
                             <p className='user-name'>
                                 {user_login.name}
@@ -136,22 +173,30 @@ const Header = () => {
                             </p>
                             <Link to="/viewreferee" className='agent-refree-profile-icon-container'>
                                 <img src={refreeprofile}/>
-                                <div className='active-dot'></div>
+                                {
+                                    refereeProfile.is_online === 1 && <div className='active-dot'></div>
+                                }
+                                
                             </Link>
                             </> 
                             
                             
                         }
                         {
-                            user_login.role === "operation staff" && <>
+                            user_login.role === "operationstaff" && <>
                                 <p to = "/opprofile" className='user-name'>
                                     {user_login.name}
                                     <span>({user_login.role})</span>
-                                    <Link className='profile-link'  to="/opprofile">
-                                        <Icon icon="ant-design:setting-filled" className='profile-link-icon'/>
-                                    </Link>
+                                    <div className= "profile-link" >
+                                    <Icon icon="ant-design:setting-filled" className='profile-link-icon' onClick={() => handleProfileCLicked()}/>
+
+                                        <div className={isProfileLinkIconOpen ? "profile-dropdown-container profile-link-open" : "profile-dropdown-container profile-link-close"}>
+                                            <Link to="/opprofile">Profile</Link>
+                                            <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                                        </div>
+                                    </div>
                                     </p>
-                                    <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                                    {/* <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button> */}
                             </>
                         }
                         {
@@ -169,7 +214,13 @@ const Header = () => {
                     }
                     
                 </div>
+                    {/* <br></br> */}
+                
             </div>
+            {
+                    user_login.isLoggedIn && user_login.role === "agent" &&
+                    <p className='referee-remark'>Referee's Remark : {refereeProfile.remark}</p>
+                }
         </div>
     </>
   )

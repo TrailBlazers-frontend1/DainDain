@@ -27,12 +27,25 @@ const AgentProfile = () => {
 
    
 
-    const onProfileChangeSubmit = (e) => {
+    const onProfileChangeSubmit =async (e) => {
         e.preventDefault()
     //    console.log(profileImage)
         const formData = new FormData();
-        formData.append("" , profileImage)
-
+        formData.append("profile_image" , profileImage)
+        formData.append("name" , agentName)
+        // console.log(formData.get("profile_image"))
+        try {
+            const res =await  axiosInstance.post("/profile-update",
+            formData,
+            {headers:{Authorization:`Bearer ${user_login.token}`}})
+            if(res.data.status === 200){
+                alert(res.data.message)
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+       
+        
     }
 
     const handleUserNameChangeCancel = () => {
@@ -48,8 +61,8 @@ const AgentProfile = () => {
 
     const onProfileCancelClicked = () => {
         profileimgRef.current.value = null
-        // setProfileImage()
-        console.log(profileimgRef)
+        setProfileImage()
+        // console.log(profileimgRef)
     }
 
     const handleUserNameChangeConfirm = async () => {
@@ -62,13 +75,14 @@ const AgentProfile = () => {
         // console.log(res)
         if(res.data.status === 200){
             alert(res.data.message)
-            const newName = res.data.data.name
+            const newName = res.data.agent.user.name
             // console.log(newName)
             // dispatch(changeName(newName))
             dispatch(changeUserName(newName))
-        }
+        // }
         setAgentName(user_login.name)
     }
+}
 
     
 
@@ -86,10 +100,10 @@ const AgentProfile = () => {
 
                     
                         {/* <Icon icon="ant-design:setting-filled" className='agent-profile-img-icon'/> */}
-                        <form onSubmit={(e) => onProfileChangeSubmit(e)} className='agent-change-profile-form'>
+                        <form onSubmit={(e) => onProfileChangeSubmit(e)} className='agent-change-profile-form' encType='multipart/form-data'> 
                             <label className='agent-change-profile-input-container' htmlFor='change-profile'>
                                 Change Profile Imge
-                                <input ref={profileimgRef}  onChange={(e) => onProfileChange(e)} className='agent-change-profile-input' type="file" id="change-profile"  accept="image/png, image/jpeg"></input>
+                                <input ref={profileimgRef}  onChange={(e) => onProfileChange(e)} className='agent-change-profile-input' type="file" name="profile_image"  accept="image/png, image/jpeg"></input>
                                 <p className='chosen-img'>{profileImage && profileImage.name}</p>
                             </label>
                             {
@@ -146,7 +160,7 @@ const AgentProfile = () => {
                         <div className='agent-transaction-history-rows-container'>
 
                             {
-                                profile.twod_sale_list.map((list) => (
+                                profile.twod_sale_list?.map((list) => (
                                     <div className='agent-transaction-history-row'>
                                         <p>{list.customer_name}</p>
                                         <p>{list.customer_phone}</p>
@@ -154,11 +168,11 @@ const AgentProfile = () => {
                                         <p>{list.twod.compensation}</p>
                                         <p>{list.sale_amount}ks</p>
                                         {
-                                        list.status === 1 &&
+                                        list.status === '1' &&
                                         <p className='agent-transaction-accepted'>Accepted</p>
                                         }
                                         {
-                                             list.status === 2 &&
+                                             list.status === '2' &&
                                              <p className='agent-transaction-declined'>Declined</p>
                                         }
                                         
@@ -189,19 +203,19 @@ const AgentProfile = () => {
                         <div className='agent-transaction-history-rows-container'>
 
                         {
-                                profile.lonepyine_sale_list.map((list) => (
+                                profile.lonepyine_sale_list?.map((list) => (
                                     <div className='agent-transaction-history-row'>
                                         <p>{list.customer_name}</p>
                                         <p>{list.customer_phone}</p>
-                                        <p>{list.lonepyaing.number}</p>
-                                        <p>{list.lonepyaing.compensation}</p>
+                                        <p>{list.lonepyine.number}</p>
+                                        <p>{list.lonepyine.compensation}</p>
                                         <p>{list.sale_amount}ks</p>
                                         {
-                                        list.status === 1 &&
+                                        list.status === '1' &&
                                         <p className='agent-transaction-accepted'>Accepted</p>
                                         }
                                         {
-                                             list.status === 2 &&
+                                             list.status === '2' &&
                                              <p className='agent-transaction-declined'>Declined</p>
                                         }
                                         
@@ -229,7 +243,7 @@ const AgentProfile = () => {
                         <div className='agent-transaction-history-rows-container'>
 
                         {
-                                profile.threed_sale_list.map((list) => (
+                                profile.threed_sale_list?.map((list) => (
                                     <div className='agent-transaction-history-row'>
                                         <p>{list.customer_name}</p>
                                         <p>{list.customer_phone}</p>
@@ -237,11 +251,11 @@ const AgentProfile = () => {
                                         <p>{list.threed.compensation}</p>
                                         <p>{list.sale_amount}ks</p>
                                         {
-                                        list.status === 1 &&
+                                        list.status === '1' &&
                                         <p className='agent-transaction-accepted'>Accepted</p>
                                         }
                                         {
-                                             list.status === 2 &&
+                                             list.status === '2' &&
                                              <p className='agent-transaction-declined'>Declined</p>
                                         }
                                         

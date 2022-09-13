@@ -26,6 +26,7 @@ import {axiosInstance} from "./urlConfig"
 import {logout} from "./redux/user"
 
 import {useNavigate} from "react-router-dom"
+import Pusher from 'pusher-js';
 
 function App(){
   return (
@@ -36,6 +37,8 @@ function App(){
 }
 
 function ParentRouter() {
+
+  const [error,setError] = useState(null)
 
   const navigate = useNavigate()
 
@@ -62,27 +65,46 @@ function ParentRouter() {
 
   // useEffect(() => {},[])
 
-  axiosInstance.interceptors.response.use(function(response){
-    return response
-  }, function(error) {
-    // const dispatch = useDispatch()
-    if(error.response.status === 500){
-      alert("Something went wrong. Please log in again.")
-      dispatch(logout())
-      localStorage.removeItem("auth")
-      navigate("/")
-    // console.log(error)
-    }
-    
-  })
+  
 
+  useEffect(() => {
+    axiosInstance.interceptors.response.use(function(response){
+      // checkJwt()
+      if(response.data.status === 401){
+        navigate("/")
+        localStorage.removeItem("auth")
+        dispatch(logout())
+        alert("Unauthorized")
+      }
+      return response
+    }, function(error) {
+      // const dispatch = useDispatch()
+      if(error.response ){
+        navigate("/")
+        localStorage.removeItem("auth")
+        dispatch(logout())
+        alert("Something went wrong. Please log in again.")
+      // console.log(error)
+      // return
+      }
+
+      return Promise.reject(error);
+    })
+  },[])
+
+
+  // useEffect(() => {
+  //   let pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
+  //     cluster: process.env.REACT_APP_PUSHER_CLUSTER
+  //   });
+  // },[])
 
   useEffect(() => {
     checkJwt()
 
-    // const token = localStorage.getItem("auth") ? localStorage.getItem("auth") : null
-    // console.log(token)
     threeDCountDown()
+
+    
     const intervalId = setInterval(()=>{
 
       //check whether it is morning round or evening round
@@ -115,7 +137,7 @@ function ParentRouter() {
         // console.log("evening")
         dispatch(changeRound("evening"))
         var now = new Date();
-        var endTime2 = "16:00:00"
+        var endTime2 = "24:00:00"
         
         //get the end time
         var e2 =  endTime2.split(':');

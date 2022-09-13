@@ -20,24 +20,29 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
     if(remark !== "" && role!==""){
 
       e.preventDefault()
-      console.log(user_login.phNo,remark,role,refreeId,opstaffId,user_login.token)
+      // console.log(user_login.phNo,remark,role,refreeId,opstaffId,user_login.token)
+      try {
+        const res = await axiosInstance.post("/request-promotion",{
+          phone: user_login.phNo,
+          request_type: role,
+          referee_code : refreeId,
+          operationstaff_code : opstaffId,
+        },{headers:{Authorization:`Bearer ${user_login.token}`}})
 
+        if(res.data.status === 200){
+         
+          alert(res.data.message)
+        }
+
+        // dispatch(promoteRole(role))
+
+      } catch (error) {
+        alert(error.message)
+      }
+      
       
 
-      // dispatch(promoteRole(role))
-      const res = await axiosInstance.post("/request-promotion",{
-        phone: user_login.phNo,
-        request_type: role,
-        remark : remark,
-        referee_id : refreeId,
-        operationstaff_id : opstaffId,
-      },{headers:{Authorization:`Bearer ${user_login.token}`}})
-
-      console.log(res)
-
-      if(res.status === 200){
-        dispatch(promoteRole(role))
-      }
+      // console.log(res)
 
       // setPhno("")
       setRemark("")
@@ -68,20 +73,21 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
               <p>Choose a role</p>
               <select required value={role} onChange={(e) => setRole(e.target.value)} name="roles" id="roles">
                 <option value="" selected>Select a Role</option>
-                <option value="refree">Refree</option>
+                <option value="referee">Referee</option>
+                <option value="operationstaff">Operation Staff</option>
                 <option value="agent">Agent</option>
               </select>
             </div>
 
             {
-              role === "refree" && <div className='opstaff-id-input-container'>
+              role === "referee" && <div className='opstaff-id-input-container'>
                 <p>Operation Staff ID:</p>
                 <input value={opstaffId} onChange={(e) => setOpstaffId(e.target.value)} required type="text"></input> 
               </div>
             }
             {
               role === "agent" && <div className='refree-id-input-container'>
-                <p>Refree ID:</p>
+                <p>Referee ID:</p>
                 <input value={refreeId} onChange={(e) => setRefreeId(e.target.value)} required type="text"></input> 
               </div>
             }

@@ -8,6 +8,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 40px;
 }
 
 .winners-filters-container{
@@ -55,17 +56,43 @@
 }
 
 .winners-details-labels-container{
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
     margin-top: 30px;
     margin-bottom: 10px;
+    /* width: 100%; */
 }
 
-.winners-details-labels-container p{
-    font-weight: 500;
+.winners-details-labels-container th{
+   width: 16%;
+   text-align: start;
 }
+/* .winners-details-labels-container th{
+   width: calc(100%/7);
+   text-align: start;
+}
+.winners-details-labels-container th{
+   width: calc(100%/7);
+   text-align: start;
+}
+.winners-details-labels-container th{
+   width: calc(100%/7);
+   text-align: start;
+}
+.winners-details-labels-container th{
+   width: calc(100%/7);
+   text-align: start;
+}
+.winners-details-labels-container th{
+   width: calc(100%/7);
+   text-align: start;
+}
+.winners-details-labels-container th{
+   width: calc(100%/7);
+   text-align: start;
+} */
 
-.winners-details-labels-container p:nth-child(1){
+/* .winners-details-labels-container p:nth-child(1){
     margin-left: 20px;
 }
 .winners-details-labels-container p:nth-child(2){
@@ -85,30 +112,46 @@
 }
 .winners-details-labels-container p:nth-child(7){
     margin-left: 180px;
-}
+} */
 
-.winners-details-container{
-    width: 100%;
+.winners-details-rows-container{
     height: 300px;
     border: 2px solid var(--primary-color);
-    border-radius: 15px;
+    border-radius: 15px; 
     overflow-y: scroll;
     padding: 15px;
+    margin-top: 60px;
+}
+
+.winners-details-row{
+    /* width: 100%; */
+    /* height: 300px; */
+    /* border: 2px solid var(--primary-color);
+    border-radius: 15px; */
+    /* overflow-y: scroll;
+    padding: 15px; */
 }
 
 
 
-.winners-details-rows{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.winners-details-row{
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: space-between; */
+    /* width: 100%;
+    height: 40px; */
 }
 
-.winners-details-rows p:not(:first-child){
+.winners-details-row p:not(:first-child){
     margin-top: 20px;
 }
 
-.winners-details-rows p:nth-child(1){
+.winners-details-row td{
+    width: 16%;
+   text-align: start;
+}
+
+/* .winners-details-rows p:nth-child(1){
     width: 140px;
 }
 
@@ -129,7 +172,7 @@
 }
 .winners-details-rows p:nth-child(7){
     width: 70px;
-}
+} */
 
 
 .transaction-parent-container{
@@ -192,11 +235,26 @@
     margin-top: 40px;
 }
 
-.twod-sale-day-book-parent-container > p{
+/* .twod-sale-day-book-parent-container > p{
     font-size: 20px;
     font-weight: 600;
     margin-bottom: 20px;
+} */
+
+.twod-sale-day-book-header-container{
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.twod-sale-day-book-header-container > p{
+    font-size: 20px;
+    font-weight: 600;
+    /* margin-bottom: 20px; */
+}
+
+
 
 .twod-day-sale-book-row-container:not(:first-child){
     margin-top: 30px;
@@ -214,7 +272,7 @@
     font-weight: 500;
 }
 
-.twod-sale-day-book-label-container p:nth-child(2){
+/* .twod-sale-day-book-label-container p:nth-child(2){
     margin-left: 90px;
 }
 .twod-sale-day-book-label-container p:nth-child(3){
@@ -237,7 +295,7 @@
 }
 .twod-sale-day-book-label-container p:nth-child(9){
     margin-left: 120px;
-}
+} */
 
 .twod-day-sale-book-rows-container{
     width: 100%;
@@ -253,7 +311,7 @@
     justify-content: space-between;
 }
 
-.twod-day-sale-book-row p:nth-child(1){
+/* .twod-day-sale-book-row p:nth-child(1){
     width: 15px;
 }
 .twod-day-sale-book-row p:nth-child(2){
@@ -261,7 +319,7 @@
 }
 .twod-day-sale-book-row p:nth-child(3){
     width: 30px;
-}
+} */
 
 .twod-day-sale-book-row-detail-column p:not(:first-child, .twod-day-sale-book-seperate-row){
     margin-top: 10px;
@@ -271,10 +329,10 @@
     width: 60px;
 }
 
-.twod-day-sale-book-row-name-column{
+/* .twod-day-sale-book-row-name-column{
     width: 120px;
     
-}
+} */
 
 /* .twod-day-sale-book-row-name-column p{
     white-space: wrap;
@@ -317,7 +375,7 @@
     
 
 
-    .twod-sale-day-book-label-container p:nth-child(5){
+    /* .twod-sale-day-book-label-container p:nth-child(5){
         margin-left: 130px;
     }
     .twod-sale-day-book-label-container p:nth-child(6){
@@ -355,5 +413,5 @@
     }
     .winners-details-labels-container p:nth-child(7){
         margin-left: 180px;
-    }
+    } */
 }

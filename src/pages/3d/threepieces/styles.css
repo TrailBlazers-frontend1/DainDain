@@ -257,5 +257,22 @@
     background-color: var(--secondary-color);
     margin: auto;
     display: block;
-    margin-top: 3.875rem;
+    margin-top: 30px;
+}
+
+.threepieces-R-counter{
+    display: flex;
+    margin: 30px 0;
+    align-items: center;
+}
+
+.threepieces-R-counter p{
+    font-size: 1.125rem;
+    font-weight: 300;
+    margin-right: 80px;
+}
+
+.threepieces-R-counter input{
+    width: 15px;
+    height: 15px;
 }
