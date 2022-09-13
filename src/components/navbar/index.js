@@ -13,6 +13,8 @@ const Navbar = () => {
   const [isNotiOpen,setIsNotiOpen] = useState(false)
 
   const {user_login} = useSelector(state => state.user)
+  const {current_language} = useSelector(state => state.language)
+  // console.log(current_language)
   
   return (
     <>
@@ -23,21 +25,21 @@ const Navbar = () => {
         <p className="logo">LOGO</p>
 
         <div className='navbar-links-container'>
-          <Link to="/">Main Page</Link>
+          <Link to="/">{current_language === "english" ? "Main Page" : "ပင်မ"}</Link>
           {
-            user_login.role === "operation staff" ? <Link to = "/refreerequests">Refree Requests</Link> :
+            user_login.role === "operationstaff" ? <Link to = "/refreerequests">Refree Requests</Link> :
               <>
-              <Link to="/2d">2D</Link>
-              <Link to="/3d">3D</Link>
+              <Link to="/2d">{current_language === "english" ? "2D" : "၂လုံး"}</Link>
+              <Link to="/3d">{current_language === "english" ? "3D" : "၃လုံး"}</Link>
               {
                 user_login.role === "agent" ? <> 
-                <Link to ="/transaction">Transaction</Link> 
-                <Link to="/sale">Sale</Link>
+                <Link to ="/transaction">{current_language === "english" ? "Transaction" : "‌ငွေလွှဲခြင်း"}</Link> 
+                <Link to="/sale">{current_language === "english" ? "Sale" : "အ‌ေ"}</Link>
                 </>: null
               }
               </>
           }
-          
+           
         </div>
         <div className='navbar-btn-container'>
           {

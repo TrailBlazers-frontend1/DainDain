@@ -7,9 +7,11 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     profile : {
+      id:"",
       image:"",
       coin_amount:"",
       commission:"",
+      refereeId:"",
       twod_sale_list:[],
       threed_sale_list:[],
       lonepyine_sale_list:[],

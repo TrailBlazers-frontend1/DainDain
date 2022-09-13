@@ -84,6 +84,7 @@
     /* left: -200px; */
     /* bottom: 0; */
     top: 40px;
+    z-index: 2;
 }
 
 .noti-dropdown-header{

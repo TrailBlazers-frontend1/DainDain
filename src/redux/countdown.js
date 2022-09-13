@@ -12,7 +12,7 @@ export const isMorningOrEvening = () => {
     var startTime1 = '06:00:00';
     var endTime1 = '11:30:00';
     var startTime2 = "12:30:00";
-    var endTime2 = "16:00:00"
+    var endTime2 = "24:00:00"
 
     if(dt.getDay() === 6 || dt.getDay() === 7){
       isMorningRound = false
@@ -43,17 +43,27 @@ export const isMorningOrEvening = () => {
 
 export const threeDCountDown = () => {
   const now = new Date()
-  const date1 = new Date(now.getFullYear(),now.getMonth(),16)
-  const date2 = new Date(now.getFullYear(),now.getMonth() + 1,0)
-  // console.log(date1,date2)
+  const date1 = new Date(now.getFullYear(),now.getMonth(),16,14)
+  const date2 = new Date(now.getFullYear(),now.getMonth() + 1,1,14)
+
+  const A = new Date(now.getFullYear(),now.getMonth(),1,14)
+  const B = new Date(now.getFullYear(),now.getMonth()-1,16,14)
+  // console.log(date1,date2,A,B)
+  // console.log(now)
   let diffInTime
-  if(now.getDate() < 16){
-    diffInTime = date1.getTime() - now.getTime()
-    // console.log(diffInTime)
+  if(now < date1){
+    if(now < A){
+      diffInTime = A - now.getTime()
+    }else{
+      diffInTime = date1.getTime() - now.getTime()
+    }   
+    // console.log('round1')
   }
-  if(now.getDate() > 16){
+
+  //round 2
+  if(now > date1){
     diffInTime = date2.getTime() - now.getTime()
-    // console.log(diffInTime)
+    // console.log("round2")
   }
   let diffInDays = Math.floor(diffInTime / (1000 * 3600 * 24))
   let diffinHours = Math.floor((diffInTime / (1000* 3600)) % 24)

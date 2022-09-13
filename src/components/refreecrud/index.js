@@ -3,8 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import "./styles.css"
 import { Icon } from '@iconify/react';
 import { addRefree, editRefree } from '../../redux/refree';
+import { axiosInstance } from '../../urlConfig';
 
-const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, setIsEditRefree, editRefreeId,setEditRefreeId}) => {
+const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, setIsEditRefree, editRefreeId,setEditRefreeId,setRefereeRequests,setRefereeLists}) => {
 
     const [addRefreePhNo,setAddRefreePhNo] = useState("")
     const [addRefreeName,setAddRefreeName] = useState("")
@@ -13,6 +14,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
 
     // const refreeName = editRefreeData.name
 
+    const {user_login} =  useSelector(state => state.user)
     const {refree_list} = useSelector(state => state.refree)
 
     const dispatch = useDispatch()
@@ -21,6 +23,24 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
     const [editRefreeName,setEditRefreeName] = useState("")
     const [editRefreepw,setEditRefreepw] = useState("")
     const [editRefreeConfirmpw,setEditRefreeConfirmpw] = useState("")
+
+    const fetchRefereeRequests = async () => {
+        try {
+            const requests =await axiosInstance.get('/referee-requests',{headers:{Authorization:`Bearer ${user_login.token}`}})
+            const referees = await axiosInstance.get("/showreferees",{headers:{Authorization:`Bearer ${user_login.token}`}})
+            console.log(requests)
+            console.log(referees)
+            if(requests.data.status === 200){
+                setRefereeRequests(requests.data.referee_requests)
+            }
+            if(referees.data.status === 200){
+                setRefereeLists(referees.data.referees)
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+       
+    }
 
     useEffect(() => {
         const editRefree = refree_list.find((refree) => refree.id === editRefreeId)
@@ -58,18 +78,36 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
         dispatch(addRefree(newRefree))
     }
 
-    const submitEditRefree = (e) => {
+    const submitEditRefree =async (e) => {
         e.preventDefault()
         // console.log(editRefreePhNo,editRefreeName,editRefreepw,editRefreeConfirmpw)
+        console.log(editRefreeId, editRefreeName)
+        
+        try {
+            const res =await axiosInstance.post(`referees/${editRefreeId}`,{
+                name : editRefreeName
+            },{headers:{Authorization:`Bearer ${user_login.token}`}})
 
-        const newRefree = {
-            id: editRefreeId,
-            name:editRefreeName,
-            PhNo:editRefreePhNo,
-
+           if(res.data.status === 200){
+            alert(res.data.message)
+            fetchRefereeRequests()
+           }
+        } catch (error) {
+            alert(error.message)
         }
 
-        dispatch(editRefree(newRefree))
+        setIsEditRefree(false)
+
+        
+
+        // const newRefree = {
+        //     id: editRefreeId,
+        //     name:editRefreeName,
+        //     PhNo:editRefreePhNo,
+
+        // }
+
+        // dispatch(editRefree(newRefree))
     }
 
 
@@ -121,25 +159,25 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
                         <Icon icon="emojione-monotone:cross-mark-button" className='refree-crud-close-icon' onClick={() => refreeEditClose()}/>
                     </div>
         
-                    <div className='refree-crud-phno-input-container'>
+                    {/* <div className='refree-crud-phno-input-container'>
                         <input value={editRefreePhNo} onChange={(e) => setEditRefreePhNo(e.target.value)} placeholder='0912345678'  required  type="tel" className="refree-crud-phno-input"></input>
                         <p>+95</p>
-                    </div>
+                    </div> */}
                     <div className='refree-crud-name-input-container'>
                         <input value={editRefreeName} onChange={(e) => setEditRefreeName(e.target.value)} required  type="text" className="refree-crud-name-input"></input>
                         <p>Name</p>
                     </div>
 
-                    <div className='refree-crud-pw-input-container'>
+                    {/* <div className='refree-crud-pw-input-container'>
                         <input value={editRefreepw} onChange={(e) => setEditRefreepw(e.target.value)}   type="password" className="refree-crud-pw-input"></input>
                         <Icon icon="ant-design:lock-outlined" className='refree-crud-pw-icon'/>
                         
-                    </div>
+                    </div> */}
         
-                    <div className='refree-crud-confirm-pw-container'>
+                    {/* <div className='refree-crud-confirm-pw-container'>
                         <input value={editRefreeConfirmpw} onChange={(e) => setEditRefreeConfirmpw(e.target.value)}   type="password" className='refree-crud-confirm-pw-input'></input>
                         <p>Confirm Password</p>
-                    </div>
+                    </div> */}
         
                     <button type="submit" className='refree-crud-submit-btn'>{title}</button>
                 </form>

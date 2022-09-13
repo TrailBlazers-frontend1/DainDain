@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import "./styles.css"
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
@@ -8,10 +8,39 @@ import { Icon } from '@iconify/react';
 import {Navigate} from "react-router-dom"
 
 import {useSelector} from "react-redux"
+import { axiosInstance } from '../../urlConfig'
 
 const ViewRefree = () => {
 
+    const [refereeName,setRefereeName] = useState("")
+    const [refereeImage,setRefereeImage] = useState("")
+    const [refereeId,setRefereeId] = useState("")
+    const [refereePhone,setRefereePhone] = useState("")
+
     const {user_login} = useSelector(state => state.user)
+
+    const fetchRefereeProfile =  async ()=>{
+        try {
+            const res = await axiosInstance.get("/referee",{headers:{Authorization:`Bearer ${user_login.token}`}})
+            // console.log(res)
+            if(res.data.status === 200){
+                setRefereeName(res.data.referee.user.name)
+                setRefereePhone(res.data.referee.user.phone)
+                setRefereeId(res.data.referee.referee_code)
+            }
+        } catch (error) {
+            alert(error.message)
+        }
+     
+    }
+
+
+    useEffect(() => {
+        if(user_login.isLoggedIn && user_login.role === "agent"){ 
+            fetchRefereeProfile()
+        }    
+       
+    },[])
 
     if(user_login.isLoggedIn && user_login.role === "agent"){
         return (
@@ -41,17 +70,17 @@ const ViewRefree = () => {
                     
             
                     <>
-                        <p>Referee Name</p>
+                        <p>{refereeName}</p>
                         
                     </>
                     
                 </div>
 
-                <p className='agent-id'>rf-001</p>
+                <p className='agent-id'>{refereeId}</p>
 
                 <div className='view-referee-phno-container'>
                     <p>Phone No.:</p>
-                    <p className='view-referee-phno'>0912345678</p>
+                    <p className='view-referee-phno'>{refereePhone}</p>
                 </div>
 
 

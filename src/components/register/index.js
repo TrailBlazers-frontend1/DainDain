@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import "./styles.css"
 import { Icon } from '@iconify/react';
 import {useSelector, useDispatch } from 'react-redux/es/exports';
-import { signup } from '../../redux/user';
+
 import { axiosInstance } from '../../urlConfig';
 
 const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
@@ -55,7 +55,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         i = i -1
         setCountDown(i)
         if(i === 0){
-          console.log("countdown end")
+          // console.log("countdown end")
           setCountDown(60)
           clearInterval(interval);
           return
@@ -71,8 +71,11 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
     // const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
 
     // console.log(isPhRegistered)
+<<<<<<< HEAD
 
     // && isPhRegistered.status === 200
+=======
+>>>>>>> withBackEnd
   
     if(isPhnoValid ){
       setCountDown(60)
@@ -82,13 +85,13 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         setCountDownStarted(false)
       },1000 * 60)
 
-      const OtpRequest = {
-        "access-token" : "vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-",
-        "to" : phno,
-        "brand_name" : "TrailBlazers",
-        "channel" : "sms",
-        "sender_name":"MC888"
-      }
+      // const OtpRequest = {
+      //   "access-token" : "vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-",
+      //   "to" : phno,
+      //   "brand_name" : "TrailBlazers",
+      //   "channel" : "sms",
+      //   "sender_name":"MC888"
+      // }
   
       // const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${phno}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
       // OtpRequest})
@@ -109,6 +112,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
   }
 
 
+<<<<<<< HEAD
 //   useEffect(() => {
 //     if(otpInput === ""){
 //       setIsOTPValid(false)
@@ -122,6 +126,21 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 //           }
 //         }
 //       }
+=======
+  useEffect(() => {
+    if(otpInput === ""){
+      setIsOTPValid(false)
+    }else{
+      const verifyOTP =  async () => {
+        // if(otpInput.length === 4){
+        //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
+        //   // console.log(res)
+        //   if(res.status ===  200){
+            setIsOTPValid(true)
+          // }
+        // }
+      }
+>>>>>>> withBackEnd
   
 //       verifyOTP()
 //     }
@@ -147,6 +166,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         password_confirmation : confirmPassword
       }
 
+<<<<<<< HEAD
       // try {
       //   const res = axiosInstance.post("/register",userData)
       //   if(res.status === 200) {
@@ -155,8 +175,18 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
       // } catch (error) {
       //   console.log(error)
       // }
-
-      dispatch(signup(userData))
+=======
+      try {
+        const res = axiosInstance.post("/register",userData)
+        if(res.status === 200) {
+          // console.log(res)
+          alert(res.data.message)
+        }
+      } catch (error) {
+        // console.log(error)
+        alert(error.message)
+      }
+>>>>>>> withBackEnd
 
       setName("")
       setphno("")
