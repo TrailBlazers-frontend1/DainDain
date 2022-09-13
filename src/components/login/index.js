@@ -70,7 +70,7 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                 }
 
                 if(data.request_type === "referee"){
-                  navigate("https://www.google.com/")
+                  navigate("https://www.google.com/",{replace : true})
                 }else{
                   localStorage.setItem("auth",JSON.stringify(user))
                   dispatch(login(user))

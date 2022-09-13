@@ -58,7 +58,7 @@ const Header = () => {
                     // console.log(profile)
                 }
         } catch (error) {
-            alert(error.message)
+            // alert(error.message)
         }
         
     }
@@ -71,7 +71,7 @@ const Header = () => {
                 dispatch(setRefereeProfile(res.data.referee))
             }
         } catch (error) {
-            alert(error.message)
+            // alert(error.message)
         }
      
     }

@@ -68,7 +68,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 
   const getOtp = async () => {
 
-    // const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
+    const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
 
     // console.log(isPhRegistered)
   
