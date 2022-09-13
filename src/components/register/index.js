@@ -71,11 +71,6 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
     // const isPhRegistered = await axiosInstance.post("/checkPhone", {phno})
 
     // console.log(isPhRegistered)
-<<<<<<< HEAD
-
-    // && isPhRegistered.status === 200
-=======
->>>>>>> withBackEnd
   
     if(isPhnoValid ){
       setCountDown(60)
@@ -112,21 +107,6 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
   }
 
 
-<<<<<<< HEAD
-//   useEffect(() => {
-//     if(otpInput === ""){
-//       setIsOTPValid(false)
-//     }else{
-//       const verifyOTP =  async () => {
-//         if(otpInput.length === 4){
-//           const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
-//           console.log(res)
-//           if(res.status ===  200){
-//             setIsOTPValid(true)
-//           }
-//         }
-//       }
-=======
   useEffect(() => {
     if(otpInput === ""){
       setIsOTPValid(false)
@@ -140,12 +120,11 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
           // }
         // }
       }
->>>>>>> withBackEnd
   
 //       verifyOTP()
-//     }
+    }
     
-// },[otpInput])
+},[otpInput])
 
   const signUp = (e) => {
     e.preventDefault()
@@ -166,16 +145,6 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         password_confirmation : confirmPassword
       }
 
-<<<<<<< HEAD
-      // try {
-      //   const res = axiosInstance.post("/register",userData)
-      //   if(res.status === 200) {
-      //     console.log(res)
-      //   }
-      // } catch (error) {
-      //   console.log(error)
-      // }
-=======
       try {
         const res = axiosInstance.post("/register",userData)
         if(res.status === 200) {
@@ -186,7 +155,6 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         // console.log(error)
         alert(error.message)
       }
->>>>>>> withBackEnd
 
       setName("")
       setphno("")

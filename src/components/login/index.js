@@ -51,53 +51,15 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             password:password
         }
 
-        // try {
-            // const res = await axiosInstance.post("/login",userData)
+        try {
+            const res = await axiosInstance.post("/login",userData)
             // const data = await res.data
             // console.log(res)
-<<<<<<< HEAD
-            // if(res.data.status === 200){
-=======
             if(res.data.status === 200){
->>>>>>> withBackEnd
                 alert("login successful")
                 // console.log(data)
-                // const data = res.data.user
+                const data = res.data.user
 
-<<<<<<< HEAD
-                //save token in local storage
-
-                // localStorage.setItem("auth" , res.data.access_token)
-                // localStorage.setItem("isLoggedIn" , true)
-
-                // const user = {
-                //     id: data.id,
-                //     name : data.name,
-                //     phNo : data.phone,
-                //     role: data.status,
-                //     token:res.data.access_token,
-                //     isLoggedIn:true,
-                // }
-
-                const user = {
-                        id: "",
-                        name : "Thurein Win",
-                        phNo : "091234567",
-                        role: "agent",
-                        token:"",
-                        isLoggedIn:true,
-                    }
-    
-
-                localStorage.setItem("auth",JSON.stringify(user))
-                dispatch(login(user))
-            // }else{
-                // alert("Something went wrong")
-            // }
-        // } catch (error) {
-            // console.log(error)
-        // }
-=======
                 const user = {
                     id: data.id,
                     name : data.name,
@@ -121,7 +83,6 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
         } catch (error) {
             console.log(error)
         }
->>>>>>> withBackEnd
 
         setPhNo("")
         setPassword("")

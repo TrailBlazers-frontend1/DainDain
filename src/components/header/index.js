@@ -36,39 +36,6 @@ const Header = () => {
 
     const dispatch = useDispatch()
 
-<<<<<<< HEAD
-    useEffect(() => {
-        if(user_login.isLoggedIn && user_login.role === "agent"){
-
-        
-        const fetchAgentProfile =  () => {
-            // const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
-
-            // console.log(res)
-            // if(res.data.status === 200){
-                // const agent = {
-                //     image:res.data.user.image,
-                //     coin_amount:res.data.user.coin_amount,
-                //     commission:res.data.user.commision,
-                //     twod_sale_list:res.data.twod_saleLists,
-                //     threed_sale_list:res.data.threed_salelists,
-                //     lonepyine_sale_list:res.data.lonepyaing_salelists,
-                // }
-
-                const agent = {
-                        image:"",
-                        coin_amount:"10000",
-                        commission:"5",
-                        twod_sale_list:[],
-                        threed_sale_list:[],
-                        lonepyine_sale_list:[],
-                    }
-
-                dispatch(setAgentProfile(agent))
-
-                console.log(profile)
-            // }
-=======
     const fetchAgentProfile = async () => {
         try {
             const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
@@ -105,7 +72,6 @@ const Header = () => {
             }
         } catch (error) {
             alert(error.message)
->>>>>>> withBackEnd
         }
      
     }
@@ -140,18 +106,6 @@ const Header = () => {
 
     const handleUserLogout = async () => {
         // {headers:{Authorization:`Bearer ${user_login.token}`}}
-<<<<<<< HEAD
-        // const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
-
-        // console.log(res)
-        // if(res.data.status === 200){
-            // alert(res.data.message)
-            dispatch(logout())
-            localStorage.removeItem("auth")
-            
-            navigate("/")
-        // }
-=======
         try {
             const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
 
@@ -165,7 +119,6 @@ const Header = () => {
         } catch (error) {
             alert(error.message)
         }
->>>>>>> withBackEnd
         
         
     }
