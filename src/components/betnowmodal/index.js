@@ -16,6 +16,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
     const {morning_evening} = useSelector(state => state.countdown)
     const {profile} = useSelector(state => state.agent)
     const {twodList} = useSelector(state => state.twodThreed)
+    const {current_language} = useSelector(state => state.language)
 
     let round
     if(morning_evening.morning){
@@ -200,19 +201,19 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
           <Icon icon="emojione-monotone:cross-mark-button" className='betnow-cross-btn' onClick={() => setIsBetNowModalOpen(false)}/>
         </div>
             <div className='betnow-agent-details-container'>
-                <p className='detail-label'>Agent Name:</p>
+                <p className='detail-label'>{current_language === "english" ? 'Agent Name:' : "‌အေးဂျင့်နာမည်"}</p>
                 <p className='details-info'>{user_login.name}</p>
             </div>
             <div className='betnow-agent-details-container'>
-                <p className='detail-label'>Agent PhNo:</p>
+                <p className='detail-label'>{current_language === "english" ? 'Agent Phone:' : "‌အေးဂျင့်ဖုန်း"}</p>
                 <p className='details-info'>{user_login.phNo}</p>
             </div>
             <div className='betnow-customer-details-container'>
-                <p className='detail-label'>Customer Name:</p>
+                <p className='detail-label'>{current_language === "english" ? 'Customer Name:' : "ထိုးသူ"}</p>
                 <p className='details-info'>{customerName}</p>
             </div>
             <div className='betnow-customer-details-container'>
-                <p className='detail-label'>Customer PhNo:</p>
+                <p className='detail-label'>{current_language === "english" ? 'Customer Phone:' : "ထိုးသူဖုန်း"}</p>
                 <p className='details-info'>{customerPhno}</p>
             </div>
             {/* <div className='betnow-customer-details-container'>
@@ -221,9 +222,9 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
             </div> */}
             <div className='betnow-numbers-details-container'>
                 <div className='betnow-numbers-labels-container'>
-                    <p>Number</p>
-                    <p>Compensation</p>
-                    <p>Amount</p>
+                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
+                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
+                    <p>{current_language === "english" ? "Amount" : "ထိုး‌‌ကြေး"}</p>
                 </div>
                 <div className='betnow-number-details-rows-container'>
                 {twodNumbers?.map((number,index) => (
@@ -257,7 +258,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 </div>
             </div>
 
-            <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>Bet Now</button>
+            <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>{current_language === "english" ? "Bet Now" : "ထိုးမည်း"}</button>
         </div>
         
     </div>

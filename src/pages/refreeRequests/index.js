@@ -25,6 +25,7 @@ const RefreeRequests = () => {
 
     // const {refree_list,refree_requests} = useSelector(state=>state.refree)
     const {user_login} = useSelector(state => state.user)
+    const {current_language} = useSelector(state => state.language)
 
     // const [refreeList,setRefreeList] = useState([])
 
@@ -149,8 +150,8 @@ const RefreeRequests = () => {
 
                     <div className='refree-requests-accdec-parent-container'>
                         <div className='refree-requests-accdec-headers-container'>
-                            <p>Name</p>
-                            <p>PhNo</p>
+                            <p>{current_language === "english" ? "Name" : "နာမည်"}</p>
+                            <p>{current_language === "english" ? "Phone" : "ဖုန်း"}</p>
                         </div>
 
                         <div className='refree-requests-accdec-container'>
@@ -160,8 +161,8 @@ const RefreeRequests = () => {
                                         <p className='refree-requests-name'>{request.name}</p>
                                         <p className='refree-requests-phno'>{request.phone}</p>
                                         <div className='refree-requests-btn-container'>
-                                            <button onClick={() => handleAcceptRefreeRequest(request.id)}>Accept</button>
-                                            <button onClick={() => handleDeleteRefreeRequest(request.id)}>Decline</button>
+                                            <button onClick={() => handleAcceptRefreeRequest(request.id)}>{current_language === "english" ? "Accept" : "လက်ခံ"}</button>
+                                            <button onClick={() => handleDeleteRefreeRequest(request.id)}>{current_language === "english" ? "Decline" : "ငြင်းပယ်"}</button>
                                         </div>
                                     </div>
                                 ))
@@ -175,16 +176,16 @@ const RefreeRequests = () => {
 
                    
 
-                        <p className='refree-list-header'>Refrees</p>
+                        <p className='refree-list-header'>{current_language === "english" ? "Referees" : "ဒိုင်များ"}</p>
                         {/* <button className='refree-crud-add-btn' onClick={() => refreeAddbtn()}>Add</button> */}
                    
 
                     <div className='refree-list-container'>
                         <div className='refree-list-labels-container'>
-                            <p>Name</p>
-                            <p>PhNo</p>
-                            <p>Refree Id</p>
-                            <p>Joined On</p>
+                            <p>{current_language === "english" ? "Name" : "နာမည်"}</p>
+                            <p>{current_language === "english" ? "Phone" : "ဖုန်း"}</p>
+                            <p>{current_language === "english" ? "Referre Id" : "ဒိုင် ID"}</p>
+                            <p>{current_language === "english" ? "Joined On" : "ဝင်‌သောရက်"}</p>
                         </div>
 
                         <div className='refree-list-row-container'>
@@ -197,8 +198,8 @@ const RefreeRequests = () => {
                                     <p>{refree.user.updated_at}</p>
     
                                     <div className='refree-list-editdel-btns-container'>
-                                        <button className='refree-list-edit-btn' onClick={() => refreeEditBtn(refree.id)}>Edit</button>
-                                        <button className='refree-list-delete-btn' onClick={() => refreeDeleteBtn(refree.id)}>Delete</button>
+                                        <button className='refree-list-edit-btn' onClick={() => refreeEditBtn(refree.id)}>{current_language === "english" ? "Edit" : "ပြင်မည်"}</button>
+                                        <button className='refree-list-delete-btn' onClick={() => refreeDeleteBtn(refree.id)}>{current_language === "english" ? "Delete" : "ဖျက်မည်"}</button>
                                     </div>
                                 </div>
                                 ))

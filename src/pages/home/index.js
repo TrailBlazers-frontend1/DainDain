@@ -5,6 +5,7 @@ import Navbar from '../../components/navbar'
 import homepageimg from "../../imgs/homepage-img.jpg"
 import hotgameimg from "../../imgs/hotgame-img.png"
 import lotteryimage from "../../imgs/2d.png"
+import { useSelector } from 'react-redux'
 import { Icon } from '@iconify/react';
 import "./styles.css"
 import { axiosInstance } from '../../urlConfig'
@@ -18,6 +19,8 @@ const Home = () => {
     const [live,setLive] = useState()
 
     const [date,setDate] = useState('')
+
+    const {current_language} = useSelector(state => state.language)
 
     let isFilteringDate = false
 
@@ -89,7 +92,7 @@ const Home = () => {
             <section className='hot-game-section'>
                 <div className='hot-game-title-container'>
                     <p className='hot-game-title'>
-                        Hot Game
+                        {current_language === "english" ? "Hot Game" : "နာမည်ကြီးကစားနည်း"}
                     </p>
                     <p className='hot-game-subtitle'>
                         All Available at
@@ -98,11 +101,11 @@ const Home = () => {
                 <div className='App hot-game-content-container'>
                     <div className='hot-game-btn-container'>
                         <button onClick={() => setTwoOrThree("two")} className={twoOrThree === "two" ? 'hot-game-2d-btn hot-game-active' : 'hot-game-2d-btn'}>
-                            2D
+                        {current_language === "english" ? "2D" : "၂လုံး"}
                         </button>
-                        {/* <button onClick={() => setTwoOrThree("three")} className={twoOrThree === "three" ? 'hot-game-3d-btn hot-game-active' : 'hot-game-3d-btn'}>
-                            3D
-                        </button> */}
+                        <button onClick={() => setTwoOrThree("three")} className={twoOrThree === "three" ? 'hot-game-3d-btn hot-game-active' : 'hot-game-3d-btn'}>
+                        {current_language === "english" ? "3D" : "၃လုံး"}
+                        </button>
                     </div>
 
                     <div className='hot-game-outer'>
@@ -112,18 +115,18 @@ const Home = () => {
                             </div>
                             <div className='hot-game-text-container'>
                                 <div className='hot-game-text-header-container'>
-                                    <p data-before={twoOrThree === "two" ? "2D" : "3D"} className='hot-game-text-title'>
-                                        {twoOrThree === "two" && "2D"}
-                                        {twoOrThree === "three" && "3D"}
+                                    <p data-before={twoOrThree === "two" ? current_language === "english" ? "2D" : "၂လုံး" : current_language === "english" ? "3D" : "၃လုံး"} className='hot-game-text-title'>
+                                        {twoOrThree === "two" ? current_language === "english" ? "2D" : "၂လုံး" : null}
+                                        {twoOrThree === "three" ? current_language === "english" ? "3D" : "၃လုံး" : null}
                                     </p>
                                     <div className='hot-game-text-compensation-container'>
-                                        <p className='hot-game-text-compensation-text'>Maximum Compensation</p>
-                                        <p className='hot-game-text-compensation-number'>95</p>
+                                        <p className='hot-game-text-compensation-text'>{current_language === "english" ? "Maximum Compensation" : "အမြင့်ဆုံးဆ"}</p>
+                                        <p className='hot-game-text-compensation-number'>{current_language === "english" ? "95" : "၉၅"}</p>
                                     </div>
                                 </div>
 
-                                <p className='hot-game-text'>Professional lottery platform, fast lottery opening, high payout, rich gameplay! TTBET is dedicated to providing rich games to global lottery users and creating a high-quality entertainment environment for players.</p>
-                                <Link to={twoOrThree === "two" ? "/2d" : "/3d"} className='hot-game-btn'>Enter <Icon icon="ep:arrow-right-bold" /></Link>
+                                {/* <p className='hot-game-text'>Professional lottery platform, fast lottery opening, high payout, rich gameplay! TTBET is dedicated to providing rich games to global lottery users and creating a high-quality entertainment environment for players.</p> */}
+                                <Link to={twoOrThree === "two" ? "/2d" : "/3d"} className='hot-game-btn'>{current_language === "english" ? "Enter" : "ဝင်မည်"} <Icon icon="ep:arrow-right-bold" /></Link>
                             </div>
 
 
@@ -138,7 +141,7 @@ const Home = () => {
             <section className='App live-section'>
                 <div className='live-content-container'>
                     <div className='live-btn-container'>
-                        <button className='live-2d-btn'>2D</button>
+                        <button className='live-2d-btn'>{current_language === "english" ? "2D" : "၂လုံး"}</button>
                         {/* <button className='live-3d-btn'>3D</button> */}
                     </div>
 
@@ -151,7 +154,7 @@ const Home = () => {
                     <div className='live-numbers-container'>
                         <div className='won-number-container'>
                             <p className='won-number-time'>
-                                Morning
+                                {current_language === "english" ? "Morning" : "မနက်ခင်း"}
                             </p>
 
                             <div className='won-number-content-container'>
@@ -173,7 +176,7 @@ const Home = () => {
                         </div>
                         <div className='won-number-container'>
                             <p className='won-number-time'>
-                                Evening
+                            {current_language === "english" ? "Evening" : "ညနေခင်း"}
                             </p>
 
                             <div className='won-number-content-container'>

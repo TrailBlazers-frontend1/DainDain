@@ -161,13 +161,13 @@ const Header = () => {
                             <p className='agent-comission'>Comission : {profile?.commission}</p>
                             <p className='user-name'>
                                 {user_login.name}
-                                <span>(agent)</span>
+                                <span>{current_language === "english" ? "Agent" : "‌အေးဂျင့်"}</span>
                                 <div className= "profile-link" >
                                     <Icon icon="ant-design:setting-filled" className='profile-link-icon' onClick={() => handleProfileCLicked()}/>
 
                                     <div className={isProfileLinkIconOpen ? "profile-dropdown-container profile-link-open" : "profile-dropdown-container profile-link-close"}>
-                                        <Link to="/agentprofile">Profile</Link>
-                                        <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                                        <Link to="/agentprofile">{current_language === "english" ? "Profile" : "ကိုယ်ရေးအကျဉ်း"}</Link>
+                                        <button className='log-out-btn' onClick={() => handleUserLogout()}>{current_language === "english" ? "Log Out" : "ထွက်မည်"}</button>
                                     </div>
                                 </div>
                             </p>
@@ -191,8 +191,8 @@ const Header = () => {
                                     <Icon icon="ant-design:setting-filled" className='profile-link-icon' onClick={() => handleProfileCLicked()}/>
 
                                         <div className={isProfileLinkIconOpen ? "profile-dropdown-container profile-link-open" : "profile-dropdown-container profile-link-close"}>
-                                            <Link to="/opprofile">Profile</Link>
-                                            <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                                            <Link to="/opprofile">{current_language === "english" ? "Profile" : "ကိုယ်ရေးအကျဉ်း"}</Link>
+                                            <button className='log-out-btn' onClick={() => handleUserLogout()}>{current_language === "english" ? "Log Out" : "ထွက်မည်"}</button>
                                         </div>
                                     </div>
                                     </p>
@@ -202,14 +202,14 @@ const Header = () => {
                         {
                             user_login.role === "guest" &&<div className='align-center'>
                              <p className='user-name'>{user_login.name}<span>({user_login.role})</span></p>
-                             <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button>
+                             <button className='log-out-btn' onClick={() => handleUserLogout()}>{current_language === "english" ? "Log Out" : "ထွက်မည်"}</button>
                              </div>
                         }
                             
                             {/* <button className='log-out-btn' onClick={() => handleUserLogout()}>Log Out</button> */}
                         </> : <>
-                        <button className='login-btn' onClick={() => setIsLoginOpen(true)}>Log in</button>
-                        <button className='signup-btn' onClick={() => setIsDaiRegOpen(true)}>Sign up</button>
+                        <button className='login-btn' onClick={() => setIsLoginOpen(true)}>{current_language === "english" ? "Log In" : "ဝင်မည်"}</button>
+                        <button className='signup-btn' onClick={() => setIsDaiRegOpen(true)}>{current_language === "english" ? "Sign Up" : "အကောင့်ဆောက်မည်"}</button>
                         </>
                     }
                     
@@ -219,7 +219,7 @@ const Header = () => {
             </div>
             {
                     user_login.isLoggedIn && user_login.role === "agent" &&
-                    <p className='referee-remark'>Referee's Remark : {refereeProfile.remark}</p>
+                    <p className='referee-remark'>{current_language === "english" ? "Referee's Remark" : "ဒိုင်သတင်းစကား"}: {refereeProfile.remark}</p>
                 }
         </div>
     </>

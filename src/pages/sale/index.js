@@ -89,6 +89,7 @@ const Sale = () => {
   
 
  const {user_login} = useSelector(state => state.user)
+ const {current_language} = useSelector(state => state.language)
 
 
  //fetch all transactions
@@ -105,8 +106,8 @@ const Sale = () => {
     setAccepted3dTransactions(threed?.data?.accepted_threed_lists)
 
     console.log(twod)
-  console.log(acceptedLonePyineTransactions)
-  console.log(accepted3dTransactions)
+    console.log(acceptedLonePyineTransactions)
+    console.log(accepted3dTransactions)
 
     setTemp2dArr(twod?.data?.accepted_twod_lists)
     setTempLonePyineArr(lonepyine?.data?.accepted_lonepyaing_lists)
@@ -185,23 +186,23 @@ const fetch3dAcceptedTransactions = async (date) => {
  const twodColumns = useMemo(() => 
   [
     {
-      Header: "Name",
+      Header: current_language === "english" ? "Name" : "နာမည်",
       accessor : "Name"
     },
     {
-      Header: "Date",
+      Header:  current_language === "english" ? "Date" : "ရက်",
       accessor : "Date"
     },
     {
-      Header: "Round",
+      Header:  current_language === "english" ? "Round" : "ပွဲ",
       accessor : "Round"
     },
     {
-      Header: "Number",
+      Header: current_language === "english" ? "Number" : "ထိုးသား",
       accessor : "Number"
     },
     {
-      Header: "Amount",
+      Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
       accessor : "Amount"
     },
   ]
@@ -224,23 +225,23 @@ const fetch3dAcceptedTransactions = async (date) => {
  const LonePyineColumns = useMemo(() => 
   [
     {
-      Header: "Name",
+      Header: current_language === "english" ? "Name" : "နာမည်",
       accessor : "Name"
     },
     {
-      Header: "Date",
+      Header: current_language === "english" ? "Date" : "ရက်",
       accessor : "Date"
     },
     {
-      Header: "Round",
+      Header: current_language === "english" ? "Round" : "ပွဲ",
       accessor : "Round"
     },
     {
-      Header: "Number",
+      Header: current_language === "english" ? "Number" : "ထိုးသား",
       accessor : "Number"
     },
     {
-      Header: "Amount",
+      Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
       accessor : "Amount"
     },
   ]
@@ -264,23 +265,23 @@ const fetch3dAcceptedTransactions = async (date) => {
  const threedColumns = useMemo(() => 
   [
     {
-      Header: "Name",
+      Header: current_language === "english" ? "Name" : "နာမည်",
       accessor : "Name"
     },
     {
-      Header: "Date",
+      Header: current_language === "english" ? "Date" : "ရက်",
       accessor : "Date"
     },
     {
-      Header: "Round",
+      Header: current_language === "english" ? "Round" : "ပွဲ",
       accessor : "Round"
     },
     {
-      Header: "Number",
+      Header: current_language === "english" ? "Number" : "ထိုးသား",
       accessor : "Number"
     },
     {
-      Header: "Amount",
+      Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
       accessor : "Amount"
     },
   ]
@@ -474,7 +475,7 @@ const fetch3dAcceptedTransactions = async (date) => {
 
           <div className='sale-2pieces-container'>
             <div className='sale-headers-container'>
-            <p className='sale-header'>2Pieces Accepted Sales</p>
+            <p className='sale-header'>{current_language === "english" ? "2Pieces Accepted Sales" : "၂လုံးလက်ခံရောင်းချခြင်း"}</p>
             <div className='sale-filters-container'>
               <input className='sale-filter-date-input' type="date" onChange={(e) => filter2dDate(e)}></input>
               {/* <div className='sale-filter-customer-filter'>
@@ -487,16 +488,16 @@ const fetch3dAcceptedTransactions = async (date) => {
               </div> */}
 
             <select className='sale-filter-round-filter'onChange={(e) => filter2dRound(e)}>
-              <option value="">Round</option>
+              <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
               <option value="Morning" >Morning</option>
               <option value="Evening" >Evening</option>
             </select>
             </div>
             <div className='sale-generate-btns-container' onClick={() => setIs2dGenerateOpen(!is2dGenerateOpen)}>
-              Generate
+            {current_language === "english" ? "Generate" : "ထုတ်မည်"}
               <div className={is2dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                <button onClick={() => handle2piecesExport()}>Generate to Excel</button>
-                <button onClick={() => handle2piecesExportPDF()}>Generate to PDF</button>
+                <button onClick={() => handle2piecesExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                <button onClick={() => handle2piecesExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
               </div>
             </div>
             
@@ -537,7 +538,7 @@ const fetch3dAcceptedTransactions = async (date) => {
 
           <div className='sale-lonepyine-container'>
             <div className='sale-headers-container'>
-            <p className='sale-header'>Lone Pyine Accepted Sales</p>
+            <p className='sale-header'>{current_language === "english" ? "Lone Pyine Accepted Sales" : "လုံးပြိုင်လက်ခံရောင်းချခြင်း"}</p>
             <div className='sale-filters-container'>
               <input className='sale-filter-date-input' type="date" onChange={(e) => filterLonePyineDate(e)}></input>
               {/* <div className='sale-filter-customer-filter'>
@@ -550,17 +551,17 @@ const fetch3dAcceptedTransactions = async (date) => {
               </div> */}
 
             <select className='sale-filter-round-filter'onChange={(e) => filterLonePyineRound(e)}>
-              <option value="">Round</option>
+              <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
               <option value="morning" >Morning</option>
               <option value="evening" >Evening</option>
             </select>
             </div>
             
             <div className='sale-generate-btns-container' onClick={() => setIsLonePyineGenerateOpen(!isLonePyineGenerateOpen)}>
-              Generate
+            {current_language === "english" ? "Generate" : "ထုတ်မည်"}
               <div className={isLonePyineGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                <button onClick={() => handleLonePyineExport()}>Generate to Excel</button>
-                <button onClick={() => handleLonePyineExportPDF()}>Generate to PDF</button>
+                <button onClick={() => handleLonePyineExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                <button onClick={() => handleLonePyineExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
               </div>
             </div>
             
@@ -598,7 +599,7 @@ const fetch3dAcceptedTransactions = async (date) => {
           </div>
           <div className='sale-lonepyine-container'>
             <div className='sale-headers-container'>
-            <p className='sale-header'>3Pieces Accepted Sales</p>
+            <p className='sale-header'>{current_language === "english" ? "3Pieces Accepted Sales" : "၃လုံးလက်ခံရောင်းချခြင်း"}</p>
             <div className='sale-filters-container'>
               <input className='sale-filter-date-input' type="date" onChange={(e) => filter3DDate(e)}></input>
               {/* <div className='sale-filter-customer-filter'>
@@ -617,10 +618,10 @@ const fetch3dAcceptedTransactions = async (date) => {
             </select>
             </div>
             <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
-              Generate
+            {current_language === "english" ? "Round" : "ပွဲ"}
               <div className={is3dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                <button onClick={() => handle3piecesExport()}>Generate to Excel</button>
-                <button onClick={() => handle3DExportPDF()}>Generate to PDF</button>
+                <button onClick={() => handle3piecesExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                <button onClick={() => handle3DExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
               </div>
             </div>
             </div>

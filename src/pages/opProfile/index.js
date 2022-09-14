@@ -15,6 +15,7 @@ const OpProfile = () => {
 
     const profileimgRef = useRef()
     const {user_login} = useSelector(state => state.user)
+    const {current_language} = useSelector(state => state.language)
 
 
 
@@ -108,14 +109,14 @@ const OpProfile = () => {
                                 {/* <Icon icon="ant-design:setting-filled" className='agent-profile-img-icon'/> */}
                                 <form onSubmit={(e) => onProfileChangeSubmit(e)} className='op-change-profile-form' encType='multipart/form-data'> 
                                     <label className='op-change-profile-input-container' htmlFor='change-profile'>
-                                        Change Profile Imge
+                                        {current_language === "english" ? 'Change Profile:' : "ပရိုဖိုင်ကိုပြောင်းမည်"}
                                         <input ref={profileimgRef}  onChange={(e) => onProfileChange(e)} className='op-change-profile-input' type="file" name="profile_image"  accept="image/png, image/jpeg"></input>
                                         <p className='chosen-img'>{profileImage && profileImage.name}</p>
                                     </label>
                                     {
                                         profileImage ?  <div className='profile-change-btn-container'>
-                                            <button type='submit'>Change Profile</button>
-                                            <button type='button' onClick={() => onProfileCancelClicked()}>Cancel</button>
+                                            <button type='submit'>{current_language === "english" ? 'Change Profile:' : "ပြောင်းမည်"}</button>
+                                            <button type='button' onClick={() => onProfileCancelClicked()}>{current_language === "english" ? 'Cancel:' : "ပယ်ဖျက်"}</button>
                                             </div> : null
                                     }
                                 
@@ -128,8 +129,8 @@ const OpProfile = () => {
                             {
                                 isChangeUsername ?<>
                                 <input value={agentName} onChange={(e) => setAgentName(e.target.value)} type="text" className='change-username-input'></input>
-                                <button className='confirm-username-btn' onClick={() => handleUserNameChangeConfirm()}>Confirm</button>
-                                <button className='cancel-username-btn' onClick={() => handleUserNameChangeCancel()}>Cancel</button>
+                                <button className='confirm-username-btn' onClick={() => handleUserNameChangeConfirm()}>{current_language === "english" ? 'Confirm' : "ပြောင်းမည်"}</button>
+                                <button className='cancel-username-btn' onClick={() => handleUserNameChangeCancel()}>{current_language === "english" ? 'Cancel:' : "ပယ်ဖျက်"}</button>
                                 </> : 
                                 <>
                                 <p>{agentName}</p>
