@@ -1,6 +1,5 @@
 import React from 'react'
 import "./styles.css"
-import moment from 'moment'
 import { useSelector } from 'react-redux'
 import { isMorningOrEvening, threeDCountDown } from '../../redux/countdown'
 
