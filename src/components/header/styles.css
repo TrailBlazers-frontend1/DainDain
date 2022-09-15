@@ -128,13 +128,15 @@
 
 .profile-dropdown-container a{
     display: inline-block;
-    padding: 3px 20px;
+    /* padding: 3px 20px; */
+    padding: 3px 0;
     text-decoration: none;
     color: var(--secondary-color);
     border: 2px solid var(--secondary-color);
     border-radius: 5px;
     width: 120px;
     text-align: center;
+    white-space: nowrap;
 }
 
 .log-out-btn{

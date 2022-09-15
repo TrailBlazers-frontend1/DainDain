@@ -28,6 +28,9 @@ const LonePyaing = () => {
     const {profile} = useSelector(state => state.agent)
     const {lonePyineList} =  useSelector(state => state.twodThreed)
 
+    const {current_language} = useSelector(state => state.language)
+    const {remaining_time} = useSelector(state => state.countdown)
+
     const dispatch = useDispatch()
 
     const submitCustomerInfo = (e) => {
@@ -380,16 +383,16 @@ const LonePyaing = () => {
 
         <div className='onenumber-header-container'>
             <div className='onenumber-header-washrate'>
-                <p className='onenumber-header'>Lone Pyaing</p>
-                <p className='onenumber-washrate'>Compensation   8.0</p>
+                <p className='onenumber-header'>{current_language === "english" ? "Lone Pyine" : "လုံးပြိုင်"}</p>
+                {/* <p className='onenumber-washrate'>Compensation   8.0</p> */}
             </div>
-            <p className='onenumber-description'>Description</p>
+            {/* <p className='onenumber-description'>Description</p> */}
         </div>
 
         <div className='onenumber-numbers-parent-container'>
             <div className='onenumber-numbers-container'>
                 <div className='onenumber-1stone-container'>
-                    <p className='onenumber-1stone-label'>First Number:</p>
+                    <p className='onenumber-1stone-label'>{current_language === "english" ? "First Number" : "ထိပ်လုံး"}</p>
                     <div className='onenumber-1stone-numbers-container'>
                         {firstNumberRow()}
                     </div>
@@ -425,7 +428,7 @@ const LonePyaing = () => {
             </div>
             <div className='onenumber-numbers-container'>
                 <div className='onenumber-1stone-container'>
-                    <p className='onenumber-1stone-label'>Second Number:</p>
+                    <p className='onenumber-1stone-label'>{current_language === "english" ? "Last Number" : "‌နောက်လုံး"}</p>
                     <div className='onenumber-1stone-numbers-container'>
                         {lastNumberRow()}
                     </div>
@@ -467,12 +470,12 @@ const LonePyaing = () => {
         <form onSubmit={(e) => submitCustomerInfo(e)} className='onenumber-name-phno-input-container'>
             <div className='onenumber-name-phno-container'>
                 <div className='onenumber-name-input-container'>
-                <p>Name:</p>
+                <p>{current_language === "english" ? "Name:" : "နာမည်"}</p>
                 {/* disabled={user_login.role==="guest" ? true:false} */}
                 <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} ref={customerNameInput} required type="text" name="onenumber name" ></input>
                 </div>
                 <div className='onenumber-phno-input-container'>
-                <p>Ph No:</p>
+                <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
                 {/* disabled={user_login.role==="guest" ? true:false} */}
                 <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} ref={customerPhNoInput} required type="text" name="onenumber phno" ></input>
                 </div>
@@ -496,7 +499,7 @@ const LonePyaing = () => {
                         </div>
                     </div> */}
                     
-                    <button type='submit' className='onenumber-name-phno-btn'>Add</button>
+                    <button type='submit' className='onenumber-name-phno-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
                 </div>
             
   
@@ -504,11 +507,11 @@ const LonePyaing = () => {
 
           <div className='onenumber-customer-info-detail-container'>
             <div className='onenumber-customer-info-detail-name-container'>
-                <p>Name:</p>
+                <p>{current_language === "english" ? "Name:" : "နာမည်"}</p>
                 <p>{customerName}</p>
             </div>
             <div className='onenumber-customer-info-detail-phno-container'>
-                <p>PhNo:</p>
+                <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
                 <p>{customerPhNo}</p>
             </div>
           </div>
@@ -517,9 +520,9 @@ const LonePyaing = () => {
         <div className='twod-details-parent-container'>
             <div className='twod-details-container'>
                 <div className='lonepyaing-details-header-container'>
-                    <p>Number</p>
-                    <p>Compensation</p>
-                    <p>Amount</p>
+                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
+                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
+                    <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
                 </div>
 
                 {/* <div className='twod-details-row'>
@@ -542,7 +545,7 @@ const LonePyaing = () => {
                     {
                         firstNumbers.map((number,index) => (
                             <div key={index} className='lonepyaing-details-row'>
-                                <p className='onenumber-details-number'>first({`${number.number}∞`})</p>
+                                <p className='onenumber-details-number'>{current_language === "english" ? "First" : "ထိပ်"}({`${number.number}∞`})</p>
                                 <p>{number.compensation}</p>
                             <div className='lonepyaing-details-amount-container'>
                                 <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => {
@@ -562,7 +565,7 @@ const LonePyaing = () => {
                     {
                         lastNumbers.map((number,index) => (
                             <div key={index} className='lonepyaing-details-row'>
-                                <p className='onenumber-details-number'>last({`∞${number.number}`})</p>
+                                <p className='onenumber-details-number'>{current_language === "english" ? "Last" : "နောက်"}({`∞${number.number}`})</p>
                                 <p>{number.compensation}</p>
                             <div className='lonepyaing-details-amount-container'>
                                 <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => {
@@ -627,19 +630,19 @@ const LonePyaing = () => {
 
             <div className='twod-overall-details-container'>
                 <div className='twod-overall-detail-container'>
-                    <p>Program Information</p>
+                    <p>{current_language === "english" ? "Program Information" : "အ‌ရေအတွက်"}</p>
                     <p>{firstNumbers.length + lastNumbers.length}</p>
                 </div>
                 <div className='twod-overall-detail-container'>
-                    <p>Punch Fee</p>
+                    <p>{current_language === "english" ? "Total Amount" : "ထိုးကြေးစုစု‌ပေါင်း"}</p>
                     <p>{totalAmount()}</p>
                 </div>
                 <div className='twod-overall-detail-container'>
-                    <p>Lottery Closing Time</p>
-                    <p>98:00:00</p>
+                    <p>{current_language === "english" ? "Lottery Closing Time" : "ပိတ်ချိန်"}</p>
+                    <p>{remaining_time.hours ? remaining_time.hours : "0"}:{remaining_time.minutes ? remaining_time.minutes : "0"}:{remaining_time.seconds ? remaining_time.seconds : "0"}</p>
                 </div>
 
-                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='twod-betnow-btn' onClick={() => submitLonePyaing()}>Bet Now</button>
+                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='twod-betnow-btn' onClick={() => submitLonePyaing()}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
             </div>
         </div>
     </div>

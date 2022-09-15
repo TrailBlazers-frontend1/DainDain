@@ -25,6 +25,8 @@ const AgentProfile = () => {
 
     const dispatch = useDispatch()
 
+    const {current_language} = useSelector(state => state.language)
+
    
 
     const onProfileChangeSubmit =async (e) => {
@@ -102,14 +104,14 @@ const AgentProfile = () => {
                         {/* <Icon icon="ant-design:setting-filled" className='agent-profile-img-icon'/> */}
                         <form onSubmit={(e) => onProfileChangeSubmit(e)} className='agent-change-profile-form' encType='multipart/form-data'> 
                             <label className='agent-change-profile-input-container' htmlFor='change-profile'>
-                                Change Profile Imge
+                            {current_language === "english" ? "Change Profile Image" : "ပရိုဖိုင်‌ပြောင်းပါ"}
                                 <input ref={profileimgRef}  onChange={(e) => onProfileChange(e)} className='agent-change-profile-input' type="file" name="profile_image"  accept="image/png, image/jpeg"></input>
                                 <p className='chosen-img'>{profileImage && profileImage.name}</p>
                             </label>
                             {
                                 profileImage ?  <div className='profile-change-btn-container'>
-                                    <button type='submit'>Change Profile</button>
-                                    <button type='button' onClick={() => onProfileCancelClicked()}>Cancel</button>
+                                    <button type='submit'>{current_language === "english" ? "Confirm" : "ပြောင်းပါ"}</button>
+                                    <button type='button' onClick={() => onProfileCancelClicked()}>{current_language === "english" ? "Cancel" : "ဖျက်ပါ"}</button>
                                     </div> : null
                             }
                            
@@ -122,8 +124,8 @@ const AgentProfile = () => {
                     {
                         isChangeUsername ?<>
                         <input value={agentName} onChange={(e) => setAgentName(e.target.value)} type="text" className='change-username-input'></input>
-                        <button className='confirm-username-btn' onClick={() => handleUserNameChangeConfirm()}>Confirm</button>
-                        <button className='cancel-username-btn' onClick={() => handleUserNameChangeCancel()}>Cancel</button>
+                        <button className='confirm-username-btn' onClick={() => handleUserNameChangeConfirm()}>{current_language === "english" ? "Confirm" : "ပြောင်းပါ"}</button>
+                        <button className='cancel-username-btn' onClick={() => handleUserNameChangeCancel()}>{current_language === "english" ? "Cancel" : "ဖျက်ပါ"}</button>
                         </> : 
                         <>
                         <p>{user_login.name}</p>
@@ -133,64 +135,63 @@ const AgentProfile = () => {
                     
                 </div>
 
-                <p className='agent-id'>ag-001</p>
+                {/* <p className='agent-id'>ag-001</p> */}
 
                 <div className='agent-coin-container'>
-                    <p>Remaining Amount:</p>
+                    <p>{current_language === "english" ? "Remaining Amount  :s" : "လက်ကျန်‌ငွေ  :"}</p>
                     <div className='agent-remaining-coin-container'>
                         <p>{profile.coin_amount}</p>
                         <Icon icon="ri:copper-coin-fill" className='agent-remaining-coin-icon'/>
                     </div>
                 </div>
 
-                <div className='agent-transaction-history-parent-container'>
-                    <p>2Pieces Transaction History</p>
+               
 
-                    <div className='agent-transaction-history-container'>
-                        {/* <p className='agent-transaction-history-header'>2pieces </p> */}
-                        <div className='agent-transaction-history-labels-container'>
-                            <p>Name</p>
-                            <p>PhNo</p>
-                            <p>Number</p>
-                            <p>Compensation</p>
-                            <p>Amount</p>
-                            <p>Status</p>
-                        </div>
-
-                        <div className='agent-transaction-history-rows-container'>
-
-                            {
-                                profile.twod_sale_list?.map((list) => (
-                                    <div className='agent-transaction-history-row'>
-                                        <p>{list.customer_name}</p>
-                                        <p>{list.customer_phone}</p>
-                                        <p>{list.twod.number}</p>
-                                        <p>{list.twod.compensation}</p>
-                                        <p>{list.sale_amount}ks</p>
-                                        {
-                                        list.status === '1' &&
-                                        <p className='agent-transaction-accepted'>Accepted</p>
-                                        }
-                                        {
-                                             list.status === '2' &&
-                                             <p className='agent-transaction-declined'>Declined</p>
-                                        }
-                                        
-                                    </div>
-                                ))
-                            }
-
-                        
-                       
-                        </div>
-
+                {/* <div className='agent-transaction-history-container'>
+                    <p className='agent-transaction-history-header'>2pieces </p>
+                    <div className='agent-transaction-history-labels-container'>
+                        <p>Name</p>
+                        <p>PhNo</p>
+                        <p>Number</p>
+                        <p>Compensation</p>
+                        <p>Amount</p>
+                        <p>Status</p>
                     </div>
-                </div>
-                <div className='agent-transaction-history-parent-container'>
+
+                    <div className='agent-transaction-history-rows-container'>
+
+                        {
+                            profile.twod_sale_list?.map((list) => (
+                                <div className='agent-transaction-history-row'>
+                                    <p>{list.customer_name}</p>
+                                    <p>{list.customer_phone}</p>
+                                    <p>{list.twod.number}</p>
+                                    <p>{list.twod.compensation}</p>
+                                    <p>{list.sale_amount}ks</p>
+                                    {
+                                    list.status === '1' &&
+                                    <p className='agent-transaction-accepted'>Accepted</p>
+                                    }
+                                    {
+                                            list.status === '2' &&
+                                            <p className='agent-transaction-declined'>Declined</p>
+                                    }
+                                    
+                                </div>
+                            ))
+                        }
+
+                    
+                    
+                    </div>
+
+                
+                </div> */}
+                {/* <div className='agent-transaction-history-parent-container'>
                     <p>Lone Pyine Transaction History</p>
 
                     <div className='agent-transaction-history-container'>
-                        {/* <p className='agent-transaction-history-header'>2pieces </p> */}
+                        <p className='agent-transaction-history-header'>2pieces </p>
                         <div className='agent-transaction-history-labels-container'>
                             <p>Name</p>
                             <p>PhNo</p>
@@ -225,12 +226,12 @@ const AgentProfile = () => {
                         </div>
 
                     </div>
-                </div>
-                <div className='agent-transaction-history-parent-container'>
+                </div> */}
+                {/* <div className='agent-transaction-history-parent-container'>
                     <p>3Pieces Transaction History</p>
 
                     <div className='agent-transaction-history-container'>
-                        {/* <p className='agent-transaction-history-header'>2pieces </p> */}
+                        <p className='agent-transaction-history-header'>2pieces </p>
                         <div className='agent-transaction-history-labels-container'>
                             <p>Name</p>
                             <p>PhNo</p>
@@ -265,7 +266,7 @@ const AgentProfile = () => {
                         </div>
 
                     </div>
-                </div>
+                </div> */}
             </div>
           </>
         )

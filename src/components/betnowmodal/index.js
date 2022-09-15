@@ -258,7 +258,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 </div>
             </div>
 
-            <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>{current_language === "english" ? "Bet Now" : "ထိုးမည်း"}</button>
+            <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
         </div>
         
     </div>

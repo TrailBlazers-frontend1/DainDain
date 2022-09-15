@@ -158,10 +158,10 @@ const Header = () => {
                         {
                             user_login.role === "agent" && <>
                             <p className='agent-remaining-amount'>{profile.coin_amount}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
-                            <p className='agent-comission'>Comission : {profile?.commission}</p>
+                            <p className='agent-comission'>{current_language === "english" ? "Commission" : "ကော်မရှင်"} : {profile?.commission}</p>
                             <p className='user-name'>
                                 {user_login.name}
-                                <span>{current_language === "english" ? "Agent" : "‌အေးဂျင့်"}</span>
+                                <span>{current_language === "english" ? "(Agent)" : "‌(အေးဂျင့်)"}</span>
                                 <div className= "profile-link" >
                                     <Icon icon="ant-design:setting-filled" className='profile-link-icon' onClick={() => handleProfileCLicked()}/>
 

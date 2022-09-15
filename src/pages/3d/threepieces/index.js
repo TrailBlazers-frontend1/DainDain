@@ -5,6 +5,7 @@ import { axiosInstance } from '../../../urlConfig'
 
 import BetNowModal from '../../../components/betnowmodal'
 import {useSelector} from "react-redux"
+import { threeDCountDown } from '../../../redux/countdown'
 
 const ThreePieces = () => {
 
@@ -27,12 +28,14 @@ const ThreePieces = () => {
     const {user_login} = useSelector(state => state.user)
     const {profile} = useSelector(state => state.agent)
 
+    const {current_language} = useSelector(state => state.language)
+
     const fetch3dCompensation = async () => {
       try {
         const res = await axiosInstance.get("/3ds",{headers:{Authorization:`Bearer ${user_login.token}`}})
         if(res.data.status === 200){
-          console.log(res.data.threeds.compensation)
-          setThreedCompensation(res.data.threeds.compensation)
+          // console.log(res.data.threeds.compensation)
+          setThreedCompensation(res.data.threeds?.compensation)
         }
       } catch (error) {
         alert(error.message)
@@ -231,21 +234,21 @@ const ThreePieces = () => {
 
       <div className='threepieces-header-container'>
           <div className='threepieces-header-washrate'>
-            <p className='threepieces-header'>Three Pieces</p>
-            <p className='threepieces-washrate'>Compensation   {threedCompensation}</p>
+            <p className='threepieces-header'>{current_language === "english" ? "3Pieces" : "၃လုံး"}</p>
+            <p className='threepieces-washrate'>{current_language === "english" ? "Compensation" : "ဆ"}   {threedCompensation}</p>
           </div>
-          <p className='threepieces-description'>Description</p>
+          {/* <p className='threepieces-description'>Description</p> */}
       </div>
 
       <div className='threepieces-name-number-input-container'>
   
           <form onSubmit={(e) => submitCustomerInfo(e)} className='threepieces-name-phno-input-container'>
             <div className='threepieces-name-input-container'>
-              <p>Name:</p>
+              <p>{current_language === "english" ? "Name:" : "နာမည်"}</p>
               <input ref={customerNameInput} required type="text" name="threepieces name" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
             <div className='threepieces-phno-input-container'>
-              <p>Ph No:</p>
+              <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
               <input ref={customerPhnoInput} required type="text" name="threepieces phno" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
   
@@ -264,7 +267,7 @@ const ThreePieces = () => {
               </div>
             </div> */}
             
-            <button disabled={user_login.role==="guest" ? true:false} type='submit' className='threepieces-name-phno-btn'>Add</button>
+            <button disabled={user_login.role==="guest" ? true:false} type='submit' className='threepieces-name-phno-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
   
           </form>
   
@@ -275,7 +278,7 @@ const ThreePieces = () => {
               <p className='threepieces-customer-phno'>{customerPhno}</p>
             </div>
             <div className='threepieces-number-input-container'>
-              <p>Number:</p>
+              <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
               <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
 
@@ -285,7 +288,7 @@ const ThreePieces = () => {
             </div>
   
             <div className='threepieces-amount-input-container'>
-              <p>Amount:</p>
+              <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
               <div className='threepieces-amount-input'>
                 <button type='button' className='threepieces-minus-btn' onClick={()=>{
                   if(amount > 100){
@@ -301,7 +304,7 @@ const ThreePieces = () => {
 
             
   
-            <button disabled={user_login.role==="guest"  ? true:false} type='submit' className='threepieces-number-amount-btn'>Add</button>
+            <button disabled={user_login.role==="guest"  ? true:false} type='submit' className='threepieces-number-amount-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
           </form>
   
         </div>
@@ -309,9 +312,9 @@ const ThreePieces = () => {
     <div className='twod-details-parent-container'>
                 <div className='twod-details-container'>
                   <div className='twod-details-header-container'>
-                    <p>Number</p>
-                    <p>Compensation</p>
-                    <p>Amount</p>
+                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
+                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
+                    <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
                   </div>
   
                   <div className='twod-details-table-container'>
@@ -341,19 +344,19 @@ const ThreePieces = () => {
   
                 <div className='twod-overall-details-container'>
                   <div className='twod-overall-detail-container'>
-                    <p>Program Information</p>
+                    <p>{current_language === "english" ? "Program Information" : "အ‌ရေအတွက်"}</p>
                     <p>{threePiecesNumbers.length}</p>
                   </div>
                   <div className='twod-overall-detail-container'>
-                    <p>Total Amount</p>
+                    <p>{current_language === "english" ? "Total Amount" : "ထိုးကြေးစုစု‌ပေါင်း"}</p>
                     <p>{twoPiecesTotalAmount()}</p>
                   </div>
                   <div className='twod-overall-detail-container'>
-                    <p>Lottery Closing Time</p>
-                    <p>98:00:00</p>
+                    <p>{current_language === "english" ? "Lottery Closing Time" : "ပိတ်ချိန်"}</p>
+                    <p>{threeDCountDown().diffInDays}days:{threeDCountDown().diffinHours}hours</p>
                   </div>
   
-                  <button className='twod-betnow-btn' disabled={user_login.role==="guest"  ? true:false} onClick={submitBetNow}>Bet Now</button>
+                  <button className='twod-betnow-btn' disabled={user_login.role==="guest"  ? true:false} onClick={submitBetNow}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
                   
                 </div>
       </div>

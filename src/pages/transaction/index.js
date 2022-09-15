@@ -164,6 +164,7 @@ const Transaction = () => {
     const [threedSaleBookList,setThreedSaleBookList] = useState([])
 
     const {user_login} = useSelector(state => state.user)
+    const {current_language} = useSelector(state => state.language)
 
     const fetchWinners = async () => {
       try {
@@ -323,31 +324,31 @@ const Transaction = () => {
      const twodColumns = useMemo(() => 
       [
         {
-          Header: "Name",
+          Header: current_language === "english" ? "Name" : "နာမည်",
           accessor : "Name"
         },
         {
-          Header: "Number",
+          Header: current_language === "english" ? "Number" : "ထိုးသား",
           accessor : "Number"
         },
         {
-          Header: "Amount",
+          Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
           accessor : "Amount"
         },
         {
-          Header: "Compensation",
+          Header: current_language === "english" ? "Compensation" : "ဆ",
           accessor : "Compensation"
         },
         {
-          Header: "Game Type",
+          Header: current_language === "english" ? "Game Type" : "အမျိုးအစား",
           accessor : "GameType"
         },
         {
-          Header: "Date",
+          Header: current_language === "english" ? "Date" : "ရက်",
           accessor : "Date"
         },
         {
-          Header: "Round",
+          Header:current_language === "english" ? "Round" : "ပွဲ",
           accessor : "Round"
         },
       ]
@@ -371,35 +372,35 @@ const Transaction = () => {
      const twodSaleBookColumns = useMemo(() => 
       [
         {
-          Header: "No",
+          Header: current_language === "english" ? "No" : "နံပါတ်",
           accessor : "No"
         },
         {
-          Header: "Date",
+          Header: current_language === "english" ? "Date" : "ရက်",
           accessor : "Date"
         },
         {
-          Header: "Round",
+          Header: current_language === "english" ? "Round" : "ပွဲ",
           accessor : "Round"
         },
         {
-          Header: "Name",
+          Header: current_language === "english" ? "Name" : "နာမည်",
           accessor : "Name"
         },
         {
-          Header: "Game Type",
+          Header: current_language === "english" ? "Game Type" : "အမျိုးအစား",
           accessor : "GameType"
         },
         {
-          Header: "Number",
+          Header: current_language === "english" ? "Number" : "ထိုးသား",
           accessor : "Number"
         },
         {
-          Header: "Compensation",
+          Header: current_language === "english" ? "Compensation" : "ဆ",
           accessor : "Compensation"
         },
         {
-          Header: "Amount",
+          Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
           accessor : "Amount"
         },
         
@@ -425,31 +426,31 @@ const Transaction = () => {
      const LonePyineColumns = useMemo(() => 
      [
       {
-        Header: "Name",
+        Header: current_language === "english" ? "Name" : "နာမည်",
         accessor : "Name"
       },
       {
-        Header: "Number",
+        Header: current_language === "english" ? "Number" : "ထိုးသား",
         accessor : "Number"
       },
       {
-        Header: "Amount",
+        Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
         accessor : "Amount"
       },
       {
-        Header: "Compensation",
+        Header: current_language === "english" ? "Compensation" : "ဆ",
         accessor : "Compensation"
       },
       {
-        Header: "Game Type",
+        Header: current_language === "english" ? "Game Type" : "အမျိုးအစား",
         accessor : "GameType"
       },
       {
-        Header: "Date",
+        Header: current_language === "english" ? "Date" : "ရက်",
         accessor : "Date"
       },
       {
-        Header: "Round",
+        Header:current_language === "english" ? "Round" : "ပွဲ",
         accessor : "Round"
       },
     ]
@@ -473,35 +474,35 @@ const Transaction = () => {
      const LonePyineSaleBookColumns = useMemo(() => 
      [
       {
-        Header: "No",
+        Header: current_language === "english" ? "No" : "နံပါတ်",
         accessor : "No"
       },
       {
-        Header: "Date",
+        Header: current_language === "english" ? "Date" : "ရက်",
         accessor : "Date"
       },
       {
-        Header: "Round",
+        Header: current_language === "english" ? "Round" : "ပွဲ",
         accessor : "Round"
       },
       {
-        Header: "Name",
+        Header: current_language === "english" ? "Name" : "နာမည်",
         accessor : "Name"
       },
       {
-        Header: "Game Type",
+        Header: current_language === "english" ? "Game Type" : "အမျိုးအစား",
         accessor : "GameType"
       },
       {
-        Header: "Number",
+        Header: current_language === "english" ? "Number" : "ထိုးသား",
         accessor : "Number"
       },
       {
-        Header: "Compensation",
+        Header: current_language === "english" ? "Compensation" : "ဆ",
         accessor : "Compensation"
       },
       {
-        Header: "Amount",
+        Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
         accessor : "Amount"
       },
       
@@ -528,31 +529,31 @@ const Transaction = () => {
      const threedColumns = useMemo(() => 
      [
       {
-        Header: "Name",
+        Header: current_language === "english" ? "Name" : "နာမည်",
         accessor : "Name"
       },
       {
-        Header: "Number",
+        Header: current_language === "english" ? "Number" : "ထိုးသား",
         accessor : "Number"
       },
       {
-        Header: "Amount",
+        Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
         accessor : "Amount"
       },
       {
-        Header: "Compensation",
+        Header: current_language === "english" ? "Compensation" : "ဆ",
         accessor : "Compensation"
       },
       {
-        Header: "Game Type",
+        Header: current_language === "english" ? "Game Type" : "အမျိုးအစား",
         accessor : "GameType"
       },
       {
-        Header: "Date",
+        Header: current_language === "english" ? "Date" : "ရက်",
         accessor : "Date"
       },
       {
-        Header: "Round",
+        Header:current_language === "english" ? "Round" : "ပွဲ",
         accessor : "Round"
       },
     ]
@@ -576,35 +577,35 @@ const Transaction = () => {
      const threedSaleBookColumns = useMemo(() => 
      [
       {
-        Header: "No",
+        Header: current_language === "english" ? "No" : "နံပါတ်",
         accessor : "No"
       },
       {
-        Header: "Date",
+        Header: current_language === "english" ? "Date" : "ရက်",
         accessor : "Date"
       },
       {
-        Header: "Round",
+        Header: current_language === "english" ? "Round" : "ပွဲ",
         accessor : "Round"
       },
       {
-        Header: "Name",
+        Header: current_language === "english" ? "Name" : "နာမည်",
         accessor : "Name"
       },
       {
-        Header: "Game Type",
+        Header: current_language === "english" ? "Game Type" : "အမျိုးအစား",
         accessor : "GameType"
       },
       {
-        Header: "Number",
+        Header: current_language === "english" ? "Number" : "ထိုးသား",
         accessor : "Number"
       },
       {
-        Header: "Compensation",
+        Header: current_language === "english" ? "Compensation" : "ဆ",
         accessor : "Compensation"
       },
       {
-        Header: "Amount",
+        Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
         accessor : "Amount"
       },
       
@@ -620,7 +621,7 @@ const Transaction = () => {
         {/* 2D winners */}
         <div className='App winners-parent-container'>
             <div className='winners-header-container'>
-              <p>2Pieces winners</p>
+              <p>{current_language === "english" ? "2Pieces Winners" : "၂လုံးအောင်စရင်း"}</p>
               <div className='winners-filters-container'>
                 {/* <div className='winners-name-container'>
                    <input list='customers' type="text" placeholder='Customer Name'/>
@@ -634,16 +635,16 @@ const Transaction = () => {
                 <input className='winners-date-filter' type="date" onChange={(e) => filter2dWinnersDate(e)}></input>
     
                 <select className='winners-round-filter' onChange={(e) => filter2dRound(e)}>
-                  <option value="">Round</option>
+                  <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
                   <option value="Morning">Morning</option>
                   <option value="Evening">Evening</option>
                 </select>
               </div>
               <div className='sale-generate-btns-container' onClick={() => setIs2dGenerateOpen(!is2dGenerateOpen)}>
-                  Generate
+                {current_language === "english" ? "Generate" : "ထုတ်မည်"}
                   <div className={is2dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                    <button onClick={() => handleExcelExport(twodData,"2dWinners")}>Generate to Excel</button>
-                    <button onClick={() => handlePdfExport("2dWinners","#twodWinners")}>Generate to PDF</button>
+                    <button onClick={() => handleExcelExport(twodData,"2dWinners")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                    <button onClick={() => handlePdfExport("2dWinners","#twodWinners")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
                   </div>
                 </div>
             </div>
@@ -699,7 +700,7 @@ const Transaction = () => {
         {/* Lone Pyine Winners */}
         <div className='App winners-parent-container'>
             <div className='winners-header-container'>
-              <p>Lone Pyine winners</p>
+              <p>{current_language === "english" ? "Lone Pyine Winners" : "လုံးပြိုင်အောင်စရင်း"}</p>
               <div className='winners-filters-container'>
                 {/* <div className='winners-name-container'>
                    <input list='customers' type="text" placeholder='Customer Name'/>
@@ -713,16 +714,16 @@ const Transaction = () => {
                 <input className='winners-date-filter' type="date" onChange={(e) => filterLonePyineWinnersDate(e)}></input>
     
                 <select className='winners-round-filter' onChange={(e) => filterLonePyineRound(e)}>
-                  <option value="">Round</option>
+                  <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
                   <option value="Morning">Morning</option>
                   <option value="Evening">Evening</option>
                 </select>
                 </div>
                 <div className='sale-generate-btns-container' onClick={() => setIsLonePyineGenerateOpen(!isLonePyineGenerateOpen)}>
-                  Generate
+                {current_language === "english" ? "Generate" : "ထုတ်မည်"}
                   <div className={isLonePyineGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                    <button onClick={() => handleExcelExport(lonePyineData,"LonePyineWinners")}>Generate to Excel</button>
-                    <button onClick={() => handlePdfExport("LonePyineWinners","#lonePyineWinners")}>Generate to PDF</button>
+                    <button onClick={() => handleExcelExport(lonePyineData,"LonePyineWinners")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                    <button onClick={() => handlePdfExport("LonePyineWinners","#lonePyineWinners")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
                   </div>
                 </div>
             </div>
@@ -778,7 +779,7 @@ const Transaction = () => {
         {/* 3d Winners */}
         <div className='App winners-parent-container'>
             <div className='winners-header-container'>
-              <p>3Pieces winners</p>
+              <p>{current_language === "english" ? "Lone Pyine Winners" : "၃လုံးအောင်စရင်း"}</p>
               <div className='winners-filters-container'>
                 {/* <div className='winners-name-container'>
                    <input list='customers' type="text" placeholder='Customer Name'/>
@@ -792,16 +793,16 @@ const Transaction = () => {
                 <input className='winners-date-filter' type="date" onChange={(e) => filter3dWinnersDate(e)}></input>
     
                 <select className='winners-round-filter' onChange={(e) => filter3DRound(e)}>
-                  <option value="">Round</option>
+                  <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
                   <option value="Morning">Morning</option>
                   <option value="Evening">Evening</option>
                 </select>
                 </div>
                 <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
-                  Generate
+                {current_language === "english" ? "Generate" : "ထုတ်မည်"}
                   <div className={is3dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                    <button onClick={() =>  handleExcelExport(threedData,"3dWinners")}>Generate to Excel</button>
-                    <button onClick={() => handlePdfExport("3dWinners","#threedWinners")}>Generate to PDF</button>
+                    <button onClick={() =>  handleExcelExport(threedData,"3dWinners")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                    <button onClick={() => handlePdfExport("3dWinners","#threedWinners")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
                   </div>
                 </div>
             </div>
@@ -857,8 +858,8 @@ const Transaction = () => {
     
         <div className='App transaction-parent-container'>
               <div className='transaction-header-container'>
-                <p onClick={() => setHeaderCategory("2d")} className={headerCategory === "2d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>2D</p>
-                <p onClick={() => setHeaderCategory("3d")} className={headerCategory === "3d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>3D</p>
+                <p onClick={() => setHeaderCategory("2d")} className={headerCategory === "2d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>{current_language === "english" ? "2D" : "၂လုံး"}</p>
+                <p onClick={() => setHeaderCategory("3d")} className={headerCategory === "3d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>{current_language === "english" ? "3D" : "၃လုံး"}</p>
               </div>
     
               <div className='transaction-category-container'>
@@ -877,12 +878,12 @@ const Transaction = () => {
                 <>
                   <div className='twod-sale-day-book-parent-container'>
                     <div className='twod-sale-day-book-header-container'>
-                      <p>2Pieces</p>
+                      <p>{current_language === "english" ? "2Pieces" : "၂လုံး"}</p>
                       <div className='sale-generate-btns-container' onClick={() => setIs2dSaleBookGenerateOpen(!is2dSaleBookGenerateOpen)}>
-                        Generate
+                      {current_language === "english" ? "Generate" : "ထုတ်မည်"}
                         <div className={is2dSaleBookGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                          <button onClick={() =>  handleExcelExport(twodSaleBookData,"2dSaleBook")}>Generate to Excel</button>
-                          <button onClick={() => handlePdfExport("2dSaleBook","#twodSaleBook")}>Generate to PDF</button>
+                          <button onClick={() =>  handleExcelExport(twodSaleBookData,"2dSaleBook")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                          <button onClick={() => handlePdfExport("2dSaleBook","#twodSaleBook")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
                         </div>
                       </div>
                     </div>
@@ -985,12 +986,12 @@ const Transaction = () => {
     
                   <div className='twod-sale-day-book-parent-container'>
                   <div className='twod-sale-day-book-header-container'>
-                      <p>Lone Pyine</p>
+                      <p>{current_language === "english" ? "Lone Pyine" : "လုံးပြိုင်"}</p>
                       <div className='sale-generate-btns-container' onClick={() => setIsLonePyineSaleBookGenerateOpen(!isLonePyineSaleBookGenerateOpen)}>
-                        Generate
+                      {current_language === "english" ? "Generate" : "ထုတ်မည်"}
                         <div className={isLonePyineSaleBookGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                          <button onClick={() =>  handleExcelExport(lonePyineSaleBookData,"LonePyineSaleBook")}>Generate to Excel</button>
-                          <button onClick={() => handlePdfExport("LonePyineSaleBook","#lonePyineSaleBook")}>Generate to PDF</button>
+                          <button onClick={() =>  handleExcelExport(lonePyineSaleBookData,"LonePyineSaleBook")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                          <button onClick={() => handlePdfExport("LonePyineSaleBook","#lonePyineSaleBook")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
                         </div>
                       </div>
                     </div>
@@ -1099,12 +1100,12 @@ const Transaction = () => {
                 headerCategory === "3d" && transactionCategory ==="sale day book" ? 
                 <div className='twod-sale-day-book-parent-container'>
                   <div className='twod-sale-day-book-header-container'>
-                      <p>3Pieces</p>
+                      <p>{current_language === "english" ? "3Pieces" : "၃လုံး"}</p>
                       <div className='sale-generate-btns-container' onClick={() => setIs3dSaleBookGenerateOpen(!is3dSaleBookGenerateOpen)}>
-                        Generate
+                      {current_language === "english" ? "Generate" : "ထုတ်မည်"}
                         <div className={is3dSaleBookGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
-                          <button onClick={() =>  handleExcelExport(threedSaleBookData,"3dSaleBook")}>Generate to Excel</button>
-                          <button onClick={() => handlePdfExport("3dSaleBook","#threedSaleBook")}>Generate to PDF</button>
+                          <button onClick={() =>  handleExcelExport(threedSaleBookData,"3dSaleBook")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+                          <button onClick={() => handlePdfExport("3dSaleBook","#threedSaleBook")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
                         </div>
                       </div>
                     </div>

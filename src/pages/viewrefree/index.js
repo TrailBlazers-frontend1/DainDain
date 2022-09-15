@@ -18,6 +18,7 @@ const ViewRefree = () => {
     const [refereePhone,setRefereePhone] = useState("")
 
     const {user_login} = useSelector(state => state.user)
+    const {current_language} = useSelector(state => state.language)
 
     const fetchRefereeProfile =  async ()=>{
         try {
@@ -79,7 +80,7 @@ const ViewRefree = () => {
                 <p className='agent-id'>{refereeId}</p>
 
                 <div className='view-referee-phno-container'>
-                    <p>Phone No.:</p>
+                    <p>{current_language === "english" ? "Phone  :" : "ဖုန်း   :"}</p>
                     <p className='view-referee-phno'>{refereePhone}</p>
                 </div>
 

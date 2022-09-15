@@ -33,8 +33,8 @@ const Navbar = () => {
               <Link to="/3d">{current_language === "english" ? "3D" : "၃လုံး"}</Link>
               {
                 user_login.role === "agent" ? <> 
-                <Link to ="/transaction">{current_language === "english" ? "Transaction" : "‌ငွေလွှဲခြင်း"}</Link> 
-                <Link to="/sale">{current_language === "english" ? "Sale" : "အ‌ေ"}</Link>
+                <Link to ="/transaction">{current_language === "english" ? "Transaction" : "‌ငွေအဝင်အထွက်"}</Link> 
+                <Link to="/sale">{current_language === "english" ? "Sale" : "အ‌ရောင်း"}</Link>
                 </>: null
               }
               </>

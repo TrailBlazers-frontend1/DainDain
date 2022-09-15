@@ -612,13 +612,13 @@ const fetch3dAcceptedTransactions = async (date) => {
               </div> */}
 
             <select className='sale-filter-round-filter'onChange={(e) => filter3DRound(e)}>
-              <option value="">Round</option>
+              <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
               <option value="morning" >Morning</option>
               <option value="evening" >Evening</option>
             </select>
             </div>
             <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
-            {current_language === "english" ? "Round" : "ပွဲ"}
+            {current_language === "english" ? "Generate" : "ထုတ်မည်"}
               <div className={is3dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
                 <button onClick={() => handle3piecesExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
                 <button onClick={() => handle3DExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>

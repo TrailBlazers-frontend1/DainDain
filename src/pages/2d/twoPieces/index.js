@@ -34,6 +34,9 @@ const TwoPieces = () => {
     const {morning_evening} = useSelector(state => state.countdown)
     const {profile} = useSelector(state => state.agent)
     const {twodList} = useSelector(state => state.twodThreed)
+
+    const {current_language} = useSelector(state => state.language)
+    const {remaining_time} = useSelector(state => state.countdown)
     
     const fetch2dList = async () => {
       try {
@@ -268,7 +271,7 @@ const TwoPieces = () => {
           {
             user_login.role==="guest" ? null :
           <div className='twopieces-rate-container'>
-            <p className='twopieces-rate-label'>Rate:</p>
+            <p className='twopieces-rate-label'>{current_language === "english" ? "Rate" : "ဆ"}</p>
             <p className='twopieces-rate-num'>{twodList[i]? twodList[i].compensation : "0"}</p>
           </div>
           }
@@ -319,10 +322,10 @@ const TwoPieces = () => {
       
         <div className='twopieces-header-container'>
           <div className='twopieces-header-washrate'>
-            <p className='twopieces-header'>Two Pieces</p>
+            <p className='twopieces-header'>{current_language === "english" ? "2Pieces" : "၂လုံး"}</p>
             {/* <p className='twopieces-washrate'>Compensation   80</p> */}
           </div>
-          <p className='twopieces-description'>Description</p>
+          {/* <p className='twopieces-description'>Description</p> */}
         </div>
   
         <div className='twopieces-numbers-parent-container'>
@@ -388,11 +391,11 @@ const TwoPieces = () => {
   
           <form onSubmit={(e) => submitCustomerInfo(e)} className='twopieces-name-phno-input-container'>
             <div className='twopieces-name-input-container'>
-              <p>Name:</p>
+              <p>{current_language === "english" ? "Name:" : "နာမည်"}</p>
               <input ref={customerNameInput} required type="text" name="twopieces name" disabled={user_login.role==="guest"  || (!morning_evening.morning && !morning_evening.evening)  ?true:false}></input>
             </div>
             <div className='twopieces-phno-input-container'>
-              <p>Ph No:</p>
+              <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
               <input ref={customerPhnoInput} required type="text" name="twopieces phno" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
             </div>
   
@@ -411,7 +414,7 @@ const TwoPieces = () => {
               </div>
             </div> */}
             
-            <button type='submit' className='twopieces-name-phno-btn'>Add</button>
+            <button type='submit' className='twopieces-name-phno-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
   
           </form>
   
@@ -422,13 +425,13 @@ const TwoPieces = () => {
               <p className='twopieces-customer-phno'>{customerPhno}</p>
             </div>
             <div className='twopieces-number-input-container'>
-              <p>Number:</p>
+              <p>{current_language === "english" ? "Number:" : "ထိုးသား"}</p>
               <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => handleNumberInputChange(e)} type="number" id="number" name="number" min="0" max="99" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
              
             </div>
   
             <div className='twopieces-amount-input-container'>
-              <p>Amount:</p>
+              <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
               <div className='twopieces-amount-input'>
                 <button  type='button' className='twopieces-minus-btn' onClick={()=>{
                   if(amount > 100){
@@ -443,7 +446,7 @@ const TwoPieces = () => {
               </div>
             </div>
   
-            <button type='submit' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false}  className='twopieces-number-amount-btn'>Add</button>
+            <button type='submit' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false}  className='twopieces-number-amount-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
           </form>
   
         </div>
@@ -452,9 +455,9 @@ const TwoPieces = () => {
       <div className='twod-details-parent-container'>
                 <div className='twod-details-container'>
                   <div className='twod-details-header-container'>
-                    <p>Number</p>
-                    <p>Compensation</p>
-                    <p>Amount</p>
+                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
+                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
+                    <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
                   </div>
   
                   <div className='twod-details-table-container'>
@@ -482,19 +485,19 @@ const TwoPieces = () => {
   
                 <div className='twod-overall-details-container'>
                   <div className='twod-overall-detail-container'>
-                    <p>Program Information</p>
+                    <p>{current_language === "english" ? "Program Information" : "အ‌ရေအတွက်"}</p>
                     <p>{twodNumbers.length}</p>
                   </div>
                   <div className='twod-overall-detail-container'>
-                    <p>Total Amount</p>
+                    <p>{current_language === "english" ? "Total Amount" : "ထိုးကြေးစုစု‌ပေါင်း"}</p>
                     <p>{twoPiecesTotalAmount()}</p>
                   </div>
                   <div className='twod-overall-detail-container'>
-                    <p>Lottery Closing Time</p>
-                    <p>98:00:00</p>
+                    <p>{current_language === "english" ? "Lottery Closing Time" : "ပိတ်ချိန်"}</p>
+                    <p>{remaining_time.hours ? remaining_time.hours : "0"}:{remaining_time.minutes ? remaining_time.minutes : "0"}:{remaining_time.seconds ? remaining_time.seconds : "0"}</p>
                   </div>
   
-                  <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false} className='twod-betnow-btn' onClick={submitBetNow}>Bet Now</button>
+                  <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ?  true:false} className='twod-betnow-btn' onClick={submitBetNow}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
                   
                 </div>
       </div>

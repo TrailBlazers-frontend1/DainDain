@@ -10,12 +10,15 @@ import ThreePieces from './threepieces'
 
 import {Navigate} from "react-router-dom"
 
+
 import {useSelector} from "react-redux"
 
 const ThreeD = () => {
 
   const {user_login} = useSelector(state => state.user)
   const [threedCategory,setThreedCategory] = useState("threepieces")
+
+  const {current_language} = useSelector(state => state.language)
 
   if(user_login.isLoggedIn){
     return (
@@ -31,7 +34,7 @@ const ThreeD = () => {
           <div className='App threed-parent-container'>
             <div className='threed-view-container'>
               <div className='threed-navbar'>
-                <p className={threedCategory === "threepieces" ? 'threed-3pieces-link active' : 'threed-3pieces-link'} onClick={() => setThreedCategory("threepieces")}>Three Pieces</p>
+                <p className={threedCategory === "threepieces" ? 'threed-3pieces-link active' : 'threed-3pieces-link'} onClick={() => setThreedCategory("threepieces")}>{current_language === "english" ? "3Pieces" : "၃လုံး"}</p>
                 {/* <p className={threedCategory === "firsttwo" ? 'threed-lonepyaing-link active' : 'threed-lonepyaing-link'} onClick={() => setThreedCategory("firsttwo")}>First Two</p>
                 <p className={threedCategory === "lasttwo" ? 'threed-lonepyaing-link active' : 'threed-lonepyaing-link'} onClick={() => setThreedCategory("lasttwo")}>Last Two</p> */}
               </div>
@@ -48,7 +51,7 @@ const ThreeD = () => {
             </div>
   
             <div className='threed-op-record-parent-container'>
-              <p className='threed-op-record-header'>Lottery Opening Record</p>
+              <p className='threed-op-record-header'>{current_language === "english" ? "Lottery Opening Record" : "၃လုံးမှတ်တမ်း"}</p>
               <div className='threed-op-record-container'>
                 <div className='threed-op-record-datetime-container'>
                   <p>2022-07-16</p>

@@ -59,12 +59,19 @@
     margin-left: 10px;
 }
 
+.betnow-numbers-labels-container p:nth-child(1){
+    width: 60px;
+}
+
 .betnow-numbers-labels-container p:nth-child(2){
     margin-left: 50px;
+    width: 110px;
+    text-align: center;
 }
 
 .betnow-numbers-labels-container p:nth-child(3){
     margin-left: 50px;
+    width: 60px;
 }
 
 .betnow-number-details-rows-container{

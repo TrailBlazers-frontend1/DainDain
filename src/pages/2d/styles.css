@@ -97,7 +97,7 @@
 }
 
 .lottery-op-details-set-text, .lottery-op-details-value-text, .lottery-op-details-number-text{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--secondary-color);
 }

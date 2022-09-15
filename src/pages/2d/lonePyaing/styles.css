@@ -262,12 +262,19 @@
     margin-bottom: 10px;
 }
 
+.lonepyaing-details-header-container p:nth-child(1){
+    width: 60px;
+}
+
 .lonepyaing-details-header-container p:nth-child(2){
     margin-left: 100px;
+    width: 110px;
+    text-align: center;
 }
 
 .lonepyaing-details-header-container p:nth-child(3){
     margin-left: 100px;
+    width: 60px;
 }
 
 .lonepyaing-details-table-container{

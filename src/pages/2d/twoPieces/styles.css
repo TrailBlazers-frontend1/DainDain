@@ -378,12 +378,19 @@
     margin-bottom: 10px;
 }
 
+.twod-details-header-container p:nth-child(1){
+    width: 60px;
+}
+
 .twod-details-header-container p:nth-child(2){
     margin-left: 73px;
+    width: 110px;
+    text-align: center;
 }
 
 .twod-details-header-container p:nth-child(3){
     margin-left: 130px;
+    width: 60px;
 }
 
 .twod-details-table-container{
