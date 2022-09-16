@@ -1,4 +1,4 @@
-import React,{useState,useEffect, useMemo} from 'react'
+import React,{useState,useEffect, useMemo, cloneElement} from 'react'
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
 import "./styles.css"
@@ -98,14 +98,31 @@ function SaleBookTable({columns, data, id}){
         { // loop over the rows
           rows?.map(row => {
             prepareRow(row)
+            // console.log(row)
             return (
-              <tr {...row.getRowProps()} className='sale-details-row'>
+              <tr {...row.getRowProps()} className='sale-details-row row-underline'>
                 { // loop over the rows cells 
-                  row.cells?.map(cell => (
-                    <td {...cell.getCellProps()}>
-                      {cell.render('Cell')}
-                    </td>
-                  ))
+                  row.cells?.map(cell => {
+                   if(Array.isArray(cell.value)){
+                    return(
+                      <td>
+                        {
+                          cell.value.map((item,index) => (
+                            <>
+                            <tr style={{display:"flex",justifyContent:"center"}}><td>{item}</td></tr><br></br>
+                            </>
+                          ))
+                        }
+                      </td>
+                    )
+                   }else{
+                    return(
+                      <td>{cell.value}</td>
+                    )
+                   }
+                   
+                  })
+
                 }
               </tr> 
             )
@@ -122,6 +139,8 @@ function SaleBookTable({columns, data, id}){
 const handleExcelExport = (data,title) => {
   const wb = XLSX.utils.book_new()
   const ws = XLSX.utils.json_to_sheet(data)
+
+  console.log(ws)
 
   XLSX.utils.book_append_sheet(wb,ws, title)
 
@@ -197,12 +216,19 @@ const Transaction = () => {
         const threedSaleDayBook = await axiosInstance.get("/threed-salesday-book",{headers:{Authorization:`Bearer ${user_login.token}`}})
         const lonePyineSaleDayBook = await axiosInstance.get("/lonepyaing-salesday-book",{headers:{Authorization:`Bearer ${user_login.token}`}})
   
-        // console.log(twodSaleDayBook)
+        // console.log(twodSaleDayBook.data.data)
         // console.log(lonePyineSaleDayBook)
         // console.log(threedSaleDayBook)
-        setTwodSaleBookList(twodSaleDayBook?.data?.data)
-        setLonePyineSaleBookList(lonePyineSaleDayBook?.data?.data)
-        setThreedSaleBookList(threedSaleDayBook?.data?.data)
+        const twodSaleData = twodSaleDayBook?.data.data
+        const lonePyineData = lonePyineSaleDayBook?.data.data
+        const threedData = threedSaleDayBook?.data.data
+        console.log(Object.entries(twodSaleData))
+        setTwodSaleBookList(Object.entries(twodSaleData))
+        setLonePyineSaleBookList(Object.entries(lonePyineData))
+        setThreedSaleBookList(Object.entries(threedData))
+        console.log(twodSaleBookList)
+        console.log(lonePyineSaleBookList)
+        console.log(threedSaleBookList)
       } catch (error) {
         alert(error.message)
       }
@@ -355,15 +381,44 @@ const Transaction = () => {
      )
     const twodSaleBookData = useMemo(() => {
       const transactionarr = twodSaleBookList?.map((item,index) => {
+        const phone = item[0]
+        const data = item[1]
+        const numbers = data.map((item) => {
+          return item.twod.number
+        })
+        const compensations = data.map((item) => {
+          return item.twod.compensation
+        })
+        const amounts = data.map((item) => {
+          return item.sale_amount
+        })
+
+        const date = data.map((item) => {
+          return item.twod.date
+        })
+        const round = data.map((item) => {
+          return item.twod.round
+        })
+
+        const customer = data.map((item) => {
+          return item.customer_name
+        })
+
+
+        const sum = amounts.reduce((accumulator, value) => {
+          return accumulator + value;
+        }, 0);
+        
         return {
           No:index + 1,
-          Date: item.twod.date,
-          Round: item.twod.round,
-          Name: `${item.customer_name} ${item.customer_phone}`,
+          Date: date[0],
+          Round: round[0],
+          Name: customer[0],
           GameType: "2pieces",
-          Number: item.twod.number,
-          Compensation: item.twod.compensation,
-          Amount: item.sale_amount,
+          Number: numbers,
+          Compensation: compensations,
+          Amount: amounts,
+          Total : sum
     }
       })
       return transactionarr
@@ -402,6 +457,10 @@ const Transaction = () => {
         {
           Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
           accessor : "Amount"
+        },
+        {
+          Header: current_language === "english" ? "total" : "ထိုး‌ကြေး",
+          accessor : "Total"
         },
         
       ]
@@ -457,15 +516,42 @@ const Transaction = () => {
      )
      const lonePyineSaleBookData = useMemo(() => {
       const transactionarr = lonePyineSaleBookList?.map((item,index) => {
+        const phone = item[0]
+        const data = item[1]
+        const numbers = data.map((item) => {
+          return item.lonepyine.number
+        })
+        const compensations = data.map((item) => {
+          return item.lonepyine.compensation
+        })
+        const amounts = data.map((item) => {
+          return item.sale_amount
+        })
+
+        const date = data.map((item) => {
+          return item.lonepyine.date
+        })
+        const round = data.map((item) => {
+          return item.lonepyine.round
+        })
+
+        const customer = data.map((item) => {
+          return item.customer_name
+        })
+
+        const sum = amounts.reduce((accumulator, value) => {
+          return accumulator + value;
+        }, 0);
         return {
           No:index + 1,
-          Date: item.lonepyine.date,
-          Round: item.lonepyine.round,
-          Name: `${item.customer_name} ${item.customer_phone}`,
+          Date: date[0],
+          Round: round[0],
+          Name: customer[0],
           GameType: "Lone Pyine",
-          Number: item.lonepyine.number,
-          Compensation: item.lonepyine.compensation,
-          Amount: item.sale_amount,
+          Number: numbers,
+          Compensation: compensations,
+          Amount: amounts,
+          Total : sum
     }
       })
       return transactionarr
@@ -504,6 +590,10 @@ const Transaction = () => {
       {
         Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
         accessor : "Amount"
+      },
+      {
+        Header: current_language === "english" ? "Total" : "ထိုး‌ကြေး",
+        accessor : "Total"
       },
       
     ]
@@ -560,15 +650,41 @@ const Transaction = () => {
      )
      const threedSaleBookData = useMemo(() => {
       const transactionarr = threedSaleBookList?.map((item,index) => {
+        const phone = item[0]
+        const data = item[1]
+        const numbers = data.map((item) => {
+          return item.threed.number
+        })
+        const compensations = data.map((item) => {
+          return item.threed.compensation
+        })
+        const amounts = data.map((item) => {
+          return item.sale_amount
+        })
+
+        const date = data.map((item) => {
+          return item.threed.date
+        })
+        const round = data.map((item) => {
+          return item.threed.round
+        })
+
+        const customer = data.map((item) => {
+          return item.customer_name
+        })
+        const sum = amounts.reduce((accumulator, value) => {
+          return accumulator + value;
+        }, 0);
         return {
           No:index + 1,
-          Date: item.threed.date,
-          Round: item.threed.round,
-          Name: `${item.customer_name} ${item.customer_phone}`,
+          Date: date[0],
+          Round: round[0],
+          Name: customer[0],
           GameType: "3D",
-          Number: item.threed.number,
-          Compensation: item.threed.compensation,
-          Amount: item.sale_amount,
+          Number: numbers,
+          Compensation: compensations,
+          Amount: amounts,
+          Total : sum
     }
       })
       return transactionarr
@@ -607,6 +723,10 @@ const Transaction = () => {
       {
         Header: current_language === "english" ? "Amount" : "ထိုး‌ကြေး",
         accessor : "Amount"
+      },
+      {
+        Header: current_language === "english" ? "Total" : "ထိုး‌ကြေး",
+        accessor : "Total"
       },
       
     ]

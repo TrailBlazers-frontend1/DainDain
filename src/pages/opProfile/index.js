@@ -11,7 +11,8 @@ import { axiosInstance } from '../../urlConfig';
 const OpProfile = () => {
     const [isChangeUsername,setIsChangeUsername] = useState(false)
     const [agentName,setAgentName] = useState("")
-    const [profileImage,setProfileImage] =useState()
+    const [opCode, setOpCode] = useState("")
+     const [profileImage,setProfileImage] =useState()
 
     const profileimgRef = useRef()
     const {user_login} = useSelector(state => state.user)
@@ -24,7 +25,8 @@ const OpProfile = () => {
             const res = await axiosInstance.get('/opstaff-profile',{headers:{Authorization:`Bearer ${user_login.token}`}})
             console.log(res)
             if(res.data.status === 200){
-                setAgentName(res.data.data.name)
+                setAgentName(res.data.data.user.name)
+                setOpCode(res.data.data.operationstaff_code)
             }
         } catch (error) {
             alert(error.message)
@@ -40,7 +42,7 @@ const OpProfile = () => {
 
     const handleUserNameChangeCancel = () => {
         setIsChangeUsername(false)
-        setAgentName("User Name")
+        // setAgentName("User Name")
     }
 
     const handleUserNameChangeConfirm = async () => {
@@ -50,10 +52,10 @@ const OpProfile = () => {
             }, {headers:{Authorization:`Bearer ${user_login.token}`}})
             console.log(res)
             if(res.data.status === 200){
-                
+                fetchOpProfile()
             }
         } catch (error) {
-            
+            alert(error.message)
         }
         setIsChangeUsername(false)
         // setAgentName('')
@@ -140,7 +142,7 @@ const OpProfile = () => {
                             
                         </div>
         
-                        <p className='agent-id'>op-001</p>
+                        <p className='agent-id'>{opCode}</p>
         
                         {/* <div className='agent-coin-container'>
                             <p>Remaining Amount:</p>

@@ -82,10 +82,11 @@ const Header = () => {
         fetchAgentProfile()
         fetchRefereeProfile()
 
-        const channel = pusher.subscribe(`channel-name.${profile.refereeId}`);
-        channel.bind('App\\Events\\Notify', function(data) {
+        const channel = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+        channel.bind('App\\Events\\AcceptedSMS', function(data) {
         
           alert(data)
+          return 
          
         });
 

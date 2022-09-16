@@ -194,8 +194,8 @@ const RefreeRequests = () => {
                                 <div className='refree-list-row'>
                                     <p>{refree.user.name}</p>
                                     <p>{refree.user.phone}</p>
-                                    <p>{refree.user.referee_id}</p>
-                                    <p>{refree.user.updated_at}</p>
+                                    <p>{refree.referee_code}</p>
+                                    <p>{refree.user.created_at.split("T")[0]}</p>
     
                                     <div className='refree-list-editdel-btns-container'>
                                         <button className='refree-list-edit-btn' onClick={() => refreeEditBtn(refree.id)}>{current_language === "english" ? "Edit" : "ပြင်မည်"}</button>

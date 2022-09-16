@@ -85,7 +85,7 @@ function ParentRouter() {
         dispatch(logout())
         alert("Something went wrong. Please log in again.")
       // console.log(error)
-      // return
+      return
       }
 
       return Promise.reject(error);
@@ -114,7 +114,7 @@ function ParentRouter() {
         // console.log("morning")
         dispatch(changeRound("morning"))
         var now = new Date();
-        var endTime1 = '11:30:00';
+        var endTime1 = '12:30:00';
 
         //get the end time
         var e1 =  endTime1.split(':');
