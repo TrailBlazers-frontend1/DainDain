@@ -85,9 +85,9 @@ const ViewRefree = () => {
                 </div>
 
 
-                <div className='view-referee-remark-container'>
+                {/* <div className='view-referee-remark-container'>
                     <p>This is this referee remark.....</p>
-                </div>
+                </div> */}
 
                 {/* <div className='agent-coin-container'>
                     <p>Remaining Amount:</p>
