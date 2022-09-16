@@ -114,7 +114,7 @@ function ParentRouter() {
         // console.log("morning")
         dispatch(changeRound("morning"))
         var now = new Date();
-        var endTime1 = '12:30:00';
+        var endTime1 = '11:30:00';
 
         //get the end time
         var e1 =  endTime1.split(':');
@@ -137,7 +137,7 @@ function ParentRouter() {
         // console.log("evening")
         dispatch(changeRound("evening"))
         var now = new Date();
-        var endTime2 = "24:00:00"
+        var endTime2 = "16:00:00"
         
         //get the end time
         var e2 =  endTime2.split(':');

@@ -10,9 +10,9 @@ export const isMorningOrEvening = () => {
 
     
     var startTime1 = '06:00:00';
-    var endTime1 = '12:30:00';
+    var endTime1 = '11:30:00';
     var startTime2 = "12:30:00";
-    var endTime2 = "24:00:00"
+    var endTime2 = "16:00:00"
 
     if(dt.getDay() === 6 || dt.getDay() === 7){
       isMorningRound = false
