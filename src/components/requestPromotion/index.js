@@ -5,6 +5,9 @@ import "./styles.css"
 import { promoteRole } from '../../redux/user';
 import {axiosInstance} from "../../urlConfig"
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
   // const [phno,setPhno] = useState("")
   const [remark,setRemark] = useState("")
@@ -15,6 +18,16 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
   const {user_login} = useSelector(state => state.user)
 
   const dispatch = useDispatch()
+
+  const notify = (message) => toast(message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    });
 
   const submitRequest = async (e) => {
     if(remark !== "" && role!==""){
@@ -31,13 +44,13 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
 
         if(res.data.status === 200){
          
-          alert(res.data.message)
+          notify(res.data.message)
         }
 
         // dispatch(promoteRole(role))
 
       } catch (error) {
-        alert(error.message)
+        notify(error.message)
       }
       
       
@@ -94,6 +107,7 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
 
             <button className='request-promo-btn' type='submit'>Request</button>
         </form>
+        {/* <ToastContainer /> */}
     </div>
   )
 }

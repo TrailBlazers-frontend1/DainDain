@@ -12,6 +12,9 @@ import { axiosInstance } from '../../urlConfig';
 import { changeName } from '../../redux/agent';
 import { changeUserName } from '../../redux/user';
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const AgentProfile = () => {
 
     const {user_login} = useSelector(state => state.user)
@@ -27,6 +30,16 @@ const AgentProfile = () => {
 
     const {current_language} = useSelector(state => state.language)
 
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
+
    
 
     const onProfileChangeSubmit =async (e) => {
@@ -41,10 +54,10 @@ const AgentProfile = () => {
             formData,
             {headers:{Authorization:`Bearer ${user_login.token}`}})
             if(res.data.status === 200){
-                alert(res.data.message)
+                notify(res.data.message)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
        
         
@@ -76,7 +89,7 @@ const AgentProfile = () => {
 
         // console.log(res)
         if(res.data.status === 200){
-            alert(res.data.message)
+            notify(res.data.message)
             const newName = res.data.agent.user.name
             // console.log(newName)
             // dispatch(changeName(newName))
@@ -268,6 +281,7 @@ const AgentProfile = () => {
                     </div>
                 </div> */}
             </div>
+            {/* <ToastContainer /> */}
           </>
         )
         

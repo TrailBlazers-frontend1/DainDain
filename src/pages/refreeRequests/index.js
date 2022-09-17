@@ -9,6 +9,9 @@ import RefreeCrud from '../../components/refreecrud'
 import { addRefree, deleteRefree, deleteRequest } from '../../redux/refree'
 import { axiosInstance } from '../../urlConfig'
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 const RefreeRequests = () => {
 
@@ -34,12 +37,22 @@ const RefreeRequests = () => {
     //     // console.log(refree)
     // },[])
 
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
+
     const fetchRefereeRequests = async () => {
         try {
             const requests =await axiosInstance.get('/referee-requests',{headers:{Authorization:`Bearer ${user_login.token}`}})
             const referees = await axiosInstance.get("/showreferees",{headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(requests)
-            console.log(referees)
+            // console.log(requests)
+            // console.log(referees)
             if(requests.data.status === 200){
                 setRefereeRequests(requests.data.referee_requests)
             }
@@ -47,7 +60,7 @@ const RefreeRequests = () => {
                 setRefereeLists(referees.data.referees)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
        
     }
@@ -78,11 +91,11 @@ const RefreeRequests = () => {
         try {
             const res = await axiosInstance.delete(`/referees/${id}`,{headers:{Authorization:`Bearer ${user_login.token}`}})
             if(res.data.status === 200){
-                alert("Referee Deleted successfully")
+                notify("Referee Deleted successfully")
                 fetchRefereeRequests()
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
         
         
@@ -100,11 +113,11 @@ const RefreeRequests = () => {
             const res = await axiosInstance.post(`/accept-referee/${id}`,{},{headers:{Authorization:`Bearer ${user_login.token}`}})
             // console.log(res)
             if(res.data.status){
-                alert(res.data.message)
+                notify(res.data.message)
                 fetchRefereeRequests()
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
 
        
@@ -116,13 +129,13 @@ const RefreeRequests = () => {
     const handleDeleteRefreeRequest = async (id) => {
         try {
             const res = await axiosInstance.post(`/decline-referee/${id}`,{} ,{headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 200){
-                alert(res.data.message)
+                notify(res.data.message)
                 fetchRefereeRequests()
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
        
     }
@@ -194,8 +207,8 @@ const RefreeRequests = () => {
                                 <div className='refree-list-row'>
                                     <p>{refree.user.name}</p>
                                     <p>{refree.user.phone}</p>
-                                    <p>{refree.user.referee_id}</p>
-                                    <p>{refree.user.updated_at}</p>
+                                    <p>{refree.referee_code}</p>
+                                    <p>{refree.user.created_at.split("T")[0]}</p>
     
                                     <div className='refree-list-editdel-btns-container'>
                                         <button className='refree-list-edit-btn' onClick={() => refreeEditBtn(refree.id)}>{current_language === "english" ? "Edit" : "ပြင်မည်"}</button>
@@ -211,6 +224,7 @@ const RefreeRequests = () => {
                 </div>
             </div>
             </div>
+            {/* <ToastContainer /> */}
         </>
 
     )

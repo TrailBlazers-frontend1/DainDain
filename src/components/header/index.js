@@ -19,6 +19,9 @@ import { axiosInstance } from '../../urlConfig'
 import { changeLangauge } from '../../redux/langauge'
 import { setRefereeProfile } from '../../redux/refereeProfile'
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const Header = () => {
     // const [language,setLanguage] = useState("english")
     const [isLoginOpen,setIsLoginOpen] = useState(false)
@@ -30,6 +33,18 @@ const Header = () => {
     const {profile} = useSelector(state => state.agent)
     const {refereeProfile} = useSelector(state => state.refereeProfile)
     const {current_language} = useSelector(state => state.language)
+
+    // const [morningResult,setMorningResult] = useState()
+    // const [eveningResult,setEveningResult] = useState()
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+    });
 
     const navigate = useNavigate()
     
@@ -58,7 +73,7 @@ const Header = () => {
                     // console.log(profile)
                 }
         } catch (error) {
-            // alert(error.message)
+            notify(error.message)
         }
         
     }
@@ -66,26 +81,31 @@ const Header = () => {
     const fetchRefereeProfile =  async ()=>{
         try {
             const res = await axiosInstance.get("/referee",{headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 200){
                 dispatch(setRefereeProfile(res.data.referee))
             }
         } catch (error) {
-            // alert(error.message)
+            notify(error.message)
         }
      
     }
 
+
     useEffect(() => {
+
+        // fetchLive()
         if(user_login.isLoggedIn && user_login.role === "agent"){        
 
         fetchAgentProfile()
         fetchRefereeProfile()
 
-        const channel = pusher.subscribe(`channel-name.${profile.refereeId}`);
-        channel.bind('App\\Events\\Notify', function(data) {
+        const channel = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+        channel.bind('App\\Events\\AcceptedSMS', function(data) {
         
-          alert(data)
+          notify(data)
+          fetchAgentProfile()
+        //   return 
          
         });
 
@@ -110,14 +130,14 @@ const Header = () => {
             const res = await axiosInstance.post("/logout",{},{headers:{Authorization:`Bearer ${user_login.token}`}})
 
             if(res.data.status === 200){
-                alert(res.data.message)
+                // notify(res.data.message)
                 dispatch(logout())
-                localStorage.removeItem("auth")
-                
+                localStorage.removeItem("auth")  
                 navigate("/")
+                notify(res.data.message)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
         
         
@@ -222,6 +242,7 @@ const Header = () => {
                     <p className='referee-remark'>{current_language === "english" ? "Referee's Remark" : "ဒိုင်သတင်းစကား"}: {refereeProfile.remark}</p>
                 }
         </div>
+        {/* <ToastContainer /> */}
     </>
   )
 }

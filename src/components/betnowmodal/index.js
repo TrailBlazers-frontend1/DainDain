@@ -4,6 +4,9 @@ import { Icon } from '@iconify/react';
 import { useSelector } from 'react-redux'
 import { axiosInstance } from '../../urlConfig';
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
     customerName,customerPhno,
     twodNumbers,setTwodNumbers,
@@ -17,6 +20,16 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
     const {profile} = useSelector(state => state.agent)
     const {twodList} = useSelector(state => state.twodThreed)
     const {current_language} = useSelector(state => state.language)
+
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
 
     let round
     if(morning_evening.morning){
@@ -33,10 +46,10 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 twoDSalesList : twoPiecesData,
             },{headers:{Authorization:`Bearer ${user_login.token}`}})
             if(res.data.status === 200){
-                alert(res.data.message)
+                notify(res.data.message)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
     }
     const sendLonePyineSaleOrder = async (lonePyineData) => {
@@ -45,10 +58,10 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 lonePyaingSalesList : lonePyineData
             },{headers:{Authorization:`Bearer ${user_login.token}`}})
             if(res.data.status === 200){
-                alert(res.data.message)
+                notify(res.data.message)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
     }
 
@@ -58,10 +71,10 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 threeDSalesList : threePiecesData
             },{headers:{Authorization:`Bearer ${user_login.token}`}})
             if(res.data.status === 200){
-                alert(res.data.message)
+                notify(res.data.message)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
     }
 
@@ -82,9 +95,9 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
             const canBet = arr.every((item,index) => {
                 const amount = parseInt(twodNumbers[index].amount)
                 const sale = parseInt(item.sale? item.sale : 0)
-                console.log(item.max_amount < amount + sale)
+                // console.log(item.max_amount < amount + sale)
                 if(item.max_amount < (amount + sale) ){
-                    alert("U Cannot Bet")
+                    notify("U Cannot Bet")
                     return false
                 }
                 return true
@@ -107,7 +120,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                     }
                 })
               
-                console.log(twoPiecesData)
+                // console.log(twoPiecesData)
 
                sendTwodSaleOrder(twoPiecesData)
                   
@@ -129,13 +142,13 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                     customer_phone : customerPhno
                 }
             })
-            console.log(threePiecesData)
+            // console.log(threePiecesData)
             sendThreedSaleOrder(threePiecesData)
             setThreePiecesNumbers([])
         }
 
         if(firstNumbers || lastNumbers){
-            console.log(firstNumbers,lastNumbers)
+            // console.log(firstNumbers,lastNumbers)
             const firstArr = firstNumbers.map((number) => {
                 return {...number,number : `${number.number}*`}
             })
@@ -143,7 +156,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 return {...number,number : `*${number.number}`}
             })
             const combinedArray = firstArr.concat(lastArr)
-            console.log(combinedArray)
+            // console.log(combinedArray)
 
             const arr = []
             lonePyineList.forEach((item,index) => {    
@@ -154,15 +167,15 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 })
             })
 
-            console.log(arr)
+            // console.log(arr)
 
 
             const canBet = arr.every((item,index) => {
                 const amount = parseInt(combinedArray[index].amount)
                 const sale = parseInt(item.sale? item.sale : 0)
-                console.log(item.max_amount < amount + sale)
+                // console.log(item.max_amount < amount + sale)
                 if(item.max_amount < (amount + sale) ){
-                    alert("U Cannot Bet")
+                    notify("U Cannot Bet")
                     return false
                 }
                 return true
@@ -260,7 +273,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
 
             <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
         </div>
-        
+        {/* <ToastContainer /> */}
     </div>
   )
 }

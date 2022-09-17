@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import "./styles.css"
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
@@ -12,6 +12,7 @@ import {Navigate} from "react-router-dom"
 
 
 import {useSelector} from "react-redux"
+import { axiosInstance } from '../../urlConfig'
 
 const ThreeD = () => {
 
@@ -19,6 +20,21 @@ const ThreeD = () => {
   const [threedCategory,setThreedCategory] = useState("threepieces")
 
   const {current_language} = useSelector(state => state.language)
+  const [threedHistory,setThreedHistory] = useState([])
+
+  const fet3dHistory = async () => {
+      try {
+        const res = await axiosInstance.get("/winning-3ds",{headers:{Authorization:`Bearer ${user_login.token}`}})
+        // console.log(res)
+        setThreedHistory(res.data.threeds)
+      } catch (error) {
+        // notify(error.message)
+      }
+    }
+
+    useEffect(() => {
+      fet3dHistory()
+    },[])
 
   if(user_login.isLoggedIn){
     return (
@@ -52,39 +68,23 @@ const ThreeD = () => {
   
             <div className='threed-op-record-parent-container'>
               <p className='threed-op-record-header'>{current_language === "english" ? "Lottery Opening Record" : "၃လုံးမှတ်တမ်း"}</p>
-              <div className='threed-op-record-container'>
-                <div className='threed-op-record-datetime-container'>
-                  <p>2022-07-16</p>
-                  <p>15:00:00</p>
+              {
+                threedHistory.map((item) => (
+                  <div className='threed-op-record-container'>
+                  <div className='threed-op-record-datetime-container'>
+                    <p>{item.date}</p>
+                    {/* <p>15:00:00</p> */}
+                  </div>
+                  <div className='threed-op-record-number-container'>
+                    <p>{item.number.split("")[0]}</p>
+                    <p>{item.number.split("")[1]}</p>
+                    <p>{item.number.split("")[2]}</p>
+                  </div>
                 </div>
-                <div className='threed-op-record-number-container'>
-                  <p>5</p>
-                  <p>9</p>
-                  <p>4</p>
-                </div>
-              </div>
-              <div className='threed-op-record-container'>
-                <div className='threed-op-record-datetime-container'>
-                  <p>2022-07-16</p>
-                  <p>15:00:00</p>
-                </div>
-                <div className='threed-op-record-number-container'>
-                  <p>5</p>
-                  <p>9</p>
-                  <p>4</p>
-                </div>
-              </div>
-              <div className='threed-op-record-container'>
-                <div className='threed-op-record-datetime-container'>
-                  <p>2022-07-16</p>
-                  <p>15:00:00</p>
-                </div>
-                <div className='threed-op-record-number-container'>
-                  <p>5</p>
-                  <p>9</p>
-                  <p>4</p>
-                </div>
-              </div>
+                ))
+              }
+              
+              
             </div>
         </div>
       </>

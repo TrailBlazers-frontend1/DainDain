@@ -8,26 +8,41 @@ import {Navigate} from "react-router-dom"
 import "./styles.css"
 import { axiosInstance } from '../../urlConfig';
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const OpProfile = () => {
     const [isChangeUsername,setIsChangeUsername] = useState(false)
     const [agentName,setAgentName] = useState("")
-    const [profileImage,setProfileImage] =useState()
+    const [opCode, setOpCode] = useState("")
+     const [profileImage,setProfileImage] =useState()
 
     const profileimgRef = useRef()
     const {user_login} = useSelector(state => state.user)
     const {current_language} = useSelector(state => state.language)
+
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
 
 
 
     const fetchOpProfile = async () => {
         try {
             const res = await axiosInstance.get('/opstaff-profile',{headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 200){
-                setAgentName(res.data.data.name)
+                setAgentName(res.data.data.user.name)
+                setOpCode(res.data.data.operationstaff_code)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
        
     }
@@ -40,7 +55,7 @@ const OpProfile = () => {
 
     const handleUserNameChangeCancel = () => {
         setIsChangeUsername(false)
-        setAgentName("User Name")
+        // setAgentName("User Name")
     }
 
     const handleUserNameChangeConfirm = async () => {
@@ -48,12 +63,12 @@ const OpProfile = () => {
             const res = await axiosInstance.post("opstaffProfile-update",{
                 name: agentName
             }, {headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 200){
-                
+                fetchOpProfile()
             }
         } catch (error) {
-            
+            notify(error.message)
         }
         setIsChangeUsername(false)
         // setAgentName('')
@@ -72,7 +87,7 @@ const OpProfile = () => {
 
     const onProfileChangeSubmit =async (e) => {
         e.preventDefault()
-        console.log(profileImage)
+        // console.log(profileImage)
         const formData = new FormData();
         formData.append("profile_image" , profileImage)
         formData.append("name" , agentName)
@@ -80,7 +95,7 @@ const OpProfile = () => {
             const res =await  axiosInstance.post("/opstaffProfile-update",
             formData,
             {headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(res)
+            // console.log(res)
             if(res.data.status === 200){
 
             }
@@ -140,7 +155,7 @@ const OpProfile = () => {
                             
                         </div>
         
-                        <p className='agent-id'>op-001</p>
+                        <p className='agent-id'>{opCode}</p>
         
                         {/* <div className='agent-coin-container'>
                             <p>Remaining Amount:</p>
@@ -183,6 +198,7 @@ const OpProfile = () => {
                             </div>
                         </div> */}
                     </div>
+                    {/* <ToastContainer /> */}
                   </>
           )
     }else{

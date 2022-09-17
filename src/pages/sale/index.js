@@ -14,6 +14,9 @@ import { useTable } from 'react-table'
 import jsPDF from "jspdf";
 import autoTable from 'jspdf-autotable';
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 //table layout
 function Table({columns, data, id}){
@@ -91,6 +94,16 @@ const Sale = () => {
  const {user_login} = useSelector(state => state.user)
  const {current_language} = useSelector(state => state.language)
 
+ const notify = (message) => toast(message, {
+  position: "top-center",
+  autoClose: 3000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: false,
+  draggable: false,
+  progress: undefined,
+  });
+
 
  //fetch all transactions
  const fetchAcceptedTransactions = async () => {
@@ -105,23 +118,23 @@ const Sale = () => {
     setAcceptedLonePyineTransactions(lonepyine?.data?.accepted_lonepyaing_lists)
     setAccepted3dTransactions(threed?.data?.accepted_threed_lists)
 
-    console.log(twod)
-    console.log(acceptedLonePyineTransactions)
-    console.log(accepted3dTransactions)
+    // console.log(twod)
+    // console.log(acceptedLonePyineTransactions)
+    // console.log(accepted3dTransactions)
 
     setTemp2dArr(twod?.data?.accepted_twod_lists)
     setTempLonePyineArr(lonepyine?.data?.accepted_lonepyaing_lists)
     setTemp3dArr(threed?.data?.accepted_threed_lists)
   }
   } catch (error) {
-    alert(error.message)
+    notify(error.message)
   }
   
 
   // console.log(twod.data.twod_sale_lists)
-  console.log(accepted2dTransactions)
-  console.log(acceptedLonePyineTransactions)
-  console.log(accepted3dTransactions)
+  // console.log(accepted2dTransactions)
+  // console.log(acceptedLonePyineTransactions)
+  // console.log(accepted3dTransactions)
 
 }
 
@@ -130,7 +143,7 @@ const fetch2dAcceptedTransactions = async (date) => {
   const twod = await axiosInstance.post("/2d-accepted-transitionbydate",{
     current_date : date
   },{headers:{Authorization:`Bearer ${user_login.token}`}})
-  console.log(twod)
+  // console.log(twod)
   
 
   if(twod.data.status === 200){
@@ -325,7 +338,7 @@ const fetch3dAcceptedTransactions = async (date) => {
   }
 
   const filter2dDate = (e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     fetch2dAcceptedTransactions(e.target.value)
   }
 
@@ -661,7 +674,7 @@ const fetch3dAcceptedTransactions = async (date) => {
           
         </div>
 
-        
+        {/* <ToastContainer /> */}
     </>
   )
 }

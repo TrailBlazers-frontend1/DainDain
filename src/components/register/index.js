@@ -5,6 +5,9 @@ import {useSelector, useDispatch } from 'react-redux/es/exports';
 
 import { axiosInstance } from '../../urlConfig';
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
 
 
@@ -26,6 +29,16 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
   const {user_register} = useSelector(state => state.user)
 
   const dispatch = useDispatch()
+
+  const notify = (message) => toast(message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    });
   
   const handleDaiRegClose = () => {
     setIsDaiRegOpen(false)
@@ -96,11 +109,11 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
       // if(otp.status === 200){
       //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otp.data.request_id}&code=${otpInput}`)
       //   console.log(res)
-      //   isOTPValid(true)
+        // isOTPValid(true)
       // }
      
     }else{
-      alert("Phone Number is not valid.")
+      notify("Phone Number is not valid.")
     }
     
     // console.log(res)
@@ -111,7 +124,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
     if(otpInput === ""){
       setIsOTPValid(false)
     }else{
-      const verifyOTP =  async () => {
+      // const verifyOTP =  async () => {
         // if(otpInput.length === 4){
         //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
         //   // console.log(res)
@@ -119,7 +132,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
             setIsOTPValid(true)
           // }
         // }
-      }
+      // }
   
 //       verifyOTP()
     }
@@ -129,10 +142,10 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
   const signUp = (e) => {
     e.preventDefault()
     if(password !== confirmPassword){
-      alert("Passwords are not eqaul. Please reconfirm them.")
+      notify("Passwords are not eqaul. Please reconfirm them.")
     }
     else if(!isOTPValid){
-      alert("This OTP is not valid")
+      notify("This OTP is not valid")
     }
     else{
 
@@ -149,11 +162,11 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         const res = axiosInstance.post("/register",userData)
         if(res.status === 200) {
           // console.log(res)
-          alert(res.data.message)
+          notify(res.data.message)
         }
       } catch (error) {
         // console.log(error)
-        alert(error.message)
+        notify(error.message)
       }
 
       setName("")
@@ -211,7 +224,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         <button type="submit" className='dai-register-btn'>Register</button>
           {/* {user_register.name ? <p>{user_register.name}</p>:null} */}
       </form>
-
+      {/* <ToastContainer /> */}
     </div>
   )
 }

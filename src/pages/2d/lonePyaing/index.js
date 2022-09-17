@@ -7,6 +7,9 @@ import {setLonePyineList} from "../../../redux/2d3dList"
 import { axiosInstance } from '../../../urlConfig'
 import "./styles.css"
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const LonePyaing = () => {
     // let whichLone
 
@@ -30,6 +33,16 @@ const LonePyaing = () => {
 
     const {current_language} = useSelector(state => state.language)
     const {remaining_time} = useSelector(state => state.countdown)
+
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
 
     const dispatch = useDispatch()
 
@@ -70,7 +83,7 @@ const LonePyaing = () => {
             }
             
           } catch (error) {
-            alert(error.message)
+            notify(error.message)
           }
         
   
@@ -86,7 +99,7 @@ const LonePyaing = () => {
     
           const channel = pusher.subscribe(`lonepyine-channel.${profile.refereeId}`);
           channel.bind('App\\Events\\lonepyine', function(data) {
-            // alert(JSON.stringify(data));
+            // notify(JSON.stringify(data));
             dispatch(setLonePyineList(data.salesList))
             
             // console.log(lonePyineList)
@@ -131,7 +144,7 @@ const LonePyaing = () => {
 
     const changeSecondNumbers = (e,lonePyine) => {
         const numberString = e.target.value.toString().split("")[1]
-        console.log(numberString)
+        // console.log(numberString)
         
         let found = false
 
@@ -261,11 +274,11 @@ const LonePyaing = () => {
     const submitLonePyaing = () => {
         const totalLonePyineAmount = totalAmount()
         if(customerName === "" || customerPhNo === ""){
-            alert("Please Provide Customer Name and Phone Number")
+            notify("Please Provide Customer Name and Phone Number")
         }else if(firstNumbers.length === 0 && lastNumbers.length === 0){
-            alert("Please Bet on a number")
+            notify("Please Bet on a number")
         }else if(profile.coin_amount < totalLonePyineAmount){
-            alert("Not Enough Coins")
+            notify("Not Enough Coins")
           }
         else{
             // console.log(firstNumbers,lastNumbers)
@@ -646,6 +659,7 @@ const LonePyaing = () => {
             </div>
         </div>
     </div>
+    {/* <ToastContainer /> */}
     </>
   )
 }

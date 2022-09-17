@@ -5,6 +5,9 @@ import { Icon } from '@iconify/react';
 import { addRefree, editRefree } from '../../redux/refree';
 import { axiosInstance } from '../../urlConfig';
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, setIsEditRefree, editRefreeId,setEditRefreeId,setRefereeRequests,setRefereeLists}) => {
 
     const [addRefreePhNo,setAddRefreePhNo] = useState("")
@@ -24,12 +27,22 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
     const [editRefreepw,setEditRefreepw] = useState("")
     const [editRefreeConfirmpw,setEditRefreeConfirmpw] = useState("")
 
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
+
     const fetchRefereeRequests = async () => {
         try {
             const requests =await axiosInstance.get('/referee-requests',{headers:{Authorization:`Bearer ${user_login.token}`}})
             const referees = await axiosInstance.get("/showreferees",{headers:{Authorization:`Bearer ${user_login.token}`}})
-            console.log(requests)
-            console.log(referees)
+            // console.log(requests)
+            // console.log(referees)
             if(requests.data.status === 200){
                 setRefereeRequests(requests.data.referee_requests)
             }
@@ -37,7 +50,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
                 setRefereeLists(referees.data.referees)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
        
     }
@@ -81,7 +94,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
     const submitEditRefree =async (e) => {
         e.preventDefault()
         // console.log(editRefreePhNo,editRefreeName,editRefreepw,editRefreeConfirmpw)
-        console.log(editRefreeId, editRefreeName)
+        // console.log(editRefreeId, editRefreeName)
         
         try {
             const res =await axiosInstance.post(`referees/${editRefreeId}`,{
@@ -89,11 +102,11 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
             },{headers:{Authorization:`Bearer ${user_login.token}`}})
 
            if(res.data.status === 200){
-            alert(res.data.message)
+            notify(res.data.message)
             fetchRefereeRequests()
            }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
 
         setIsEditRefree(false)
@@ -181,6 +194,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
         
                     <button type="submit" className='refree-crud-submit-btn'>{title}</button>
                 </form>
+                {/* <ToastContainer /> */}
             </div>
           )
     }

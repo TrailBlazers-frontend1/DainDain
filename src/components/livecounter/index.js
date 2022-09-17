@@ -1,7 +1,8 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import "./styles.css"
 import { useSelector } from 'react-redux'
 import { isMorningOrEvening, threeDCountDown } from '../../redux/countdown'
+import { axiosInstance } from '../../urlConfig'
 
 const LiveCounter = ({category}) => {
     // const now = moment()
@@ -10,6 +11,36 @@ const LiveCounter = ({category}) => {
     // console.log(round1,round2)
 
     const {remaining_time} = useSelector(state => state.countdown)
+
+     const [morningResult,setMorningResult] = useState()
+    const [eveningResult,setEveningResult] = useState()
+
+    const date = new Date().toLocaleDateString()
+    const day = new Date().getDay()
+    
+
+    
+
+
+    const fetchLive = async () => {
+        try {
+            const res = await  axiosInstance.get("https://api.thaistock2d.com/live")
+            // console.log(res.data.result[1], res.data.result[3])
+            setMorningResult(res.data.result[1])
+            setEveningResult(res.data.result[3])
+            // setLive(res.data.live.twod)
+
+            // console.log(morningResult.stock_date)
+        } catch (error) {
+            
+        }
+        
+    }
+
+    useEffect(() => {
+        fetchLive()
+        // console.log("hi")
+    },[])
     
   return (
     <div className='livecounter-container'>
@@ -25,7 +56,7 @@ const LiveCounter = ({category}) => {
             {
                 category === "2d" && 
                 <div className='livecounter-counter-container'>
-                <p className='livecounter-multiply-times-container'><span>08/01/2022  {isMorningOrEvening().isMorningRound && 'Morning'}{isMorningOrEvening().isEveningRound && 'Evening'}</span> Round</p>
+                <p className='livecounter-multiply-times-container'><span>{morningResult?.stock_date}{isMorningOrEvening().isMorningRound && 'Morning'}{isMorningOrEvening().isEveningRound && 'Evening'}</span> Round</p>
                 <div className='livecounter-time-container'>
                     <div className='livecounter-hour-container'>
                         {/* <div className='livecounter-hour-1stdigit'>0</div> */}
@@ -52,7 +83,7 @@ const LiveCounter = ({category}) => {
             {
                 category === "3d" && 
                 <div className='livecounter-counter-container'>
-                <p className='livecounter-multiply-times-container'><span>08/01/2022</span></p>
+                <p className='livecounter-multiply-times-container'><span>{date}</span></p>
                 <div className='livecounter-time-container'>
                     <div className='livecounter-hour-container'>
                         {/* <div className='livecounter-hour-1stdigit'>0</div> */}
@@ -79,17 +110,58 @@ const LiveCounter = ({category}) => {
 
             }
 
-            
-
+            {
+                category === "2d" && (
+                        <>
             <div className='livecounter-lotteryopnum-container'>
-                <p className='livecounter-lotteryopnum-header-container'><span>08/01/2022 {isMorningOrEvening().isMorningRound && 'Morning'}{isMorningOrEvening().isEveningRound && 'Evening'}</span> Number</p>
+                <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p>
+                {/* <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p> */}
                 <div className='livecounter-lotteryopnum-num-container'>
                     {category === "2d" && (
                         <>
-                        <p className='livecounter-lotteryopnum-1st'>9</p>
-                        <p className='livecounter-lotteryopnum-2nd'>4</p>
+                        <p className='livecounter-lotteryopnum-1st'>{morningResult?.twod.split("")[0]}</p>
+                        <p className='livecounter-lotteryopnum-2nd'>{morningResult?.twod.split("")[1]}</p>
                         </>
                     )}
+                    {/* {category === "3d" && (
+                        <>
+                        <p className='livecounter-lotteryopnum-1st'>9</p>
+                        <p className='livecounter-lotteryopnum-2nd'>4</p>
+                        <p className='livecounter-lotteryopnum-3nd'>4</p>
+                        </>
+                    )} */}
+                </div>
+            </div>
+            <div className='livecounter-lotteryopnum-container'>
+                <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Evening</span> Number</p>
+                {/* <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p> */}
+                <div className='livecounter-lotteryopnum-num-container'>
+                    {category === "2d" && (
+                        <>
+                        <p className='livecounter-lotteryopnum-1st'>{eveningResult?.twod.split("")[0]}</p>
+                        <p className='livecounter-lotteryopnum-2nd'>{eveningResult?.twod.split("")[1]}</p>
+                        </>
+                    )}
+                    {/* {category === "3d" && (
+                        <>
+                        <p className='livecounter-lotteryopnum-1st'>9</p>
+                        <p className='livecounter-lotteryopnum-2nd'>4</p>
+                        <p className='livecounter-lotteryopnum-3nd'>4</p>
+                        </>
+                    )} */}
+                </div>
+            </div>
+            </>
+                )
+            }
+            
+
+            {
+                category === "3d" && (
+                    <div className='livecounter-lotteryopnum-container'>
+                {/* <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date}</span> Number</p> */}
+                {/* <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p> */}
+                {/* <div className='livecounter-lotteryopnum-num-container'>
                     {category === "3d" && (
                         <>
                         <p className='livecounter-lotteryopnum-1st'>9</p>
@@ -97,8 +169,10 @@ const LiveCounter = ({category}) => {
                         <p className='livecounter-lotteryopnum-3nd'>4</p>
                         </>
                     )}
-                </div>
+                </div> */}
             </div>
+                )
+            }
             
         </div>
     </div>

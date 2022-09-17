@@ -12,6 +12,9 @@ import { setTwodList } from '../../../redux/2d3dList'
 
 import "./styles.css"
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const TwoPieces = () => {
     const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
 
@@ -37,6 +40,16 @@ const TwoPieces = () => {
 
     const {current_language} = useSelector(state => state.language)
     const {remaining_time} = useSelector(state => state.countdown)
+
+    const notify = (message) => toast(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      });
     
     const fetch2dList = async () => {
       try {
@@ -57,7 +70,7 @@ const TwoPieces = () => {
         }
         
       } catch (error) {
-        alert(error.message)
+        notify(error.message)
       }
     }
 
@@ -153,14 +166,14 @@ const TwoPieces = () => {
     //submit number amount details start
     const submitBetNow = () => {
       const totalAmount = twoPiecesTotalAmount()
-      console.log(profile.coin_amount)
+      // console.log(profile.coin_amount)
       if(customerName == "" || customerPhno == ""){
-        alert("Please Provide Customer name and phone number")
+        notify("Please Provide Customer name and phone number")
       }
       else if(twodNumbers.length === 0){
-        alert("Please Bet on a number")
+        notify("Please Bet on a number")
       }else if(profile.coin_amount < totalAmount){
-        alert("Not Enough Coins")
+        notify("Not Enough Coins")
       }
       else{
         
@@ -185,7 +198,7 @@ const TwoPieces = () => {
         })
     
           if(doesNumberExist){
-            alert("Number Already Exists")
+            notify("Number Already Exists")
           }
           else{
             const compensationId = twodList.find((item) => {
@@ -198,7 +211,7 @@ const TwoPieces = () => {
             //     return item
             //   }
             // })
-            console.log(compensationId)
+            // console.log(compensationId)
             const newNumber = {
               id:compensationId?.id,
               number: number,
@@ -208,7 +221,7 @@ const TwoPieces = () => {
             setTwodNumbers([...twodNumbers,newNumber])
           }
       }else{
-        alert("Number should have two digits")
+        notify("Number should have two digits")
       }
         
       setNumber("")
@@ -300,7 +313,7 @@ const TwoPieces = () => {
 
       const handleNumberInputChange = (e) => {
         setNumber(e.target.value)
-        console.log(e.target.value)
+        // console.log(e.target.value)
       }
 
 
@@ -501,6 +514,7 @@ const TwoPieces = () => {
                   
                 </div>
       </div>
+      {/* <ToastContainer /> */}
       </>
     )
   }

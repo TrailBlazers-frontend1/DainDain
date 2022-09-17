@@ -10,6 +10,9 @@ import { Icon } from '@iconify/react';
 import "./styles.css"
 import { axiosInstance } from '../../urlConfig'
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 
 const Home = () => {
     const [twoOrThree,setTwoOrThree] = useState("two")
@@ -23,6 +26,16 @@ const Home = () => {
     const {current_language} = useSelector(state => state.language)
 
     let isFilteringDate = false
+
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
 
     const fetchLive = async () => {
         try {
@@ -49,20 +62,20 @@ const Home = () => {
             // setLive(res.data.live.twod)
 
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
     } 
 
     useEffect(() => {
-        console.log(date)
+        // console.log(date)
         if(date.length){
             // setIsFilteringDate(true)
             isFilteringDate = true
-            console.log(isFilteringDate)
+            // console.log(isFilteringDate)
         }else{
             // setIsFilteringDate(false)
             isFilteringDate = false
-            console.log(isFilteringDate)
+            // console.log(isFilteringDate)
         }
        
     },[date])
@@ -346,7 +359,7 @@ const Home = () => {
                     
                 </div>
             </section>
-            
+            {/* <ToastContainer /> */}
         </>
     )
 }

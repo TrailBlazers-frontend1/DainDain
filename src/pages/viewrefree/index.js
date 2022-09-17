@@ -10,6 +10,9 @@ import {Navigate} from "react-router-dom"
 import {useSelector} from "react-redux"
 import { axiosInstance } from '../../urlConfig'
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const ViewRefree = () => {
 
     const [refereeName,setRefereeName] = useState("")
@@ -19,6 +22,16 @@ const ViewRefree = () => {
 
     const {user_login} = useSelector(state => state.user)
     const {current_language} = useSelector(state => state.language)
+
+    const notify = (message) => toast(message, {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        });
 
     const fetchRefereeProfile =  async ()=>{
         try {
@@ -30,7 +43,7 @@ const ViewRefree = () => {
                 setRefereeId(res.data.referee.referee_code)
             }
         } catch (error) {
-            alert(error.message)
+            notify(error.message)
         }
      
     }
@@ -97,6 +110,7 @@ const ViewRefree = () => {
                     </div>
                 </div> */}
             </div>
+            {/* <ToastContainer /> */}
             </>
         )
     }else{

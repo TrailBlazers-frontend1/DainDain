@@ -11,6 +11,9 @@ import { axiosInstance } from '../../urlConfig';
 import { Navigate, useNavigate } from 'react-router-dom'
 // import axios from 'axios'
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const Login = ({isLoginOpen,setIsLoginOpen}) => {
 
     const [phNo,setPhNo] = useState("")
@@ -32,6 +35,16 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const notify = (message) => toast(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      });
 
     const [language,setLanguage] = useState("myanmar")
     const options = [
@@ -56,11 +69,13 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             // const data = await res.data
             // console.log(res)
             if(res.data.status === 200){
-                alert("login successful")
+              notify(res.data.message)
                 // console.log(data)
                 const data = res.data.user
-
-                const user = {
+                if(data.status === '3'){
+                  notify("You cannot log in")
+                }else{
+                  const user = {
                     id: data.id,
                     name : data.name,
                     phNo : data.phone,
@@ -69,19 +84,21 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                     isLoggedIn:true,
                 }
 
-                if(data.request_type === "referee"){
-                  navigate("https://www.google.com/",{replace : true})
-                }else{
-                  localStorage.setItem("auth",JSON.stringify(user))
-                  dispatch(login(user))
+                  if(data.request_type === "referee"){
+                    navigate("https://www.google.com/",{replace : true})
+                  }else{
+                    localStorage.setItem("auth",JSON.stringify(user))
+                    dispatch(login(user))
+                  }
                 }
+                
 
                
             }else{
-                alert("Something went wrong")
+                notify("Something went wrong")
             }
         } catch (error) {
-            console.log(error)
+            // console.log(error)
         }
 
         setPhNo("")
@@ -103,18 +120,18 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             setCountDownStarted(false)
           },1000 * 60)
     
-          const OtpRequest = {
-            "access-token" : "vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-",
-            "to" : forgotPwPhNo,
-            "brand_name" : "TrailBlazers",
-            "channel" : "sms",
-            "sender_name":"MC888"
-          }
+          // const OtpRequest = {
+          //   "access-token" : "vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-",
+          //   "to" : forgotPwPhNo,
+          //   "brand_name" : "TrailBlazers",
+          //   "channel" : "sms",
+          //   "sender_name":"MC888"
+          // }
       
-          const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${forgotPwPhNo}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
-          OtpRequest})
+          // const otp =await axiosInstance.get(`https://verify.smspoh.com/api/v2/request?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&to=${forgotPwPhNo}&channel=sms&brand_name=TrailBlazers&code_length=4`,{
+          // OtpRequest})
     
-          setOtpRequestId(otp.data.request_id)
+          // setOtpRequestId(otp.data.request_id)
     
           // if(otp.status === 200){
           //   const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otp.data.request_id}&code=${otpInput}`)
@@ -123,7 +140,7 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
           // }
          
         }else{
-          alert("Phone Number is not valid.")
+          notify("Phone Number is not valid.")
         }
         
         // console.log(res)
@@ -134,13 +151,13 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
           setIsOTPValid(false)
         }else{
           const verifyOTP =  async () => {
-            if(otpInput.length === 4){
-              const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
-              // console.log(res)
-              if(res.status ===  200){
+          //   if(otpInput.length === 4){
+          //     const res = await axiosInstance.get(`https://verify.smspoh.com/api/v1/verify?access-token=vJMxoWJOITaHCjm-bMoUe8PNZcFh79Z1-R4VpzRPjOnMB6mTd06FE6U497SldLe-&request_id=${otpRequestId}&code=${otpInput}`)
+          //     // console.log(res)
+          //     if(res.status ===  200){
                 setIsOTPValid(true)
-              }
-            }
+              // }
+            // }
           }
       
           verifyOTP()
@@ -191,10 +208,10 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
         e.preventDefault()
         // e.preventDefault()
         if(forgotPw !== forgotConfirmPw){
-          alert("Passwords are not eqaul. Please reconfirm them.")
+          notify("Passwords are not eqaul. Please reconfirm them.")
         }
         else if(!isOTPValid){
-          alert("This OTP is not valid")
+          notify("This OTP is not valid")
         }
         else{
     
@@ -210,11 +227,11 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             const res = axiosInstance.post("/forget-password",userData)
             if(res.data.status === 200) {
             //   console.log(res)
-            alert(res.data.message)
+            notify(res.data.message)
             }
           } catch (error) {
             // console.log(error)
-            alert(error.message)
+            notify(error.message)
           }
     
         //   setName("")
@@ -322,6 +339,7 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             }
            
         </div>
+        {/* <ToastContainer /> */}
     </div>
   )
 }

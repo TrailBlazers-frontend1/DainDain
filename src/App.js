@@ -27,6 +27,8 @@ import {logout} from "./redux/user"
 
 import {useNavigate} from "react-router-dom"
 import Pusher from 'pusher-js';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App(){
   return (
@@ -43,6 +45,15 @@ function ParentRouter() {
   const navigate = useNavigate()
 
   // const {user_login} = useSelector(state => state.user)
+  const notify = (message) => toast(message, {
+    position: "top-center",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: false,
+    draggable: false,
+    progress: undefined,
+    });
 
   const dispatch = useDispatch()
 
@@ -74,7 +85,7 @@ function ParentRouter() {
         navigate("/")
         localStorage.removeItem("auth")
         dispatch(logout())
-        alert("Unauthorized")
+        notify("Unauthorized")
       }
       return response
     }, function(error) {
@@ -83,9 +94,9 @@ function ParentRouter() {
         navigate("/")
         localStorage.removeItem("auth")
         dispatch(logout())
-        alert("Something went wrong. Please log in again.")
+        notify("Something went wrong. Please log in again.")
       // console.log(error)
-      // return
+      return
       }
 
       return Promise.reject(error);
@@ -114,7 +125,7 @@ function ParentRouter() {
         // console.log("morning")
         dispatch(changeRound("morning"))
         var now = new Date();
-        var endTime1 = '11:30:00';
+        var endTime1 = '12:30:00';
 
         //get the end time
         var e1 =  endTime1.split(':');
@@ -167,7 +178,7 @@ function ParentRouter() {
 
 
   return (
-    
+    <>
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/2d" element={<TwoD/>}/>
@@ -182,6 +193,8 @@ function ParentRouter() {
       <Route path="/transaction" element={<Transaction/>}/>
       <Route path="/notifications" element={<Notifications/>}/>
     </Routes>
+    <ToastContainer />
+    </>
     
     
   );

@@ -7,6 +7,9 @@ import BetNowModal from '../../../components/betnowmodal'
 import {useSelector} from "react-redux"
 import { threeDCountDown } from '../../../redux/countdown'
 
+import { ToastContainer, toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 const ThreePieces = () => {
 
   const [isBetNowModalOpen,setIsBetNowModalOpen] = useState(false)
@@ -22,6 +25,7 @@ const ThreePieces = () => {
     const [threePiecesNumbers,setThreePiecesNumbers] = useState([])
 
     const [threedCompensation,setThreedCompensation] = useState("")
+   
 
     // const {morning_evening} = useSelector(state => state.countdown)
 
@@ -29,6 +33,16 @@ const ThreePieces = () => {
     const {profile} = useSelector(state => state.agent)
 
     const {current_language} = useSelector(state => state.language)
+
+    const notify = (message) => toast(message, {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      });
 
     const fetch3dCompensation = async () => {
       try {
@@ -38,19 +52,30 @@ const ThreePieces = () => {
           setThreedCompensation(res.data.threeds?.compensation)
         }
       } catch (error) {
-        alert(error.message)
+        notify(error.message)
       }
       
 
     }
 
+    // const fet3dHistory = async () => {
+    //   try {
+    //     const res = await axiosInstance.get("/winning-3ds",{headers:{Authorization:`Bearer ${user_login.token}`}})
+    //     // console.log(res)
+    //     setThreedHistory(res.data.threeds)
+    //   } catch (error) {
+    //     notify(error.message)
+    //   }
+    // }
+
     useEffect(() => {
+      // fet3dHistory()
       if(user_login.isLoggedIn && user_login.role === "agent"){
         fetch3dCompensation()
   
       const channel = pusher.subscribe(`threed-channel.${profile.refereeId}`);
         channel.bind('App\\Events\\sendthreed', function(data) {
-          // alert(JSON.stringify(data));
+          // notify(JSON.stringify(data));
           // console.log(data[0].compensation)
           setThreedCompensation(data[0].compensation)
           // console.log(data)
@@ -91,7 +116,7 @@ const ThreePieces = () => {
         })
     
           if(doesNumberExist){
-            alert("Number Already Exists")
+            notify("Number Already Exists")
           }
           else{
             if(!Rchecked){
@@ -119,7 +144,7 @@ const ThreePieces = () => {
             
           }
       }else{
-        alert("Number should have three digits")
+        notify("Number should have three digits")
       }
         
       setNumber("")
@@ -143,12 +168,12 @@ const ThreePieces = () => {
     const submitBetNow = () => {
       const totalAmount = twoPiecesTotalAmount()
       if(customerName == "" && customerPhno == ""){
-        alert("Please Provide Customer name and phone number")
+        notify("Please Provide Customer name and phone number")
       }
       else if(threePiecesNumbers.length === 0){
-        alert("Please Bet on a number")
+        notify("Please Bet on a number")
       }else if(profile.coin_amount < totalAmount){
-        alert("Not Enough Coins")
+        notify("Not Enough Coins")
       }
       else{
         
@@ -210,7 +235,7 @@ const ThreePieces = () => {
 
     const handleRCheck = () => {
       setRchecked(!Rchecked)
-      console.log(Rchecked)
+      // console.log(Rchecked)
     }
   return (
     <>
@@ -360,6 +385,7 @@ const ThreePieces = () => {
                   
                 </div>
       </div>
+      {/* <ToastContainer /> */}
     </>
   )
 }
