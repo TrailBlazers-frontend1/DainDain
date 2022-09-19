@@ -6,7 +6,7 @@ import axios from "axios";
 // console.log(auth)
 
 export const axiosInstance = axios.create({
-    baseURL:"http://165.22.51.1/api",
+    baseURL:"http://128.199.201.43/api",
     // headers:{Authorization : `Bearer ${token}`}
 })
 
