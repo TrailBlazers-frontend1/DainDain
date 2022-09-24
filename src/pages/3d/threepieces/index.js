@@ -75,12 +75,12 @@ const ThreePieces = () => {
   
       const channel = pusher.subscribe(`threed-channel.${profile.refereeId}`);
         channel.bind('App\\Events\\sendthreed', function(data) {
-          // notify(JSON.stringify(data));
-          // console.log(data[0].compensation)
           setThreedCompensation(data[0].compensation)
-          // console.log(data)
-          // console.log("use effect ran")
         });
+
+        return (() => {
+          pusher.unsubscribe(`threed-channel.${profile.refereeId}`)
+      })
       }
     },[])
 
@@ -122,7 +122,7 @@ const ThreePieces = () => {
             if(!Rchecked){
               const newNumber = {
                 number: number,
-                compensation: threedCompensation,
+                compensation: threedCompensation ? threedCompensation : '0',
                 amount: amount.toString()
               }
               setThreePiecesNumbers([...threePiecesNumbers,newNumber])
@@ -132,7 +132,7 @@ const ThreePieces = () => {
               const newNumbers = arr.map((item) => {
                 const newNumer = {
                   number : item,
-                  compensation: threedCompensation,
+                  compensation: threedCompensation ? threedCompensation : '0',
                   amount: amount.toString()
                 }
                 return newNumer
@@ -303,7 +303,7 @@ const ThreePieces = () => {
               <p className='threepieces-customer-phno'>{customerPhno}</p>
             </div>
             <div className='threepieces-number-input-container'>
-              <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
+              <p>{current_language === "english" ? "Number" : "နံပါတ်"}</p>
               <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
 
@@ -335,37 +335,44 @@ const ThreePieces = () => {
         </div>
     </div>
     <div className='twod-details-parent-container'>
-                <div className='twod-details-container'>
-                  <div className='twod-details-header-container'>
-                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
-                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
-                    <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
-                  </div>
+                <table className='twod-details-container'>
+                  <thead>
+                  <tr className='twod-details-header-container'>
+                    <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
+                    <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                    <th>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</th>
+                    <th></th>
+                  </tr>
+                  </thead>
   
-                  <div className='twod-details-table-container'>
+                  <tbody className='twod-details-table-container'>
                     {
                       threePiecesNumbers.map((item,index) => (
-                          <div key = {index} className='twod-details-row'>
-                          <p>{item.number}</p>
-                          <p>{threedCompensation}</p>
-                          <div className='twod-details-amount-container'>
-                            <button
-                            disabled={user_login.role==="guest"  ? true:false}
-                             onClick={(e) => 
-                            {if(item.amount > 100){
-                              decreaseAmount(e,item)} 
-  
-                            }}
-                              >-</button>
-                            <input disabled={user_login.role==="guest"  ? true:false} type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
-                            <button disabled={user_login.role==="guest"  ? true:false} onClick={(e) => increaseAmount(e,item)}>+</button>
-                          </div>
-                          <button disabled={user_login.role==="guest"  ? true:false} className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
-                          </div>
+                          <tr key = {index} className='twod-details-row'>
+                            <td>{item.number}</td>
+                            <td>{item.compensation}</td>
+                            <td>
+                            <div className='twod-details-amount-container'>
+                              <button
+                              disabled={user_login.role==="guest"  ? true:false}
+                              onClick={(e) => 
+                              {if(item.amount > 100){
+                                decreaseAmount(e,item)} 
+    
+                              }}
+                                >-</button>
+                              <input disabled={user_login.role==="guest"  ? true:false} type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
+                              <button disabled={user_login.role==="guest"  ? true:false} onClick={(e) => increaseAmount(e,item)}>+</button>
+                            </div>
+                            </td>
+                            <td>
+                            <button disabled={user_login.role==="guest"  ? true:false} className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
+                            </td>
+                          </tr>
                       ))
                     }
-                  </div>
-                </div>
+                  </tbody>
+                </table>
   
                 <div className='twod-overall-details-container'>
                   <div className='twod-overall-detail-container'>

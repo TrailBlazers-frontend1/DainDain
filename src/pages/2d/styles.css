@@ -21,7 +21,7 @@
 .twod-navbar p{
     padding: 10px;
     /* border-right: 1px solid black; */
-    font-size: 1.125rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -41,10 +41,11 @@
     -moz-box-shadow: 1px 1px 10px 0px rgba(0,0,0,0.25);
     border-radius: 15px;
     padding: 20px;
+    overflow-y: scroll;
 }
 
 .lottery-op-record-header{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     text-align: center;
     margin-bottom: 1.875rem;
@@ -70,7 +71,7 @@
 }
 
 .lottery-op-evening-time{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     text-align: center;
     margin-bottom: 1.875rem;
@@ -118,5 +119,54 @@
 }
 
 .lottery-op-records-lonepyaing-container{
-    height: 600px;
+    height: 720px;
+}
+
+.towd-history-link{
+    display: none;
+}
+
+.lottery-op-close-btn{
+    display: none;
+}
+
+@media screen and (max-width:1200px){
+    .twod-parent-container{
+        grid-template-columns: 1fr;
+        position: relative;
+        /* overflow-x: hidden; */
+    }
+
+    .towd-history-link{
+        display: inline-block;
+        /* float: right; */
+        margin-left: auto;
+        cursor: pointer;
+        color: var(--secondary-color);
+        border-radius: none;
+    }
+    .lottery-op-record-parent-container{
+        display: none;
+        position: absolute;
+        right: -400px;
+        top: 0;
+        width: 250px;
+        z-index: 20;
+        background-color: white;
+    }
+
+    .lottery-op-record-parent-container-open{
+        display: block;
+        right: 0;
+        
+    }
+
+    .lottery-op-close-btn{
+        display: inline-block;
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width:1000px){
+    
 }

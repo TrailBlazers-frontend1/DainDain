@@ -78,10 +78,12 @@ const RefreeRequests = () => {
     }
 
     const refreeEditBtn = (id) => {
-        // console.log(refree)
-        setIsEditRefree(true)
-        setTitle("Edit Refree")
+        console.log(id)
         setEditRefreeId(id)
+        setTitle("Edit Referee")
+        setIsEditRefree(true)
+        
+        
         // console.log(editRefreeData)
     }
 
@@ -159,29 +161,33 @@ const RefreeRequests = () => {
             
             <div className='refree-requests-parent-container'>
                 <div className='refree-requests-container'>
-                    <p className='refree-requests-header'>Refree Requests</p>
+                    <p className='refree-requests-header'>{current_language === "english" ? "Referee Requests" : "ဒိုင်တောင်းဆိုချက်"}</p>
+                    <div className='referee-requests-table-container'>
 
-                    <div className='refree-requests-accdec-parent-container'>
-                        <div className='refree-requests-accdec-headers-container'>
-                            <p>{current_language === "english" ? "Name" : "နာမည်"}</p>
-                            <p>{current_language === "english" ? "Phone" : "ဖုန်း"}</p>
-                        </div>
+                    
+                    <table className='refree-requests-accdec-parent-container'>
+                        <tr className='refree-requests-accdec-headers-container'>
+                            <td>{current_language === "english" ? "Name" : "နာမည်"}</td>
+                            <td>{current_language === "english" ? "Phone" : "ဖုန်း"}</td>
+                            <td></td>
+                        </tr>
 
-                        <div className='refree-requests-accdec-container'>
+                        <tbody className='refree-requests-accdec-container'>
                             {
                                 refereeRequests.map((request,index) => (
-                                    <div className='refree-requests-accdec-row'>
-                                        <p className='refree-requests-name'>{request.name}</p>
-                                        <p className='refree-requests-phno'>{request.phone}</p>
-                                        <div className='refree-requests-btn-container'>
+                                    <tr className='refree-requests-accdec-row'>
+                                        <td className='refree-requests-name'>{request.name}</td>
+                                        <td className='refree-requests-phno'>{request.phone}</td>
+                                        <td className='refree-requests-btn-container'>
                                             <button onClick={() => handleAcceptRefreeRequest(request.id)}>{current_language === "english" ? "Accept" : "လက်ခံ"}</button>
                                             <button onClick={() => handleDeleteRefreeRequest(request.id)}>{current_language === "english" ? "Decline" : "ငြင်းပယ်"}</button>
-                                        </div>
-                                    </div>
+                                        </td>
+                                    </tr>
                                 ))
                             }
                             
-                        </div>
+                        </tbody>
+                    </table>
                     </div>
                 </div>
 
@@ -191,35 +197,38 @@ const RefreeRequests = () => {
 
                         <p className='refree-list-header'>{current_language === "english" ? "Referees" : "ဒိုင်များ"}</p>
                         {/* <button className='refree-crud-add-btn' onClick={() => refreeAddbtn()}>Add</button> */}
+                        
+                    <div className='referee-list-table-container'>
+
                    
+                    <table className='refree-list-container'>
+                        <tr className='refree-list-labels-container'>
+                            <td>{current_language === "english" ? "Name" : "နာမည်"}</td>
+                            <td>{current_language === "english" ? "Phone" : "ဖုန်း"}</td>
+                            <td>{current_language === "english" ? "Referre Id" : "ဒိုင် ID"}</td>
+                            <td>{current_language === "english" ? "Joined On" : "ဝင်‌သောရက်"}</td>
+                            <td></td>
+                        </tr>
 
-                    <div className='refree-list-container'>
-                        <div className='refree-list-labels-container'>
-                            <p>{current_language === "english" ? "Name" : "နာမည်"}</p>
-                            <p>{current_language === "english" ? "Phone" : "ဖုန်း"}</p>
-                            <p>{current_language === "english" ? "Referre Id" : "ဒိုင် ID"}</p>
-                            <p>{current_language === "english" ? "Joined On" : "ဝင်‌သောရက်"}</p>
-                        </div>
-
-                        <div className='refree-list-row-container'>
+                        <tbody className='refree-list-row-container'>
                             {
                                 refereeLists?.map((refree,index) => (
-                                <div className='refree-list-row'>
-                                    <p>{refree.user.name}</p>
-                                    <p>{refree.user.phone}</p>
-                                    <p>{refree.referee_code}</p>
-                                    <p>{refree.user.created_at.split("T")[0]}</p>
-    
-                                    <div className='refree-list-editdel-btns-container'>
-                                        <button className='refree-list-edit-btn' onClick={() => refreeEditBtn(refree.id)}>{current_language === "english" ? "Edit" : "ပြင်မည်"}</button>
-                                        <button className='refree-list-delete-btn' onClick={() => refreeDeleteBtn(refree.id)}>{current_language === "english" ? "Delete" : "ဖျက်မည်"}</button>
-                                    </div>
-                                </div>
+                                <tr className='refree-list-row'>
+                                    <td>{refree.user.name}</td>
+                                    <td>{refree.user.phone}</td>
+                                    <td>{refree.referee_code}</td>
+                                    <td>{refree.user.created_at.split("T")[0]}</td>
+                                    <td className='refree-list-editdel-btns-container'>
+                                        <button className='refree-list-edit-btn' onClick={() => refreeEditBtn(refree.id)}>{current_language === "english" ? "Edit" : "ပြင်"}</button>
+                                        <button className='refree-list-delete-btn' onClick={() => refreeDeleteBtn(refree.id)}>{current_language === "english" ? "Delete" : "ဖျက်"}</button>
+                                    </td>
+                                </tr>
                                 ))
                             }
                             
                             
-                        </div>
+                        </tbody>
+                    </table>
                     </div>
                 </div>
             </div>

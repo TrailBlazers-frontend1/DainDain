@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+import Loading from '../../components/Loading';
 
 function Table({columns, data, id}){
 
@@ -185,6 +186,8 @@ const Transaction = () => {
     const [lonePyineSaleBookList,setLonePyineSaleBookList] = useState([])
     const [threedSaleBookList,setThreedSaleBookList] = useState([])
 
+    const [isLoading,setIsLoading] = useState(true)
+
     const {user_login} = useSelector(state => state.user)
     const {current_language} = useSelector(state => state.language)
 
@@ -203,6 +206,7 @@ const Transaction = () => {
         const twodWinners = await axiosInstance.get("/2d-win",{headers:{Authorization:`Bearer ${user_login.token}`}})
       const threedWinners = await axiosInstance.get("/3d-win",{headers:{Authorization:`Bearer ${user_login.token}`}})
       const lonePyineWinners = await axiosInstance.get("/lp-win",{headers:{Authorization:`Bearer ${user_login.token}`}})
+      setIsLoading(true)
         if(twodWinners.data.status === 200 && threedWinners.data.status === 200 && lonePyineWinners.data.status === 200){
           // console.log(twodWinners)
           // console.log(lonePyineWinners)
@@ -214,9 +218,11 @@ const Transaction = () => {
           setTempTwodWinners(twodWinners?.data?.data)
           setTempThreedWinners(threedWinners?.data?.data)
           setTempLonePyineWinners(lonePyineWinners?.data?.data)
+          setIsLoading(false)
         }
       
       } catch (error) {
+        setIsLoading(false)
         notify(error.message)
       }
       
@@ -228,21 +234,26 @@ const Transaction = () => {
         const twodSaleDayBook = await axiosInstance.get("/twod-salesday-book",{headers:{Authorization:`Bearer ${user_login.token}`}})
         const threedSaleDayBook = await axiosInstance.get("/threed-salesday-book",{headers:{Authorization:`Bearer ${user_login.token}`}})
         const lonePyineSaleDayBook = await axiosInstance.get("/lonepyaing-salesday-book",{headers:{Authorization:`Bearer ${user_login.token}`}})
-  
+        setIsLoading(true)
         // console.log(twodSaleDayBook.data.data)
         // console.log(lonePyineSaleDayBook)
         // console.log(threedSaleDayBook)
-        const twodSaleData = twodSaleDayBook?.data.data
-        const lonePyineData = lonePyineSaleDayBook?.data.data
-        const threedData = threedSaleDayBook?.data.data
-        // console.log(Object.entries(twodSaleData))
-        setTwodSaleBookList(Object.entries(twodSaleData))
-        setLonePyineSaleBookList(Object.entries(lonePyineData))
-        setThreedSaleBookList(Object.entries(threedData))
-        // console.log(twodSaleBookList)
-        // console.log(lonePyineSaleBookList)
-        // console.log(threedSaleBookList)
+        if(twodSaleDayBook.data.status === 200 && threedSaleDayBook.data.status === 200 && lonePyineSaleDayBook.data.status === 200){
+          const twodSaleData = twodSaleDayBook?.data.data
+          const lonePyineData = lonePyineSaleDayBook?.data.data
+          const threedData = threedSaleDayBook?.data.data
+          // console.log(Object.entries(twodSaleData))
+          setTwodSaleBookList(Object.entries(twodSaleData))
+          setLonePyineSaleBookList(Object.entries(lonePyineData))
+          setThreedSaleBookList(Object.entries(threedData))
+          // console.log(twodSaleBookList)
+          // console.log(lonePyineSaleBookList)
+          // console.log(threedSaleBookList)
+          setIsLoading(false)
+        }
+       
       } catch (error) {
+        setIsLoading(false)
         notify(error.message)
       }
      
@@ -367,7 +378,7 @@ const Transaction = () => {
           accessor : "Name"
         },
         {
-          Header: current_language === "english" ? "Number" : "ထိုးသား",
+          Header: current_language === "english" ? "Number" : "နံပါတ်",
           accessor : "Number"
         },
         {
@@ -460,7 +471,7 @@ const Transaction = () => {
           accessor : "GameType"
         },
         {
-          Header: current_language === "english" ? "Number" : "ထိုးသား",
+          Header: current_language === "english" ? "Number" : "နံပါတ်",
           accessor : "Number"
         },
         {
@@ -472,7 +483,7 @@ const Transaction = () => {
           accessor : "Amount"
         },
         {
-          Header: current_language === "english" ? "total" : "ထိုး‌ကြေး",
+          Header: current_language === "english" ? "Total" : "စုစု‌ပေါင်း",
           accessor : "Total"
         },
         
@@ -502,7 +513,7 @@ const Transaction = () => {
         accessor : "Name"
       },
       {
-        Header: current_language === "english" ? "Number" : "ထိုးသား",
+        Header: current_language === "english" ? "Number" : "နံပါတ်",
         accessor : "Number"
       },
       {
@@ -593,7 +604,7 @@ const Transaction = () => {
         accessor : "GameType"
       },
       {
-        Header: current_language === "english" ? "Number" : "ထိုးသား",
+        Header: current_language === "english" ? "Number" : "နံပါတ်",
         accessor : "Number"
       },
       {
@@ -605,7 +616,7 @@ const Transaction = () => {
         accessor : "Amount"
       },
       {
-        Header: current_language === "english" ? "Total" : "ထိုး‌ကြေး",
+        Header: current_language === "english" ? "Total" : "စုစု‌ပေါင်း",
         accessor : "Total"
       },
       
@@ -636,7 +647,7 @@ const Transaction = () => {
         accessor : "Name"
       },
       {
-        Header: current_language === "english" ? "Number" : "ထိုးသား",
+        Header: current_language === "english" ? "Number" : "နံပါတ်",
         accessor : "Number"
       },
       {
@@ -726,7 +737,7 @@ const Transaction = () => {
         accessor : "GameType"
       },
       {
-        Header: current_language === "english" ? "Number" : "ထိုးသား",
+        Header: current_language === "english" ? "Number" : "နံပါတ်",
         accessor : "Number"
       },
       {
@@ -738,7 +749,7 @@ const Transaction = () => {
         accessor : "Amount"
       },
       {
-        Header: current_language === "english" ? "Total" : "ထိုး‌ကြေး",
+        Header: current_language === "english" ? "Total" : "စုစု‌ပေါင်း",
         accessor : "Total"
       },
       
@@ -746,8 +757,10 @@ const Transaction = () => {
      )
 
      if(user_login.isLoggedIn && user_login.role === "agent"){
-      return (
-        <>
+
+      return (<>
+      {
+        isLoading ? <Loading/> : <>
         <Header/>
         <Navbar/>
     
@@ -823,11 +836,13 @@ const Transaction = () => {
                     </tr>
                 </tbody>
             </table> */}
+            <div className='winners-table-container'>
              <Table 
                   id="twodWinners"
                   columns={twodColumns} 
                   data = {twodData}
                 />
+            </div>
         </div>
     
         {/* Lone Pyine Winners */}
@@ -902,17 +917,21 @@ const Transaction = () => {
                     </div>
                 </div>
             </div> */}
+            <div className='winners-table-container'>
+
+           
              <Table 
                   id="lonePyineWinners"
                   columns={LonePyineColumns} 
                   data = {lonePyineData}
                 />
+            </div>
         </div>
     
         {/* 3d Winners */}
         <div className='App winners-parent-container'>
             <div className='winners-header-container'>
-              <p>{current_language === "english" ? "Lone Pyine Winners" : "၃လုံးအောင်စရင်း"}</p>
+              <p>{current_language === "english" ? "3D Winners" : "၃လုံးအောင်စရင်း"}</p>
               <div className='winners-filters-container'>
                 {/* <div className='winners-name-container'>
                    <input list='customers' type="text" placeholder='Customer Name'/>
@@ -981,12 +1000,13 @@ const Transaction = () => {
                     </div>
                 </div>
             </div> */}
+            <div className='winners-table-container'>
              <Table 
                   id="threedWinners"
                   columns={threedColumns} 
                   data = {threedData}
                 />
-    
+            </div>
         </div>
     
         <div className='App transaction-parent-container'>
@@ -1109,11 +1129,13 @@ const Transaction = () => {
                       </div>
                       
                     </div> */}
+                    <div className='salebook-table-container'>
                     <SaleBookTable 
                       id="twodSaleBook"
                       columns={twodSaleBookColumns} 
                       data = {twodSaleBookData}
                     />
+                    </div>
                   </div>
     
     
@@ -1213,11 +1235,13 @@ const Transaction = () => {
                       </div>
                       
                     </div> */}
-                    <SaleBookTable 
-                      id="lonePyineSaleBook"
-                      columns={LonePyineSaleBookColumns} 
-                      data = {lonePyineSaleBookData}
-                    />
+                    <div className='winners-table-container'>
+                      <SaleBookTable 
+                        id="lonePyineSaleBook"
+                        columns={LonePyineSaleBookColumns} 
+                        data = {lonePyineSaleBookData}
+                      />
+                    </div>
                   </div>
                 </>
                
@@ -1327,18 +1351,22 @@ const Transaction = () => {
                       </div>
                       
                     </div> */}
+                    <div className='winners-table-container'>
                     <SaleBookTable 
                       id="threedSaleBook"
                       columns={threedSaleBookColumns} 
                       data = {threedSaleBookData}
                     />
+                    </div>
     
                   </div> : null
               }
         </div>
         {/* <ToastContainer /> */}
         </>
-      )
+      }
+        
+      </>)
      }else{
       return(
       <Navigate to ="/" replace={true}></Navigate>

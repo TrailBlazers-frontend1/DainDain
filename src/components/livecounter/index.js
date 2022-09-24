@@ -18,7 +18,7 @@ const LiveCounter = ({category}) => {
     const date = new Date().toLocaleDateString()
     const day = new Date().getDay()
     
-
+    const {current_language} = useSelector(state => state.language)
     
 
 
@@ -56,7 +56,9 @@ const LiveCounter = ({category}) => {
             {
                 category === "2d" && 
                 <div className='livecounter-counter-container'>
-                <p className='livecounter-multiply-times-container'><span>{morningResult?.stock_date}{isMorningOrEvening().isMorningRound && 'Morning'}{isMorningOrEvening().isEveningRound && 'Evening'}</span> Round</p>
+                <p className='livecounter-multiply-times-container'><span>
+                    {morningResult?.stock_date} {isMorningOrEvening().isMorningRound && current_language === "english" && "Morning"}{isMorningOrEvening().isMorningRound && current_language === "myanmar" && "မနက်ခင်း"}
+                    {isMorningOrEvening().isEveningRound && current_language === "english" && "Evening"}{isMorningOrEvening().isEveningRound && current_language === "myanmar" && "ညနေခင်း"}</span> Round</p>
                 <div className='livecounter-time-container'>
                     <div className='livecounter-hour-container'>
                         {/* <div className='livecounter-hour-1stdigit'>0</div> */}
@@ -114,7 +116,7 @@ const LiveCounter = ({category}) => {
                 category === "2d" && (
                         <>
             <div className='livecounter-lotteryopnum-container'>
-                <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p>
+                <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} {current_language === "english" ? "Morning" : "မနက်ခင်း"}</span> {current_language === "english" ? "Number" : "နံပါတ်"}</p>
                 {/* <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p> */}
                 <div className='livecounter-lotteryopnum-num-container'>
                     {category === "2d" && (
@@ -133,7 +135,7 @@ const LiveCounter = ({category}) => {
                 </div>
             </div>
             <div className='livecounter-lotteryopnum-container'>
-                <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Evening</span> Number</p>
+                <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} {current_language === "english" ? "Evening" : "ညနေခင်း"}</span> {current_language === "english" ? "Number" : "နံပါတ်"}</p>
                 {/* <p className='livecounter-lotteryopnum-header-container'><span>{morningResult?.stock_date} Morning</span> Number</p> */}
                 <div className='livecounter-lotteryopnum-num-container'>
                     {category === "2d" && (

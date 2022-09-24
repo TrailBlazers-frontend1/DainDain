@@ -37,7 +37,7 @@
 }
 
 .refree-crud-form-header p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -157,7 +157,7 @@
     padding: 10px 65px;
     border: none;
     background-color: var(--secondary-color);
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     display: block;

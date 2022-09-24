@@ -2,16 +2,20 @@ import React,{useState, useEffect, useRef} from 'react'
 import {Link} from "react-router-dom"
 import Header from '../../components/header'
 import Navbar from '../../components/navbar'
-import homepageimg from "../../imgs/homepage-img.jpg"
-import hotgameimg from "../../imgs/hotgame-img.png"
+import homepageimg from "../../imgs/2d3d-img3.jpg"
+import hotgameimg from "../../imgs/2d3d-img2.png"
 import lotteryimage from "../../imgs/2d.png"
 import { useSelector } from 'react-redux'
 import { Icon } from '@iconify/react';
 import "./styles.css"
 import { axiosInstance } from '../../urlConfig'
+import { useDispatch } from 'react-redux'
 
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
+
+import { setRefereeProfile } from '../../redux/refereeProfile'
+import { setAgentProfile } from '../../redux/agent'
 
 
 const Home = () => {
@@ -23,7 +27,12 @@ const Home = () => {
 
     const [date,setDate] = useState('')
 
+    const dispatch = useDispatch()
+
+    const liveNumber = useRef()
+
     const {current_language} = useSelector(state => state.language)
+    const {user_login} = useSelector(state => state.user)
 
     let isFilteringDate = false
 
@@ -36,6 +45,46 @@ const Home = () => {
         draggable: false,
         progress: undefined,
         });
+
+    const fetchAgentProfile = async () => {
+        try {
+            const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
+    
+                // console.log(res)
+                if(res.data.status === 200){
+                    const agent = {
+                        id:res.data.agent.id,
+                        image:res.data.agent.image,
+                        coin_amount:res.data.agent.cashincashout.coin_amount,
+                        commission:res.data.agent.commision,
+                        refereeId: res.data.agent.referee_id,
+                        twod_sale_list:res.data.twod_lists,
+                        threed_sale_list:res.data.threed_lists,
+                        lonepyine_sale_list:res.data.lonepyaing_lists,
+                    }
+    
+                    dispatch(setAgentProfile(agent))
+    
+                    // console.log(profile)
+                }
+        } catch (error) {
+            notify(error.message)
+        }
+        
+    }
+    
+    const fetchRefereeProfile =  async ()=>{
+        try {
+            const res = await axiosInstance.get("/referee",{headers:{Authorization:`Bearer ${user_login.token}`}})
+            // console.log(res)
+            if(res.data.status === 200){
+                dispatch(setRefereeProfile(res.data.referee))
+            }
+        } catch (error) {
+            notify(error.message)
+        }
+        
+    }
 
     const fetchLive = async () => {
         try {
@@ -65,6 +114,28 @@ const Home = () => {
             notify(error.message)
         }
     } 
+
+    const fadeInOut = () => {
+        if(liveNumber.current){
+            liveNumber?.current?.classList.add("fade-out")
+            setTimeout(() => {
+                liveNumber.current.classList.remove("fade-out")
+                liveNumber.current.classList.add("fade-in")
+            },2000)
+        }
+       
+    }
+
+    useEffect(() => {
+        // liveNumber.current.classList.add("fade-out")
+       
+        const interval = setInterval(() => {
+            fadeInOut()
+            // console.log(liveNumber)
+        },3000)
+
+    //    clearInterval(interval)
+    },[])
 
     useEffect(() => {
         // console.log(date)
@@ -99,7 +170,7 @@ const Home = () => {
             
             
             <div className='homepage-img-container'>
-                <img src={homepageimg} alt="homepage image"></img>
+                {/* <img src={homepageimg} alt="homepage image"></img> */}
             </div>
 
             <section className='hot-game-section'>
@@ -159,10 +230,10 @@ const Home = () => {
                     </div>
 
                     <div className='live-view'>
-                        {live}
+                        <p ref={liveNumber}>{live}</p>
                     </div>
 
-                    <input value={date}  className='live-date' type="date" id="live-date" name="live-date" onChange={(e) => handleDateChange(e)}></input>
+                    {/* <input value={date}  className='live-date' type="date" id="live-date" name="live-date" onChange={(e) => handleDateChange(e)}></input> */}
 
                     <div className='live-numbers-container'>
                         <div className='won-number-container'>

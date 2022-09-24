@@ -16,24 +16,50 @@
 
 .refree-requests-header{
     text-align: center;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 40px;
 }
 
-.refree-requests-accdec-headers-container{
-    display: flex;
-    margin-bottom: 10px;
-    margin-left: 10px;
+.referee-requests-table-container{
+    overflow-x: auto;
 }
 
-.refree-requests-accdec-headers-container p{
+.refree-requests-accdec-parent-container{
+   width: 100%;
+   min-width: 500px;
+}
+
+.refree-requests-accdec-headers-container{
+    /* display: flex; */
+    margin-bottom: 10px;
+    /* margin-left: 10px; */
+    table-layout: fixed;
+    width: 100%;
+}
+
+.refree-requests-accdec-headers-container th{
     font-size: 1rem;
     font-weight: 500;
 }
 
-.refree-requests-accdec-headers-container p:nth-child(2){
+/* .refree-requests-accdec-headers-container p:nth-child(2){
     margin-left: 140px;
+} */
+
+table{
+    width: 100%;
+    table-layout: fixed;
+}
+
+tr{
+    display: table;
+    width: 100%;
+}
+
+th, td{
+    text-align: center;
+    /* width: 180px; */
 }
 
 .refree-requests-accdec-container{
@@ -41,26 +67,32 @@
     height: 18.75rem;
     border: 3px solid var(--primary-color);
     border-radius: 15px;
-    padding: 15px 10px;
+    padding: 15px 0;
     overflow-y: scroll;
+    display: block;
 }
 
 .refree-requests-accdec-row{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
-.refree-requests-accdec-row p:first-child{
+.refree-requests-accdec-row td{
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between; */
+    width: 33%;
+}
+
+/* .refree-requests-accdec-row p:first-child{
     width: 100px;
 }
 
 .refree-requests-accdec-row:not(:first-child){
     margin-top: 15px;
-}
+} */
 
 .refree-requests-btn-container button{
-    padding: 5px 10px;
+    padding: 5px 2px;
     border-radius: 5px;
     border: none;
     background-color: white;
@@ -85,58 +117,72 @@
     margin-left: 20px;
 }
 
+
 .refree-list-header{
     text-align: center;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 40px;
 }
 
+.referee-list-table-container{
+    overflow-x: auto;
+}
+
+.refree-list-container{
+    min-width: 650px;
+}
+
 .refree-list-labels-container{
-    display: flex;
+    /* table-layout: fixed; */
+    width: 100%;
     margin-bottom: 10px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
     /* justify-content: space-between; */
     /* margin-right: 10px; */
 }
 
-.refree-list-labels-container p{
+.refree-list-labels-container td{
     font-size: 1rem;
     font-weight: 500;
+    width: 20%;
 }
 
-.refree-list-labels-container p:nth-child(2){
-    margin-left: 150px;
-}
-.refree-list-labels-container p:nth-child(3){
-    margin-left: 70px;
-}
-.refree-list-labels-container p:nth-child(4){
-    margin-left: 55px;
-}
+
 
 .refree-list-row-container{
     width: 100%;
     height: 18.75rem;
     border: 3px solid var(--primary-color);
     border-radius: 15px;
-    padding: 15px 10px;
+    padding: 15px 0;
     overflow-y: scroll;
+    display: block;
+}
+
+.refree-list-row-container td, .refree-list-row-container th{
+    width: 20%;
 }
 
 .refree-list-row{
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; */
+    margin-bottom: 10px;
 }
 
-.refree-list-row p:first-child{
+/* .refree-list-row p:first-child{
     width: 100px;
 }
 
 .refree-list-row:not(:first-child){
     margin-top: 15px;
-}
+} */
+
+/* .refree-list-editdel-btns-container{
+    display: flex;
+    align-items: center;
+} */
 
 .btn-wrapper{
     display: flex;
@@ -175,5 +221,22 @@
     }
     .refree-list-labels-container p:nth-child(4){
         margin-left: 60px;
+    }
+}
+
+@media screen and (max-width:1200px){
+
+    .refree-requests-container{
+        padding: 20px 2px;
+    }
+    .refree-requests-parent-container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .refree-list-parent-container{
+        padding: 20px 2px;
+        margin-left: 0;
+        margin-top: 20px;
     }
 }

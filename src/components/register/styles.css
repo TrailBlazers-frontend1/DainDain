@@ -37,7 +37,7 @@
 }
 
 .dai-register-title{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -87,6 +87,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 1.875rem;
+    width: 100%;
 }
 
 .dai-register-otp-input-container p{
@@ -203,7 +204,7 @@
     padding: 10px 65px;
     border: none;
     background-color: var(--secondary-color);
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     /* text-align: center; */
@@ -238,4 +239,26 @@
     pointer-events: none;
     width: 65px;
     white-space: wrap;
+}
+
+@media screen and (max-width: 750px){
+
+    .forgotpw-form-container{
+
+    }
+
+    .forgotpw-cross-btn{
+        margin-bottom: 20px;
+    }
+
+    .dai-register-form{
+        width: 280px;
+    }
+    .dai-otp-input{
+        width: 80px;
+    }
+
+    .otp-request-btn{
+        white-space: nowrap;
+    }
 }

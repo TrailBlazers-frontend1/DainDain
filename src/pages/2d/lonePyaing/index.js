@@ -70,7 +70,7 @@ const LonePyaing = () => {
               const morningLonePyine = await axiosInstance.get("/getLonePyaingsAM",{headers:{Authorization:`Bearer ${user_login.token}`}})
             if(morningLonePyine.data.status === 200){
               // console.log(res)
-              dispatch(setLonePyineList(morningLonePyine.data.lonepyines))
+              dispatch(setLonePyineList(morningLonePyine.data.lonepyaings))
             }
             }
     
@@ -78,7 +78,7 @@ const LonePyaing = () => {
               const eveningLonepyine = await axiosInstance.get("/getLonePyaingsPM",{headers:{Authorization:`Bearer ${user_login.token}`}})
               if(eveningLonepyine.data.status === 200){
                 // console.log(res)
-                dispatch(setLonePyineList(eveningLonepyine.data.lonepyines))
+                dispatch(setLonePyineList(eveningLonepyine.data.lonepyaings))
               }
             }
             
@@ -105,6 +105,10 @@ const LonePyaing = () => {
             // console.log(lonePyineList)
             // console.log("use effect ran")
           });
+
+          return (() => {
+            pusher.unsubscribe(`lonepyine-channel.${profile.refereeId}`)
+        })
         }
     },[])
 
@@ -133,7 +137,7 @@ const LonePyaing = () => {
             const newNumber = {
                 id:lonePyine?.id,
                 number:numberString,
-                compensation: lonePyine?.compensation,
+                compensation: lonePyine? lonePyine.compensation : "0",
                 amount:"1000"
             }
             setFirstNumbers([...firstNumbers,newNumber])
@@ -163,7 +167,7 @@ const LonePyaing = () => {
             const newNumber = {
                 id:lonePyine?.id,
                 number:numberString,
-                compensation:lonePyine?.compensation,
+                compensation:lonePyine? lonePyine.compensation : "0",
                 amount:"1000"
             }
             setLastNumbers([...lastNumbers,newNumber])
@@ -531,12 +535,15 @@ const LonePyaing = () => {
           </div>
 
         <div className='twod-details-parent-container'>
-            <div className='twod-details-container'>
-                <div className='lonepyaing-details-header-container'>
-                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
-                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
-                    <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
-                </div>
+            <table className='twod-details-container'>
+                <thead>
+                    <tr className='lonepyaing-details-header-container'>
+                        <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
+                        <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                        <th>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
                 {/* <div className='twod-details-row'>
                         <p className='onenumber-details-number'>first({
@@ -554,44 +561,52 @@ const LonePyaing = () => {
                                 <button className='twod-details-delete-btn'>Delete</button>
                         </div>: null */}
 
-                <div className='lonepyaing-details-table-container'>
+                <tbody className='lonepyaing-details-table-container'>
                     {
                         firstNumbers.map((number,index) => (
-                            <div key={index} className='lonepyaing-details-row'>
-                                <p className='onenumber-details-number'>{current_language === "english" ? "First" : "ထိပ်"}({`${number.number}∞`})</p>
-                                <p>{number.compensation}</p>
-                            <div className='lonepyaing-details-amount-container'>
-                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => {
-                                    if(number.amount > 100){
-                                        // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
-                                     decreaseAmount(e,number,firstOrLast)
-                                    }
-                                }}>-</button>
-                                <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} type="number" onChange={(e,firstOrLast="first") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
-                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => increaseAmount(e,number,firstOrLast)}>+</button>
-                            </div>
+                            <tr key={index} className='lonepyaing-details-row'>
+                                <td className='onenumber-details-number'>{current_language === "english" ? "First" : "ထိပ်"}({`${number.number}∞`})</td>
+                                <td>{number.compensation}</td>
+                                <td>
+                                <div className='lonepyaing-details-amount-container'>
+                                    <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => {
+                                        if(number.amount > 100){
+                                            // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
+                                        decreaseAmount(e,number,firstOrLast)
+                                        }
+                                    }}>-</button>
+                                    <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} type="number" onChange={(e,firstOrLast="first") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
+                                    <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="first") => increaseAmount(e,number,firstOrLast)}>+</button>
+                                </div>
+                                </td>
+                                <td>
                                 <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="first") => deleteNumber(number,firstOrLast)}>Delete</button>
-                            </div>
+                                </td>
+                            </tr>
                             
                         ))
                     }
                     {
                         lastNumbers.map((number,index) => (
-                            <div key={index} className='lonepyaing-details-row'>
-                                <p className='onenumber-details-number'>{current_language === "english" ? "Last" : "နောက်"}({`∞${number.number}`})</p>
-                                <p>{number.compensation}</p>
-                            <div className='lonepyaing-details-amount-container'>
-                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => {
-                                    if(number.amount > 100){
-                                        // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
-                                     decreaseAmount(e,number,firstOrLast)
-                                    }
-                                }}>-</button>
-                                <input type="number" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e,firstOrLast="last") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
-                                <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => increaseAmount(e,number,firstOrLast)}>+</button>
-                            </div>
+                            <tr key={index} className='lonepyaing-details-row'>
+                                <td className='onenumber-details-number'>{current_language === "english" ? "Last" : "နောက်"}({`∞${number.number}`})</td>
+                                <td>{number.compensation}</td>
+                                <td>
+                                <div className='lonepyaing-details-amount-container'>
+                                    <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => {
+                                        if(number.amount > 100){
+                                            // setFirstNumbers({...firstNumbers, amount: (parseInt(firstNumbers.amount) - 100).toString()})
+                                        decreaseAmount(e,number,firstOrLast)
+                                        }
+                                    }}>-</button>
+                                    <input type="number" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onChange={(e,firstOrLast="last") => handleAmountfinalChange(e,number,firstOrLast)} value={number.amount}></input>
+                                    <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={(e,firstOrLast="last") => increaseAmount(e,number,firstOrLast)}>+</button>
+                                </div>
+                                </td>
+                                <td>
                                 <button disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} className='lonepyaing-details-delete-btn' onClick={(e,firstOrLast="last") => deleteNumber(number,firstOrLast)}>Delete</button>
-                            </div>
+                                </td>
+                            </tr>
                             
                         ))
                     }
@@ -638,8 +653,8 @@ const LonePyaing = () => {
                         </div>: null 
                     } */}
                     
-                </div>
-            </div>
+                </tbody>
+            </table>
 
             <div className='twod-overall-details-container'>
                 <div className='twod-overall-detail-container'>

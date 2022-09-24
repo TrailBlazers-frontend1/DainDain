@@ -40,7 +40,7 @@
 }
 
 .request-promo-title{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -85,7 +85,7 @@
 }
 
 .request-promo-role-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #676974;
     pointer-events: none;
@@ -120,7 +120,7 @@
     padding: 10px 60px;
     border: none;
     background-color: var(--secondary-color);
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     /* text-align: center; */
@@ -136,7 +136,7 @@
 }
 
 .opstaff-id-input-container p, .refree-id-input-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     color: #676974;
     pointer-events: none;

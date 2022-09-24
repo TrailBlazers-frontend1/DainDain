@@ -60,7 +60,7 @@ const OpProfile = () => {
 
     const handleUserNameChangeConfirm = async () => {
         try {
-            const res = await axiosInstance.post("opstaffProfile-update",{
+            const res = await axiosInstance.post("/opstaffProfile-update",{
                 name: agentName
             }, {headers:{Authorization:`Bearer ${user_login.token}`}})
             // console.log(res)

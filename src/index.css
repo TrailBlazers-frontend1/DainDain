@@ -7,6 +7,7 @@
     box-sizing: border-box;
     font-size: 16px;
     font-family: 'Poppins', sans-serif;
+    /* overflow-x: hidden; */
 }
 
 /* body{
@@ -18,6 +19,26 @@
 button{
     cursor: pointer;
     display: inline-block;
+}
+
+table{
+  width: 100%;
+  text-align: center;
+  border: none;
+  table-layout: fixed;
+  /* display: block; */
+}
+
+tbody{
+  display: block;
+  height: 300px;
+  overflow-y: scroll;
+}
+
+tr{
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 :root{
@@ -54,5 +75,11 @@ input[type=number] {
     *{
         font-size: 14px;
     }
+}
+
+@media screen and (max-width:1000px){
+  *{
+    font-size: 12px;
+}
 }
 

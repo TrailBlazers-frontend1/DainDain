@@ -36,6 +36,15 @@ const Header = () => {
 
     // const [morningResult,setMorningResult] = useState()
     // const [eveningResult,setEveningResult] = useState()
+
+    // const channel = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+    // channel.bind('App\\Events\\AcceptedSMS', function(data) { 
+    //     notify(data)
+    //     fetchAgentProfile()
+    //     // return 
+       
+    //   });
+
     const notify = (message) => toast(message, {
         position: "top-center",
         autoClose: 3000,
@@ -91,6 +100,29 @@ const Header = () => {
      
     }
 
+    useEffect(() => {
+        if(user_login.isLoggedIn && user_login.role === "agent"){ 
+            const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+            channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
+              notify(data)
+              fetchAgentProfile()
+              
+            });
+    
+            const channel2 = pusher.subscribe(`channel-agent.${profile.id}`)
+            channel2.bind("App\\Events\\agent_cash", function(data) {
+                notify(data)
+                fetchAgentProfile()
+            })
+            return (() => {
+                    pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
+                    pusher.unsubscribe(`channel-agent.${profile.id}`)
+                })
+        }
+        
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+      },[])
+
 
     useEffect(() => {
 
@@ -99,19 +131,8 @@ const Header = () => {
 
         fetchAgentProfile()
         fetchRefereeProfile()
-
-        const channel = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
-        channel.bind('App\\Events\\AcceptedSMS', function(data) {
-        
-          notify(data)
-          fetchAgentProfile()
-        //   return 
-         
-        });
-
     }
-            
-    },[])
+    },[user_login])
 
     const options = [
         {label : "Myanmar", value:"myanmar"},
@@ -177,8 +198,8 @@ const Header = () => {
                         user_login.isLoggedIn ? <>
                         {
                             user_login.role === "agent" && <>
-                            <p className='agent-remaining-amount'>{profile.coin_amount}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
-                            <p className='agent-comission'>{current_language === "english" ? "Commission" : "ကော်မရှင်"} : {profile?.commission}</p>
+                            <p className='agent-remaining-amount'>{profile.coin_amount ? profile.coin_amount: 0}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
+                            <p className='agent-comission'>{current_language === "english" ? "Commission" : "ကော်မရှင်"} : {profile?.commission ? profile?.commission : 0}</p>
                             <p className='user-name'>
                                 {user_login.name}
                                 <span>{current_language === "english" ? "(Agent)" : "‌(အေးဂျင့်)"}</span>
@@ -198,6 +219,7 @@ const Header = () => {
                                 }
                                 
                             </Link>
+
                             </> 
                             
                             
@@ -206,7 +228,7 @@ const Header = () => {
                             user_login.role === "operationstaff" && <>
                                 <p to = "/opprofile" className='user-name'>
                                     {user_login.name}
-                                    <span>({user_login.role})</span>
+                                    <span>{current_language === "english" ? "(Operation Staff)" : "(ဝန်ထမ်း)"}</span>
                                     <div className= "profile-link" >
                                     <Icon icon="ant-design:setting-filled" className='profile-link-icon' onClick={() => handleProfileCLicked()}/>
 
@@ -234,13 +256,26 @@ const Header = () => {
                     }
                     
                 </div>
-                    {/* <br></br> */}
+                
                 
             </div>
             {
+                    user_login.isLoggedIn &&  user_login.role === "agent" ? <div className='App agent-details-mobile-view-container'>
+                        <p className='agent-remaining-amount agent-detail-mobile-view'>{profile.coin_amount ? profile.coin_amount: 0}<Icon icon="ri:copper-coin-fill" className='agent-remaining-header-coin-icon'/></p>
+                        <p className='agent-comission agent-detail-mobile-view'>{current_language === "english" ? "Commission" : "ကော်မရှင်"} : {profile?.commission ? profile?.commission : 0}</p>
+                        <Link to="/viewreferee" className='agent-refree-profile-icon-container agent-detail-mobile-view'>
+                                <img src={refreeprofile}/>
+                                {
+                                    refereeProfile.is_online === 1 && <div className='active-dot'></div>
+                                }
+                                
+                            </Link>
+                    </div> : null
+            }
+            {/* {
                     user_login.isLoggedIn && user_login.role === "agent" &&
                     <p className='referee-remark'>{current_language === "english" ? "Referee's Remark" : "ဒိုင်သတင်းစကား"}: {refereeProfile.remark}</p>
-                }
+            } */}
         </div>
         {/* <ToastContainer /> */}
     </>

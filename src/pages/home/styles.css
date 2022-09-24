@@ -1,13 +1,24 @@
 .homepage-img-container{
     width: 100%;
     height: 400px;
+    background: #C33764;  /* fallback colour. Make sure this is just one solid colour. */
+    /* -webkit-linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), */
+    background:  url("../../imgs/2d3d-img3.jpg");
+    /* linear-gradient(rgba(29, 38, 113, 0.8), rgba(195, 55, 100, 0.8)), */
+    background:  url("../../imgs/2d3d-img3.jpg"); /* The least supported option. */
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
-.homepage-img-container img{
+
+
+/* .homepage-img-container img{
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
+} */
 
 .hot-game-section{
     margin-top: 5rem;
@@ -62,7 +73,7 @@
 
 .hot-game-outer{
     width: 100%;
-    height: 27rem;
+    height: 23rem;
     background-color: var(--primary-color);
     border-radius: 15px;
     padding: 20px 30px;
@@ -172,21 +183,27 @@
 }
 
 .live-2d-btn{
-    margin-right: 1.875rem;
+    /* margin-right: 1.875rem; */
 }
 
 .live-view{
-    width: 40rem;
+    width: 25rem;
     height: 16.25rem;
     background-color: var(--primary-color);
     border-radius: 15px;
     display: grid;
     place-items: center;
-    font-size: 30px;
+    
     font-weight: 600;
     /* color: white; */
     margin: auto;
     margin-bottom: 4.375rem;
+}
+
+.live-view p{
+    font-size: 70px;
+    transition: opacity 0.2s ease-in-out;
+    color: #F6BF02;
 }
 
 .live-date{
@@ -288,7 +305,7 @@
 }
 
 .check-voucher-title{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     margin-bottom: 1.875rem;
 
@@ -299,7 +316,7 @@
     align-items: center;
 }
 .check-voucher-input-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin-right: 10px;
 }
 
@@ -322,7 +339,7 @@
     border-radius: 5px;
     padding: 10px 50px;
     margin-top: 1.875rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     font-weight: 500;
     /* margin: auto; */
@@ -345,7 +362,7 @@
 }
 
 .voucher-details-title{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     margin-bottom: 2.5rem;
 
@@ -364,11 +381,11 @@
 
 .voucher-code-label, .voucher-num-label, .voucher-amount-label{
     margin-right: 0.938rem;
-    font-size: 1.125rem;
+    font-size: 1rem;
 }
 
 .voucher-code, .voucher-num, .voucher-amount{
-    font-size: 1.125rem;
+    font-size: 1rem;
 }
 
 .voucher-num-amount-container{
@@ -390,7 +407,7 @@
 .voucher-detailes-btn{
     border: 3px solid var(--primary-color);
     padding: 10px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     background-color: white;
     border-radius: 10px;
 }
@@ -457,7 +474,7 @@
 }
 
 .lottery-text-title{
-    font-size: 1.125rem;
+    font-size: 1rem;
 
 }
 
@@ -477,9 +494,197 @@
     height: 100%;
 }
 
+.fade-in{
+    opacity: 0.1;
+}
+
+.fade-out{
+    opacity: 1;
+}
+
 @media screen and (max-width: 1600px){
     .homepage-img-container{
         height: 350px;
+    }
+}
+
+@media screen and (max-width: 1200px){
+    .hot-game-outer{
+        height: 300px;
+    }
+    .hot-game-img-container{
+        height: 260px;
+        width: 417px;
+        position: static;
+    }
+
+    .hot-game-text-title{
+        font-size: 36px;
+    }
+
+    .hot-game-text-title::before{
+        top: 30px;
+    }
+
+    .hot-game-text-header-container{
+        margin-bottom: 20px;
+    }
+
+    .live-btn-container button{
+        font-size: 24px;
+    }
+
+    .live-view{
+        height: 159px;
+        width: 388px;
+    }
+
+    
+
+    .live-date{
+        width: 205px;
+        font-size: 16px;
+        height: 54px;
+    }
+
+    .won-number-container{
+        padding: 20px;
+    }
+
+    .won-number-time{
+        font-size: 20px;
+    }
+
+    .won-number{
+        font-size: 24px;
+        padding: 20px;
+    }
+
+    .live-set-container{
+        width: 229px;
+        height: 57px;
+    }
+
+    .live-set-container p{
+        font-size: 16px;
+    }
+
+    .live-value-container{
+        width: 229px;
+        height: 57px;
+        
+    }
+
+    .live-value-container p{
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 1000px){
+
+    .hot-game-outer{
+        height: 260px;
+    }
+    .hot-game-img-container{
+        height: 230px;
+        width: 300px;
+        
+    }
+
+    .hot-game-text-compensation-text{
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .won-number{
+        margin-right: 15px;
+    }
+
+    .live-set-container{
+        width: 170px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .live-set-container p{
+        font-size: 14px;
+    }
+
+    .live-value-container{
+        width: 170px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .live-value-container p{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .homepage-img-container{
+        height: 200px;
+    }
+    .hot-game-outer{
+        height: auto;
+        padding: 20px;
+    }
+    .hot-game-inner{
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        align-items: center;
+        padding-bottom: 20px;
+    }
+
+    .hot-game-text-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hot-game-btn{
+        /* margin: auto; */
+        /* text-align: center; */
+    }
+
+    .live-content-container{
+        padding: 10px 0;
+    }
+
+    .live-section{
+        padding: 0px;
+    }
+
+    .live-view{
+        width: 250px;
+    }
+
+
+
+    .live-numbers-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .won-number-container{
+        padding: 20px 10px;
+    }
+
+    .won-number-container:nth-child(2){
+        margin-top: 20px;
+    }
+
+    .lai-container{
+        display: flex;
+        flex-direction: column;
+
+    }
+
+    .lottery-container:not(:last-child){
+        border-right: none;
+        border-bottom: 2px solid var(--primary-color);
     }
 }
 

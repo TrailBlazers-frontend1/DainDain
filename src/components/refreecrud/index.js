@@ -27,6 +27,8 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
     const [editRefreepw,setEditRefreepw] = useState("")
     const [editRefreeConfirmpw,setEditRefreeConfirmpw] = useState("")
 
+    const {current_language} = useSelector(state => state.language)
+
     const notify = (message) => toast(message, {
         position: "top-center",
         autoClose: 3000,
@@ -55,13 +57,13 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
        
     }
 
-    useEffect(() => {
-        const editRefree = refree_list.find((refree) => refree.id === editRefreeId)
-        setEditRefreeName(editRefree?.name)
-        setEditRefreePhNo(editRefree?.PhNo)
-        // console.log(editRefree)
+    // useEffect(() => {
+    //     const editRefree = refree_list.find((refree) => refree.id === editRefreeId)
+    //     setEditRefreeName(editRefree?.name)
+    //     setEditRefreePhNo(editRefree?.PhNo)
+    //     // console.log(editRefree)
 
-    },[editRefreeId])
+    // },[])
 
     const refreeAddClose = () => {
         setIsAddRefree(false)
@@ -158,7 +160,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
             </div>
           )
     }
-    if(title === "Edit Refree"){
+    if(title === "Edit Referee"){
         // console.log(editRefreeData)
         // console.log(typeof(refreeName))
         // setEditRefreeName(refree.name)
@@ -168,7 +170,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
             <div className={isEditRefree ? "refree-crud-overlay refree-crud-open" : "refree-crud-overlay refree-crud-close"}>
                 <form className='refree-crud-form' onSubmit={(e) => submitEditRefree(e)}>
                     <div className='refree-crud-form-header'>
-                        <p>{title}</p>
+                        <p>{current_language === "english" ? "Edit Refree" : "ဒိုင်ပြောင်းလဲ"}</p>
                         <Icon icon="emojione-monotone:cross-mark-button" className='refree-crud-close-icon' onClick={() => refreeEditClose()}/>
                     </div>
         
@@ -178,7 +180,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
                     </div> */}
                     <div className='refree-crud-name-input-container'>
                         <input value={editRefreeName} onChange={(e) => setEditRefreeName(e.target.value)} required  type="text" className="refree-crud-name-input"></input>
-                        <p>Name</p>
+                        <p>{current_language === "english" ? "Name" : "နာမည်"}</p>
                     </div>
 
                     {/* <div className='refree-crud-pw-input-container'>
@@ -192,7 +194,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
                         <p>Confirm Password</p>
                     </div> */}
         
-                    <button type="submit" className='refree-crud-submit-btn'>{title}</button>
+                    <button type="submit" className='refree-crud-submit-btn'>{current_language === "english" ? "Confirm" : "အတည်ပြု"}</button>
                 </form>
                 {/* <ToastContainer /> */}
             </div>

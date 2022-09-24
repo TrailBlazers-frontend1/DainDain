@@ -233,43 +233,45 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 <p className='detail-label'>Customer Type:</p>
                 <p className='details-info'>customerType</p>
             </div> */}
-            <div className='betnow-numbers-details-container'>
-                <div className='betnow-numbers-labels-container'>
-                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
-                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
-                    <p>{current_language === "english" ? "Amount" : "ထိုး‌‌ကြေး"}</p>
-                </div>
-                <div className='betnow-number-details-rows-container'>
-                {twodNumbers?.map((number,index) => (
-                    <div key={index} className='betnow-number-details-row'>
-                    <p>{number.number}</p>
-                    <p>{number.compensation}</p>
-                    <p>{number.amount}</p>
-                    </div>
-                ))}
-                {threePiecesNumbers?.map((number,index) => (
-                    <div key={index} className='betnow-number-details-row'>
-                    <p>{number.number}</p>
-                    <p>{number.compensation}</p>
-                    <p>{number.amount}</p>
-                    </div>
-                ))}
-                {firstNumbers?.map((number,index) => (
-                    <div key={index} className='betnow-number-details-row'>
-                    <p>{number.number}∞</p>
-                    <p>{number.compensation}</p>
-                    <p>{number.amount}</p>
-                    </div>
-                ))}
-                {lastNumbers?.map((number,index) => (
-                    <div key={index} className='betnow-number-details-row'>
-                    <p>∞{number.number}</p>
-                    <p>{number.compensation}</p>
-                    <p>{number.amount}</p>
-                    </div>
-                ))}
-                </div>
-            </div>
+            <table className='betnow-numbers-details-container'>
+                <thead>
+                    <tr className='betnow-numbers-labels-container'>
+                        <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
+                        <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                        <th>{current_language === "english" ? "Amount" : "ထိုး‌‌ကြေး"}</th>
+                    </tr>
+                </thead>
+                <tbody className='betnow-number-details-rows-container'>
+                    {twodNumbers?.map((number,index) => (
+                        <tr key={index} className='betnow-number-details-row'>
+                            <td>{number.number}</td>
+                            <td>{number.compensation}</td>
+                            <td>{number.amount}</td>
+                        </tr>
+                    ))}
+                    {threePiecesNumbers?.map((number,index) => (
+                        <tr key={index} className='betnow-number-details-row'>
+                            <td>{number.number}</td>
+                            <td>{number.compensation}</td>
+                            <td>{number.amount}</td>
+                        </tr>
+                    ))}
+                    {firstNumbers?.map((number,index) => (
+                        <tr key={index} className='betnow-number-details-row'>
+                            <td>{number.number}∞</td>
+                            <td>{number.compensation}</td>
+                            <td>{number.amount}</td>
+                        </tr>
+                    ))}
+                    {lastNumbers?.map((number,index) => (
+                        <tr key={index} className='betnow-number-details-row'>
+                            <td>∞{number.number}</td>
+                            <td>{number.compensation}</td>
+                            <td>{number.amount}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
 
             <button className='betnow-modal-btn' disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} onClick={() => handleBetNow()}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
         </div>

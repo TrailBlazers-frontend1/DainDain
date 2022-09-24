@@ -12,14 +12,14 @@
 }
 
 .first2-select-competiton-label{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-right: 3.75rem;
 }
 
 .first2-select-competiton-btn{
     padding: 3px 10px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: var(--secondary-color);
     background-color: transparent;
     border: 2px solid var(--secondary-color);
@@ -33,7 +33,7 @@
 .first2-numbers-label{
     text-align: center;
     font-weight: 500;
-    font-size: 1.125rem;
+    font-size: 1rem;
     margin-bottom: 30px;
 }
 
@@ -60,7 +60,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     pointer-events: none;
 }

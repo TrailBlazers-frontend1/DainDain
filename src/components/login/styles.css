@@ -56,7 +56,7 @@
 }
 
 .login-logo{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
 }
 
@@ -169,7 +169,7 @@
     padding: 10px 60px;
     border: none;
     background-color: var(--secondary-color);
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     /* text-align: center; */
@@ -184,4 +184,70 @@
 
 .forgotpw-cross-btn{
     margin-bottom: 40px;
+}
+
+@media screen and (max-width: 1000px){
+    .login-container{
+        height: 450px;
+        width: 450px;
+        display: inline-block;
+        position: relative;
+        /* padding: 20px 0 ; */
+       
+    }
+
+    .login-img-container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        border-radius: 15px;
+    }
+
+    .login-image{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        border-radius: 15px;
+    }
+
+    .login-form-container{
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 15px;
+        
+        /* width: 100%; */
+        height: calc(100% - 40px);
+        margin: 20px;
+    }
+
+    .forgotpw-form-container{
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 15px;
+        
+        /* width: 100%; */
+        height: calc(100% - 40px);
+        margin: 20px;
+    }
+}
+
+@media screen and (max-width: 750px){
+    .login-container{
+        width: 280px;
+    }
+
+    .forgotpw-form-container{
+        padding: 10px;
+        height: calc(100% - 20px);
+        margin: 10px;
+    }
+
+    .login-form-container{
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 15px;
+        
+        /* width: 100%; */
+        height: calc(100% - 20px);
+        margin: 10px;
+    }
 }

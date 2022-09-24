@@ -14,6 +14,8 @@ import {Navigate} from "react-router-dom"
 import {useSelector} from "react-redux"
 import { axiosInstance } from '../../urlConfig'
 
+import { Icon } from '@iconify/react';
+
 const ThreeD = () => {
 
   const {user_login} = useSelector(state => state.user)
@@ -21,6 +23,8 @@ const ThreeD = () => {
 
   const {current_language} = useSelector(state => state.language)
   const [threedHistory,setThreedHistory] = useState([])
+
+  const [isLotteryHistoryOpen,setIsLotteryHistoryOpen] = useState(false)
 
   const fet3dHistory = async () => {
       try {
@@ -36,7 +40,7 @@ const ThreeD = () => {
       fet3dHistory()
     },[])
 
-  if(user_login.isLoggedIn){
+  if(user_login.isLoggedIn && user_login.role !== "operationstaff"){
     return (
       <>
           <Header/>
@@ -53,6 +57,7 @@ const ThreeD = () => {
                 <p className={threedCategory === "threepieces" ? 'threed-3pieces-link active' : 'threed-3pieces-link'} onClick={() => setThreedCategory("threepieces")}>{current_language === "english" ? "3Pieces" : "၃လုံး"}</p>
                 {/* <p className={threedCategory === "firsttwo" ? 'threed-lonepyaing-link active' : 'threed-lonepyaing-link'} onClick={() => setThreedCategory("firsttwo")}>First Two</p>
                 <p className={threedCategory === "lasttwo" ? 'threed-lonepyaing-link active' : 'threed-lonepyaing-link'} onClick={() => setThreedCategory("lasttwo")}>Last Two</p> */}
+                <p className='threed-history-link' onClick={() => setIsLotteryHistoryOpen(true)}>Lottery Records</p>
               </div>
   
               {threedCategory === "threepieces" && 
@@ -66,21 +71,25 @@ const ThreeD = () => {
               } */}
             </div>
   
-            <div className='threed-op-record-parent-container'>
+            <div className={isLotteryHistoryOpen ? 'threed-op-record-parent-container threed-op-record-parent-container-open' : "threed-op-record-parent-container"}>
+            <Icon icon="akar-icons:cross" className='lottery-op-close-btn' onClick={() => setIsLotteryHistoryOpen(false)}/>
               <p className='threed-op-record-header'>{current_language === "english" ? "Lottery Opening Record" : "၃လုံးမှတ်တမ်း"}</p>
               {
                 threedHistory.map((item) => (
+                  <>
                   <div className='threed-op-record-container'>
-                  <div className='threed-op-record-datetime-container'>
-                    <p>{item.date}</p>
-                    {/* <p>15:00:00</p> */}
+                    <div className='threed-op-record-datetime-container'>
+                      <p>{item.date}</p>
+                      {/* <p>15:00:00</p> */}
+                    </div>
+                    <div className='threed-op-record-number-container'>
+                      <p>{item.number.split("")[0]}</p>
+                      <p>{item.number.split("")[1]}</p>
+                      <p>{item.number.split("")[2]}</p>
+                    </div>
                   </div>
-                  <div className='threed-op-record-number-container'>
-                    <p>{item.number.split("")[0]}</p>
-                    <p>{item.number.split("")[1]}</p>
-                    <p>{item.number.split("")[2]}</p>
-                  </div>
-                </div>
+                 
+                </>
                 ))
               }
               

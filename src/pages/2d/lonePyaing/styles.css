@@ -16,7 +16,7 @@
     margin-right: 2.5rem;
     padding: 5px 10px;
     background-color: #5D5E6B;
-    font-size: 1.125rem;
+    font-size: 1rem;
     border-radius: 5px;
     color: white;
 }
@@ -42,11 +42,19 @@
     margin-bottom: 20px;
 }
 
+.onenumber-numbers-container:nth-child(2){
+    margin-top: 40px;
+}
+
 .onenumber-1stone-container{
     display: flex;
     align-items: center;
     
 }
+
+/* .onenumber-1stone-container:nth-child(2){
+    margin-top: 20px;
+} */
 
 .onenumber-1stone-label{
     margin-right: 5px;
@@ -75,7 +83,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     pointer-events: none;
 }
@@ -113,7 +121,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     pointer-events: none;
 }
@@ -211,7 +219,7 @@
 
 .onenumber-name-phno-btn{
     padding: 5px 30px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     border: none;
@@ -229,7 +237,7 @@
 .onenumber-customer-info-detail-name-container, .onenumber-customer-info-detail-phno-container{
     display: flex;
     align-items: center;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
@@ -245,24 +253,24 @@
 
 /* .onenumber-customer-name{
     margin-left: 40px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
 .onenumber-customer-phno{
     margin-left: 20px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
 } */
 
 .lonepyaing-details-header-container{
-    display: flex;
+    /* display: flex;
     align-items: center;
-    margin-left: 20px;
+    margin-left: 20px; */
     margin-bottom: 10px;
 }
 
-.lonepyaing-details-header-container p:nth-child(1){
+/* .lonepyaing-details-header-container p:nth-child(1){
     width: 60px;
 }
 
@@ -275,21 +283,21 @@
 .lonepyaing-details-header-container p:nth-child(3){
     margin-left: 100px;
     width: 60px;
-}
+} */
 
 .lonepyaing-details-table-container{
     width: 100%;
     height: 15rem;
     border: 3px solid var(--primary-color);
     border-radius: 15px;
-    padding: 20px;
+    padding-top: 20px;
     overflow-y: scroll;
 }
 
 .lonepyaing-details-row{
-    display: flex;
+    /* display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; */
 }
 
 .lonepyaing-details-row p:first-child{
@@ -335,3 +343,77 @@
     border: none;
     background-color: var(--primary-color);
 }
+
+@media screen and (max-width:1000px){
+    .onenumber-customer-info-detail-container{
+        margin-left: 30px;
+    }
+}
+
+@media screen and (max-width:750px){
+
+    
+    .onenumber-name-phno-parent-container{
+        /* flex-direction: column; */
+        align-items: flex-start;
+    }
+
+    .onenumber-name-phno-input-container{
+        margin-left: 10px;
+    }
+
+    .onenumber-name-phno-container{
+        flex-direction: column;
+    }
+
+    .onenumber-phno-input-container{
+        margin-left: 0;
+        margin-top: 20px;
+    }
+    
+
+    .onenumber-customer-info-detail-container{
+        margin-left: 30px;
+    }
+
+    .lonepyaing-details-amount-container{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .lonepyaing-details-amount-container input{
+        width: 35px;
+    }
+}
+
+@media screen and (max-width:550px){
+    .onenumber-name-phno-parent-container{
+        align-items: center;
+    }
+    .onenumber-name-phno-input-container{
+        margin-left: 0;
+    }
+
+    .onenumber-name-phno-parent-container{
+        flex-direction: column;
+    }
+
+    .onenumber-customer-info-detail-container{
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .onenumber-name-phno-btn{
+        margin: auto;
+    }
+
+    .onenumber-1stone-numbers-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 20px 5px;
+    }
+
+}
+

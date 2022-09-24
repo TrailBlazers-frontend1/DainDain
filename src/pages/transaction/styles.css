@@ -4,6 +4,14 @@
     margin-bottom: 60px;
 }
 
+.winners-table-container{
+    overflow-x: auto;
+}
+
+.salebook-table-container{
+    overflow-x: auto;
+}
+
 .winners-header-container{
     display: flex;
     align-items: center;
@@ -414,4 +422,25 @@
     .winners-details-labels-container p:nth-child(7){
         margin-left: 180px;
     } */
+}
+
+@media screen and (max-width:1000px){
+    .winners-header-container{
+        flex-direction: column;
+    }
+
+    .winners-header-container > p{
+        margin-bottom: 10px;
+    }
+
+    .winners-date-filter{
+        width: 95px;
+        margin-left: 0;
+        
+    }
+
+    .winners-round-filter{
+        width: 95px;
+        margin-left: 10px;
+    }
 }

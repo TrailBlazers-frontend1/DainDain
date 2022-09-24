@@ -204,11 +204,13 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
         }
       },[forgotPwPhNo])
 
-    const handleForgotPwSubmit = (e) => {
+    const handleForgotPwSubmit = async (e) => {
         e.preventDefault()
         // e.preventDefault()
         if(forgotPw !== forgotConfirmPw){
           notify("Passwords are not eqaul. Please reconfirm them.")
+        }else if(forgotPw.length < 6 || forgotConfirmPw.length < 6){
+          notify("Password should have at least 6 characters or numbers")
         }
         else if(!isOTPValid){
           notify("This OTP is not valid")
@@ -224,9 +226,10 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
           }
     
           try {
-            const res = axiosInstance.post("/forget-password",userData)
+            const res =await axiosInstance.post("/forget-password",userData)
+            // console.log(res)
             if(res.data.status === 200) {
-            //   console.log(res)
+             
             notify(res.data.message)
             }
           } catch (error) {
@@ -326,7 +329,7 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                         </div>
 
                         <div className='dai-register-pw-input-container'>
-                            <input disabled={isOTPValid ? false : true} required value={forgotPw} onChange={(e) => setForgotPw(e.target.value)} type="password" className="dai-pw-input"></input>
+                            <input  disabled={isOTPValid ? false : true} required value={forgotPw} onChange={(e) => setForgotPw(e.target.value)} type="password" className="dai-pw-input"></input>
                             <Icon icon="ant-design:lock-outlined" className='dairegister-pw-icon'/>
                         </div>
                         <div className='register-confirm-pw-container'>

@@ -26,9 +26,12 @@ import {axiosInstance} from "./urlConfig"
 import {logout} from "./redux/user"
 
 import {useNavigate} from "react-router-dom"
-import Pusher from 'pusher-js';
+import { pusher } from './pusher';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import {setAgentProfile} from "./redux/agent"
+import {setRefereeProfile} from "./redux/refereeProfile"
 
 function App(){
   return (
@@ -57,6 +60,12 @@ function ParentRouter() {
 
   const dispatch = useDispatch()
 
+  const {user_login} = useSelector(state => state.user)
+  const {profile} = useSelector(state => state.agent)
+
+  // const channel = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+   
+
   const checkJwt = () => {
     const local = localStorage.getItem("auth")
     if(local){
@@ -74,14 +83,38 @@ function ParentRouter() {
     }
   }
 
-  // useEffect(() => {},[])
+  const fetchAgentProfile = async () => {
+    try {
+        const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
 
+            // console.log(res)
+            if(res.data.status === 200){
+                const agent = {
+                    id:res.data.agent.id,
+                    image:res.data.agent.image,
+                    coin_amount:res.data.agent.cashincashout.coin_amount,
+                    commission:res.data.agent.commision,
+                    refereeId: res.data.agent.referee_id,
+                    twod_sale_list:res.data.twod_lists,
+                    threed_sale_list:res.data.threed_lists,
+                    lonepyine_sale_list:res.data.lonepyaing_lists,
+                }
+
+                dispatch(setAgentProfile(agent))
+
+                // console.log(profile)
+            }
+    } catch (error) {
+        notify(error.message)
+    }
+    
+}
   
 
   useEffect(() => {
     axiosInstance.interceptors.response.use(function(response){
       // checkJwt()
-      if(response.data.status === 401){
+      if(response.status === 401){
         navigate("/")
         localStorage.removeItem("auth")
         dispatch(logout())
@@ -94,26 +127,27 @@ function ParentRouter() {
         navigate("/")
         localStorage.removeItem("auth")
         dispatch(logout())
-        notify("Something went wrong. Please log in again.")
+        // notify("Something went wrong. Please log in again.") 
       // console.log(error)
-      return
+      // return
       }
 
       return Promise.reject(error);
     })
   },[])
 
+  
 
-  // useEffect(() => {
-  //   let pusher = new Pusher(process.env.REACT_APP_PUSHER_APP_KEY, {
-  //     cluster: process.env.REACT_APP_PUSHER_CLUSTER
-  //   });
-  // },[])
 
   useEffect(() => {
     checkJwt()
 
     threeDCountDown()
+
+    // fetchAgentProfile()
+    // fetchRefereeProfile()
+    
+
 
     
     const intervalId = setInterval(()=>{
@@ -191,9 +225,9 @@ function ParentRouter() {
       <Route path="/opprofile" element={<OpProfile/>}/>
       <Route path = "/viewreferee" element={<ViewRefree/>}/>
       <Route path="/transaction" element={<Transaction/>}/>
-      <Route path="/notifications" element={<Notifications/>}/>
+      {/* <Route path="/notifications" element={<Notifications/>}/> */}
     </Routes>
-    <ToastContainer />
+    <ToastContainer toastClassName="mobile-toaster" />
     </>
     
     

@@ -15,14 +15,14 @@
 }
 
 .threepieces-select-competiton-label{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-right: 3.75rem;
 }
 
 .threepieces-select-competiton-btn{
     padding: 3px 10px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: var(--secondary-color);
     background-color: transparent;
     border: 2px solid var(--secondary-color);
@@ -47,7 +47,7 @@
     margin-right: 2.5rem;
     padding: 5px 10px;
     background-color: #5D5E6B;
-    font-size: 1.125rem;
+    font-size: 1rem;
     border-radius: 5px;
     color: white;
 }
@@ -86,7 +86,7 @@
 }
 
 .threepieces-name-input-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 300;
     /* margin-right: 5px; */
 }
@@ -106,7 +106,7 @@
 }
 
 .threepieces-phno-input-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 300;
     /* margin-right: 5px; */
 }
@@ -123,7 +123,7 @@
 }
 
 .customer-type-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     /* text-align: center; */
     margin-bottom: 10px;
 }
@@ -146,7 +146,7 @@
 
 .threepieces-name-phno-btn{
     padding: 5px 50px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     border: none;
@@ -175,14 +175,14 @@
 
 .threepieces-customer-name{
     text-align: center;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     /* margin-bottom: 2.188rem; */
 }
 
 .threepieces-customer-phno{
     text-align: center;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     margin: 10px 0 20px 0;
 }
@@ -202,7 +202,7 @@
 }
 
 .threepieces-number-input-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 300;
 }
 
@@ -214,7 +214,7 @@
 }
 
 .threepieces-amount-input-container p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 300;
 }
 
@@ -250,7 +250,7 @@
 
 .threepieces-number-amount-btn{
     padding: 5px 50px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     color: white;
     border-radius: 5px;
     border: none;
@@ -267,7 +267,7 @@
 }
 
 .threepieces-R-counter p{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 300;
     margin-right: 80px;
 }
@@ -275,4 +275,67 @@
 .threepieces-R-counter input{
     width: 15px;
     height: 15px;
+}
+
+@media screen and (max-width:1000px){
+
+    .threepieces-number-container{
+        width: 70px;
+    }
+    .threepieces-name-phno-input-container{
+        padding: 20px 10px;
+        width: 300px;
+    }
+
+    .threepieces-number-amount-input-container{
+        padding: 20px 10px;
+        width: 300px;
+    }
+    .threepieces-name-input-container input{
+        width: 212px;
+    }
+
+    .threepieces-phno-input-container input{
+        width: 212px;
+    }
+
+    .threepieces-number-input-container input{
+        width: 212px;
+    }
+
+    .threepieces-amount-input input{
+        width: 100px;
+    }
+}
+
+@media screen and (max-width:750px){
+    .threepieces-name-number-input-container{
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .threepieces-number-amount-input-container{
+        margin-top: 30px;
+        width: 250px;
+    }
+
+    .threepieces-name-input-container input{
+        width: 150px;
+    }
+
+    .threepieces-phno-input-container input{
+        width: 150px;
+    }
+
+    .threepieces-number-input-container input{
+        width: 150px;
+    }
+
+    .threepieces-name-phno-input-container{
+        width: 250px;
+    }
+
+    .threepieces-R-counter p{
+        margin-right: 20px;
+    }
 }

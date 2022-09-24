@@ -22,6 +22,7 @@ const ViewRefree = () => {
 
     const {user_login} = useSelector(state => state.user)
     const {current_language} = useSelector(state => state.language)
+    const {refereeProfile} = useSelector(state => state.refereeProfile)
 
     const notify = (message) => toast(message, {
         position: "top-center",
@@ -98,9 +99,9 @@ const ViewRefree = () => {
                 </div>
 
 
-                {/* <div className='view-referee-remark-container'>
-                    <p>This is this referee remark.....</p>
-                </div> */}
+                <div className='view-referee-remark-container'>
+                    <p>{refereeProfile.remark}</p>
+                </div>
 
                 {/* <div className='agent-coin-container'>
                     <p>Remaining Amount:</p>

@@ -17,6 +17,8 @@ import { axiosInstance } from '../../urlConfig'
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
+  import { Icon } from '@iconify/react';
+
 const renderLonePyaing = () => {
   return (
     <div>Lone Pyaing</div>
@@ -31,6 +33,8 @@ const TwoD = () => {
   // const [number,setNumber] = useState("")
   // const [amount,setAmount] = useState("1000")
   // const [twodNumbers,setTwodNumbers] = useState([])
+
+  const [isLotteryHistoryOpen,setIsLotteryHistoryOpen] = useState(false)
 
   const {user_login} = useSelector(state => state.user)
   const {current_language} = useSelector(state => state.language)
@@ -60,7 +64,7 @@ const TwoD = () => {
     fetchLotteryOpeningRecord()
   },[])
 
-  if(user_login.isLoggedIn){
+  if(user_login.isLoggedIn && user_login.role !== "operationstaff"){
     return (
       <>
           <Header/>
@@ -77,6 +81,7 @@ const TwoD = () => {
               <div className='twod-navbar'>
                 <p className={twodCategory === "2pieces" ? 'twod-2pieces-link active' : 'twod-2pieces-link'} onClick={() => setTwodCategory("2pieces")}>{current_language === "english" ? "2Pieces" : "၂လုံး"}</p>
                 <p className={twodCategory === "lonepyaing" ? 'twod-lonepyaing-link active' : 'twod-lonepyaing-link'} onClick={() => setTwodCategory("lonepyaing")}>{current_language === "english" ? "Lone Pyine" : "လုံးပြိုင်"}</p>
+                <p className='towd-history-link' onClick={() => setIsLotteryHistoryOpen(true)}>Lottery Records</p>
               </div>
   
               {twodCategory === "2pieces" &&
@@ -92,9 +97,10 @@ const TwoD = () => {
               
   
             </div>
-            <div className='lottery-op-record-parent-container'>
+            <div className={isLotteryHistoryOpen ? 'lottery-op-record-parent-container lottery-op-record-parent-container-open' : 'lottery-op-record-parent-container'}>
+              <Icon icon="akar-icons:cross" className='lottery-op-close-btn' onClick={() => setIsLotteryHistoryOpen(false)}/>
               <p className='lottery-op-record-header'>
-              {current_language === "english" ? "Lottery Opening Record" : "၂လုံးမှတ်တမ်း"}
+                {current_language === "english" ? "Lottery Opening Record" : "၂လုံးမှတ်တမ်း"}
               </p>
               <div className={twodCategory === "lonepyaing" ? 'lottery-op-records-container lottery-op-records-lonepyaing-container' : 'lottery-op-records-container'}>
                 {

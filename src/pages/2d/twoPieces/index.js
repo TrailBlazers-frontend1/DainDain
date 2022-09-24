@@ -87,6 +87,9 @@ const TwoPieces = () => {
           // console.log(JSON.stringify(data));
           dispatch(setTwodList(data.salesList))
         });
+        return (() => {
+          pusher.unsubscribe(`${process.env.REACT_APP_PUSHER_CHANNEL}.${profile.refereeId}`)
+      })
       }
       
     }, [])
@@ -396,6 +399,92 @@ const TwoPieces = () => {
               {row(93,99)}
             </div> */}
           </div>
+
+          <div className='twopieces-numbers-container twopieces-numbers-container-mobile'>
+  
+            <div className='twopieces-numbers-row'>
+              {row(0,3)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(4,7)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(8,11)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(12,15)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(16,19)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(20,23)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(24,27)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(28,31)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(32,35)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(36,39)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(40,43)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(44,47)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(48,51)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(52,55)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(56,59)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(60,63)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(64,67)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(68,71)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(72,75)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(76,79)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(80,83)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(84,87)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(88,91)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(92,95)}
+            </div>
+            <div className='twopieces-numbers-row'>
+              {row(96,99)}
+            </div>
+            
+            {/* <div className='twopieces-numbers-row'>
+              {row(85,92)}
+              </div>
+              <div className='twopieces-numbers-row'>
+              {row(93,99)}
+            </div> */}
+          </div>
         </div>
   
         <div className='twopieces-line'></div>
@@ -438,7 +527,7 @@ const TwoPieces = () => {
               <p className='twopieces-customer-phno'>{customerPhno}</p>
             </div>
             <div className='twopieces-number-input-container'>
-              <p>{current_language === "english" ? "Number:" : "ထိုးသား"}</p>
+              <p>{current_language === "english" ? "Number:" : "နံပါတ်"}</p>
               <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => handleNumberInputChange(e)} type="number" id="number" name="number" min="0" max="99" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
              
             </div>
@@ -466,19 +555,21 @@ const TwoPieces = () => {
   
       </div>
       <div className='twod-details-parent-container'>
-                <div className='twod-details-container'>
-                  <div className='twod-details-header-container'>
-                    <p>{current_language === "english" ? "Number" : "ထိုးသား"}</p>
-                    <p>{current_language === "english" ? "Compensation" : "ဆ"}</p>
-                    <p>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</p>
-                  </div>
+                <table className='twod-details-container'>
+                  <tr className='twod-details-header-container'>
+                    <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
+                    <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                    <th>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</th>
+                    <th></th>
+                  </tr>
   
-                  <div className='twod-details-table-container'>
+                  <tbody className='twod-details-table-container'>
                     {
                       twodNumbers.map((item,index) => (
-                          <div key = {index} className='twod-details-row'>
-                          <p>{item.number}</p>
-                          <p>{item.compensation}</p>
+                          <tr key = {index} className='twod-details-row'>
+                          <td>{item.number}</td>
+                          <td>{item.compensation}</td>
+                          <td>
                           <div className='twod-details-amount-container'>
                             <button onClick={(e) => 
                             {if(item.amount > 100){
@@ -489,12 +580,15 @@ const TwoPieces = () => {
                             <input type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
                             <button onClick={(e) => increaseAmount(e,item)}>+</button>
                           </div>
+                          </td>
+                          <td>
                           <button className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
-                          </div>
+                          </td>
+                          </tr>
                       ))
                     }
-                  </div>
-                </div>
+                  </tbody>
+                </table>
   
                 <div className='twod-overall-details-container'>
                   <div className='twod-overall-detail-container'>

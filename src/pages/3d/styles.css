@@ -21,7 +21,7 @@
 .threed-navbar p{
     padding: 10px;
     /* border-right: 1px solid black; */
-    font-size: 1.125rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -41,7 +41,7 @@
 }
 
 .threed-op-record-header{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
     text-align: center;
     margin-bottom: 1.875rem;
@@ -63,7 +63,7 @@
 
 .threed-op-record-number-container p{
     padding: 2px 10px;
-    font-size: 1.125rem;
+    font-size: 1rem;
     border-radius: 50%;
     background-color: var(--secondary-color);
     color: white;
@@ -71,4 +71,36 @@
 
 .threed-op-record-number-container p:not(:last-child){
     margin-right: 5px;
+}
+
+@media screen and (max-width:1200px){
+    .threed-parent-container{
+        grid-template-columns: 1fr;
+        position: relative;
+    }
+
+    .threed-history-link{
+        display: inline-block;
+        /* float: right; */
+        margin-left: auto;
+        cursor: pointer;
+        color: var(--secondary-color);
+        border-radius: none;
+    }
+
+    .threed-op-record-parent-container{
+        display: none;
+        position: absolute;
+        right: -400px;
+        top: 0;
+        width: 250px;
+        z-index: 20;
+        background-color: white;
+    }
+
+    .threed-op-record-parent-container-open{
+        display: block;
+        right: 0;
+        
+    }
 }

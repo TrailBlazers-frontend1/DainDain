@@ -14,7 +14,7 @@
 .livecounter-content-container{
     display: flex;
     align-items: center;
-    width: 100%;
+    width: 90%;
     height: 100%;
     justify-content: space-between;
     /* align-content: center; */
@@ -33,7 +33,7 @@
 }
 
 .livecounter-category-text{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 500;
 }
 
@@ -135,5 +135,28 @@
 @media screen and (max-width:1600px){
     .livecounter-container{
         height: 120px;
+    }
+}
+
+@media screen and (max-width:1200px){
+    
+}
+
+@media screen and (max-width:1000px){
+    .livecounter-container{
+        height: auto;
+        padding: 10px 0;
+    }
+    .livecounter-content-container{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: 20px 0;
+    }
+
+    .livecounter-content-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }

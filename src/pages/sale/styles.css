@@ -1,5 +1,11 @@
+.sale-parent-container{
+    /* overflow-x: auto; */
+}
+
 .sale-2pieces-container, .sale-lonepyine-container, .sale-3pieces-container{
     width: 100%;
+    position: relative;
+    /* overflow-x: auto; */
 }
 
 
@@ -110,7 +116,9 @@
 
 .sale-details-parent-container{
     width: 100%;
-
+    min-width: 800px;
+    /* overflow-x: auto; */
+    /* display: block; */
 }
 
 .sale-details-labels-container{
@@ -158,6 +166,10 @@
 
 .row-underline{
     border-bottom: 2px solid black;
+}
+
+.sale-table-container{
+    overflow-x: auto;
 }
 
 
@@ -240,6 +252,37 @@
     }
     .sale-details-labels-container p:nth-child(5){
         margin-left: 250px;
+    } */
+}
+
+@media screen and (max-width:1000px){
+
+    .sale-headers-container{
+        flex-direction: column;
+        /* align-items: flex-start; */
+    }
+
+    
+
+    .sale-header{
+        margin-bottom: 10px;
+    }
+
+    .sale-filter-date-input{
+        width: 95px;
+    }
+
+    .sale-filter-round-filter{
+        width: 95px;
+        margin-left: 10px;
+    }
+
+    .sale-generate-btns-container{
+        margin-top: 10px;
+    }
+
+    /* .sale-details-parent-container{
+        position: absolute;
     } */
 }
 

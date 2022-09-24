@@ -134,7 +134,7 @@
 }
 
 .agent-id{
-    font-size: 1.125rem;
+    font-size: 1rem;
     text-align: center;
     margin-top: 10px;
 }
@@ -207,7 +207,7 @@
 }
 
 .agent-transaction-history-header{
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 600;
     margin-bottom: 10px;
 }
