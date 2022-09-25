@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux"
 // import Pusher from 'pusher-js';
 import { pusher } from '../../../pusher'
 import {setLonePyineList} from "../../../redux/2d3dList"
+import { setAgentProfile } from '../../../redux/agent'
 import { axiosInstance } from '../../../urlConfig'
 import "./styles.css"
 
@@ -97,6 +98,33 @@ const LonePyaing = () => {
   
       }
 
+      const fetchAgentProfile = async () => {
+        try {
+            const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
+    
+                // console.log(res)
+                if(res.data.status === 200){
+                    const agent = {
+                        id:res.data.agent.id,
+                        image:res.data.agent.image,
+                        coin_amount:res.data.agent.cashincashout.coin_amount,
+                        commission:res.data.agent.commision,
+                        refereeId: res.data.agent.referee_id,
+                        twod_sale_list:res.data.twod_lists,
+                        threed_sale_list:res.data.threed_lists,
+                        lonepyine_sale_list:res.data.lonepyaing_lists,
+                    }
+    
+                    dispatch(setAgentProfile(agent))
+    
+                    // console.log(profile)
+                }
+        } catch (error) {
+            notify(error.message)
+        }
+        
+    }
+
     useEffect(() => {
         if(user_login.isLoggedIn && user_login.role === "agent"){
 
@@ -118,14 +146,15 @@ const LonePyaing = () => {
 
           const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
           channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
-        //   notify(data)
+          notify(data)
           fetchLonePyineList()
+          fetchAgentProfile()
             
         });
 
           return (() => {
             pusher.unsubscribe(`lonepyine-channel.${profile.refereeId}`)
-            pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
+            // pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
         })
         }
     },[])
