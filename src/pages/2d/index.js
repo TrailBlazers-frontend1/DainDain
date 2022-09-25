@@ -9,15 +9,17 @@ import LonePyaing from './lonePyaing'
 // import { Link } from 'react-router-dom'
 import {Navigate} from "react-router-dom"
 
-import {useSelector} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import user from '../../redux/user';
 import Login from '../../components/login'
 import { axiosInstance } from '../../urlConfig'
+import { pusher } from '../../pusher'
 
 import { ToastContainer, toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
 
   import { Icon } from '@iconify/react';
+import { setAgentProfile } from '../../redux/agent'
 
 const renderLonePyaing = () => {
   return (
@@ -38,6 +40,9 @@ const TwoD = () => {
 
   const {user_login} = useSelector(state => state.user)
   const {current_language} = useSelector(state => state.language)
+  const {profile} = useSelector(state => state.agent)
+
+  const dispatch = useDispatch()
 
   const notify = (message) => toast(message, {
     position: "top-center",
@@ -60,9 +65,60 @@ const TwoD = () => {
     
   }
 
+  const fetchAgentProfile = async () => {
+    try {
+        const res = await axiosInstance.get("/agent-profile",{headers:{Authorization:`Bearer ${user_login.token}`}})
+
+            // console.log(res)
+            if(res.data.status === 200){
+                console.log("agent profile")
+                const agent = {
+                    id:res.data.agent?.id,
+                    image:res.data.agent?.image,
+                    coin_amount:res.data.agent?.cashincashout?.coin_amount,
+                    commission:res.data.agent?.commision,
+                    refereeId: res.data.agent?.referee_id,
+                    twod_sale_list:res.data.twod_lists,
+                    threed_sale_list:res.data.threed_lists,
+                    lonepyine_sale_list:res.data.lonepyaing_lists,
+                }
+
+                dispatch(setAgentProfile(agent))
+
+                // console.log(profile)
+            }
+    } catch (error) {
+        notify(error.message)
+    }
+    
+}
+
   useEffect(() => {
     fetchLotteryOpeningRecord()
   },[])
+
+//   useEffect(() => {
+//     if(user_login.isLoggedIn && user_login.role === "agent"){ 
+//         const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+//         channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
+//           notify(data)
+//           fetchAgentProfile()
+          
+//         });
+
+//         const channel2 = pusher.subscribe(`channel-agent.${profile.id}`)
+//         channel2.bind("App\\Events\\agent_cash", function(data) {
+//             notify(data)
+//             fetchAgentProfile()
+//         })
+//         return (() => {
+//                 pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
+//                 pusher.unsubscribe(`channel-agent.${profile.id}`)
+//             })
+//     }
+    
+//         // eslint-disable-next-line react-hooks/exhaustive-deps
+// },[])
 
   if(user_login.isLoggedIn && user_login.role !== "operationstaff"){
     return (

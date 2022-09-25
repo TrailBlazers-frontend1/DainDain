@@ -73,6 +73,10 @@
     margin-right: 5px;
 }
 
+.threed-history-link{
+    display: none;
+}
+
 @media screen and (max-width:1200px){
     .threed-parent-container{
         grid-template-columns: 1fr;

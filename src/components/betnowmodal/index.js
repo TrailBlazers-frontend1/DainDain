@@ -94,7 +94,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
             
             const canBet = arr.every((item,index) => {
                 const amount = parseInt(twodNumbers[index].amount)
-                const sale = parseInt(item.sale? item.sale : 0)
+                const sale = parseInt(item.sales? item.sales : 0)
                 // console.log(item.max_amount < amount + sale)
                 if(item.max_amount < (amount + sale) ){
                     notify("U Cannot Bet")
@@ -172,7 +172,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
 
             const canBet = arr.every((item,index) => {
                 const amount = parseInt(combinedArray[index].amount)
-                const sale = parseInt(item.sale? item.sale : 0)
+                const sale = parseInt(item.sales? item.sales : 0)
                 // console.log(item.max_amount < amount + sale)
                 if(item.max_amount < (amount + sale) ){
                     notify("U Cannot Bet")
@@ -237,7 +237,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 <thead>
                     <tr className='betnow-numbers-labels-container'>
                         <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
-                        <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                        <th>{current_language === "english" ? "Rate" : "ဆ"}</th>
                         <th>{current_language === "english" ? "Amount" : "ထိုး‌‌ကြေး"}</th>
                     </tr>
                 </thead>

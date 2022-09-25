@@ -57,7 +57,12 @@ const TwoPieces = () => {
           const morning2d = await axiosInstance.get("/getTwoDsAM",{headers:{Authorization:`Bearer ${user_login.token}`}})
         if(morning2d.data.status === 200){
           // console.log(res)
-          dispatch(setTwodList(morning2d.data.twods))
+          // console.log(morning2d.data.twods)
+          const sortedMorningTwodList = morning2d.data.twods.sort((a,b) => {
+            return a.id - b.id
+          })
+          console.log(sortedMorningTwodList)
+          dispatch(setTwodList(sortedMorningTwodList))
         }
         }
 
@@ -65,7 +70,11 @@ const TwoPieces = () => {
           const evening2d = await axiosInstance.get("/getTwoDsPM",{headers:{Authorization:`Bearer ${user_login.token}`}})
           if(evening2d.data.status === 200){
             // console.log(res)
-            dispatch(setTwodList(evening2d.data.twods))
+            const sortedEveningTwodList = evening2d.data.twods.sort((a,b) => {
+              return a.id - b.id
+            })
+            console.log(sortedEveningTwodList)
+            dispatch(setTwodList(sortedEveningTwodList))
           }
         }
         
@@ -84,15 +93,31 @@ const TwoPieces = () => {
   
         const channel = pusher.subscribe(`${process.env.REACT_APP_PUSHER_CHANNEL}.${profile.refereeId}`);
         channel.bind('App\\Events\\testing', function(data) {
-          // console.log(JSON.stringify(data));
-          dispatch(setTwodList(data.salesList))
+          console.log(data);
+         
+        //   const sortedTwodList = data.salesList.sort((a,b) => {
+        //     return a.id - b.id
+        //   })
+        //   console.log(sortedTwodList)
+        //   dispatch(setTwodList(sortedTwodList))
+          fetch2dList()
         });
+
+        const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+            channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
+            // notify(data)
+            fetch2dList()
+              
+        });
+
         return (() => {
           pusher.unsubscribe(`${process.env.REACT_APP_PUSHER_CHANNEL}.${profile.refereeId}`)
+          pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
       })
       }
       
     }, [])
+    
 
 
     const submitCustomerInfo = (e) => {
@@ -558,7 +583,7 @@ const TwoPieces = () => {
                 <table className='twod-details-container'>
                   <tr className='twod-details-header-container'>
                     <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
-                    <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                    <th>{current_language === "english" ? "Rate" : "ဆ"}</th>
                     <th>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</th>
                     <th></th>
                   </tr>

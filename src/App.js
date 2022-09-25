@@ -109,6 +109,33 @@ function ParentRouter() {
     }
     
 }
+
+
+  //  useEffect(() => {
+  //       if(user_login.isLoggedIn && user_login.role === "agent"){ 
+  //           const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+  //           channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
+  //             notify(data)
+  //             fetchAgentProfile()
+              
+  //           });
+    
+  //           const channel2 = pusher.subscribe(`channel-agent.${profile.id}`)
+  //           channel2.bind("App\\Events\\agent_cash", function(data) {
+  //               notify(data)
+  //               fetchAgentProfile()
+  //           })
+  //           return (() => {
+  //                   pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
+  //                   pusher.unsubscribe(`channel-agent.${profile.id}`)
+  //               })
+  //       }
+        
+  //           // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   },[])
+
+
+
   
 
   useEffect(() => {

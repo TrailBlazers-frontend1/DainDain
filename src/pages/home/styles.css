@@ -189,7 +189,7 @@
 .live-view{
     width: 25rem;
     height: 16.25rem;
-    background-color: var(--primary-color);
+    /* background-color: var(--primary-color); */
     border-radius: 15px;
     display: grid;
     place-items: center;
@@ -201,7 +201,7 @@
 }
 
 .live-view p{
-    font-size: 70px;
+    font-size: 120px;
     transition: opacity 0.2s ease-in-out;
     color: #F6BF02;
 }

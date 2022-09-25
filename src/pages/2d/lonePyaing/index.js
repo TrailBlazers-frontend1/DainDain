@@ -70,7 +70,11 @@ const LonePyaing = () => {
               const morningLonePyine = await axiosInstance.get("/getLonePyaingsAM",{headers:{Authorization:`Bearer ${user_login.token}`}})
             if(morningLonePyine.data.status === 200){
               // console.log(res)
-              dispatch(setLonePyineList(morningLonePyine.data.lonepyaings))
+              const sortedMorningLonePyineList = morningLonePyine.data.lonepyines.sort((a,b) => {
+                return a.id - b.id
+              })
+              console.log(sortedMorningLonePyineList)
+              dispatch(setLonePyineList(sortedMorningLonePyineList))
             }
             }
     
@@ -78,7 +82,11 @@ const LonePyaing = () => {
               const eveningLonepyine = await axiosInstance.get("/getLonePyaingsPM",{headers:{Authorization:`Bearer ${user_login.token}`}})
               if(eveningLonepyine.data.status === 200){
                 // console.log(res)
-                dispatch(setLonePyineList(eveningLonepyine.data.lonepyaings))
+                const sortedEveningLonePyineList = eveningLonepyine.data.lonepyines.sort((a,b) => {
+                    return a.id - b.id
+                  })
+                  console.log(sortedEveningLonePyineList)
+                dispatch(setLonePyineList(sortedEveningLonePyineList))
               }
             }
             
@@ -99,15 +107,25 @@ const LonePyaing = () => {
     
           const channel = pusher.subscribe(`lonepyine-channel.${profile.refereeId}`);
           channel.bind('App\\Events\\lonepyine', function(data) {
+            console.log(data)
             // notify(JSON.stringify(data));
-            dispatch(setLonePyineList(data.salesList))
+            // dispatch(setLonePyineList(data.salesList))
+            fetchLonePyineList()
             
             // console.log(lonePyineList)
             // console.log("use effect ran")
           });
 
+          const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
+          channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
+        //   notify(data)
+          fetchLonePyineList()
+            
+        });
+
           return (() => {
             pusher.unsubscribe(`lonepyine-channel.${profile.refereeId}`)
+            pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
         })
         }
     },[])
@@ -539,7 +557,7 @@ const LonePyaing = () => {
                 <thead>
                     <tr className='lonepyaing-details-header-container'>
                         <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
-                        <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                        <th>{current_language === "english" ? "Rate" : "ဆ"}</th>
                         <th>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</th>
                         <th></th>
                     </tr>

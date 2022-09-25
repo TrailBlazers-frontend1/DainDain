@@ -260,7 +260,7 @@ const ThreePieces = () => {
       <div className='threepieces-header-container'>
           <div className='threepieces-header-washrate'>
             <p className='threepieces-header'>{current_language === "english" ? "3Pieces" : "၃လုံး"}</p>
-            <p className='threepieces-washrate'>{current_language === "english" ? "Compensation" : "ဆ"}   {threedCompensation}</p>
+            <p className='threepieces-washrate'>{current_language === "english" ? "Rate" : "ဆ"}   {threedCompensation}</p>
           </div>
           {/* <p className='threepieces-description'>Description</p> */}
       </div>
@@ -339,7 +339,7 @@ const ThreePieces = () => {
                   <thead>
                   <tr className='twod-details-header-container'>
                     <th>{current_language === "english" ? "Number" : "နံပါတ်"}</th>
-                    <th>{current_language === "english" ? "Compensation" : "ဆ"}</th>
+                    <th>{current_language === "english" ? "Rate" : "ဆ"}</th>
                     <th>{current_language === "english" ? "Amount:" : "ထိုးကြေး"}</th>
                     <th></th>
                   </tr>

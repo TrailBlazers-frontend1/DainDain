@@ -66,12 +66,13 @@ const Header = () => {
 
                 // console.log(res)
                 if(res.data.status === 200){
+                    console.log("agent profile")
                     const agent = {
-                        id:res.data.agent.id,
-                        image:res.data.agent.image,
-                        coin_amount:res.data.agent.cashincashout.coin_amount,
-                        commission:res.data.agent.commision,
-                        refereeId: res.data.agent.referee_id,
+                        id:res.data.agent?.id,
+                        image:res.data.agent?.image,
+                        coin_amount:res.data.agent?.cashincashout?.coin_amount,
+                        commission:res.data.agent?.commision,
+                        refereeId: res.data.agent?.referee_id,
                         twod_sale_list:res.data.twod_lists,
                         threed_sale_list:res.data.threed_lists,
                         lonepyine_sale_list:res.data.lonepyaing_lists,
@@ -121,7 +122,7 @@ const Header = () => {
         }
         
             // eslint-disable-next-line react-hooks/exhaustive-deps
-      },[])
+    },[])
 
 
     useEffect(() => {

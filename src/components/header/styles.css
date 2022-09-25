@@ -280,8 +280,8 @@
     .agent-details-mobile-view-container{
         display: flex;
         align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
+        justify-content: flex-end;
+        padding-bottom: 10px;
     }
 
     .agent-detail-mobile-view{
