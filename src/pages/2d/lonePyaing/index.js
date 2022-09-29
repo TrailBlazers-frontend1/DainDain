@@ -86,7 +86,7 @@ const LonePyaing = () => {
                 const sortedEveningLonePyineList = eveningLonepyine.data.lonepyines.sort((a,b) => {
                     return a.id - b.id
                   })
-                  console.log(sortedEveningLonePyineList)
+                //   console.log(sortedEveningLonePyineList)
                 dispatch(setLonePyineList(sortedEveningLonePyineList))
               }
             }
@@ -135,7 +135,7 @@ const LonePyaing = () => {
     
           const channel = pusher.subscribe(`lonepyine-channel.${profile.refereeId}`);
           channel.bind('App\\Events\\lonepyine', function(data) {
-            console.log(data)
+            // console.log(data)
             // notify(JSON.stringify(data));
             // dispatch(setLonePyineList(data.salesList))
             fetchLonePyineList()
@@ -146,14 +146,19 @@ const LonePyaing = () => {
 
           const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
           channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
-          notify(data)
+        //   notify(data)
           fetchLonePyineList()
           fetchAgentProfile()
             
         });
+        const channel3 = pusher.subscribe(`agentAccept-noti.${profile.id}`)
+        channel3.bind("App\\Events\\AcceptNotiAgent",function(data){
+            notify(data)
+        })
 
           return (() => {
             pusher.unsubscribe(`lonepyine-channel.${profile.refereeId}`)
+            pusher.unsubscribe(`agentAccept-noti.${profile.id}`)
             // pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
         })
         }

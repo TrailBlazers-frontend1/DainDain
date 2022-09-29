@@ -71,7 +71,7 @@ const TwoD = () => {
 
             // console.log(res)
             if(res.data.status === 200){
-                console.log("agent profile")
+                // console.log("agent profile")
                 const agent = {
                     id:res.data.agent?.id,
                     image:res.data.agent?.image,

@@ -758,9 +758,619 @@ const Transaction = () => {
 
      if(user_login.isLoggedIn && user_login.role === "agent"){
 
-      return (<>
-      {
-        isLoading ? <Loading/> : <>
+      // return (<>
+      // {
+      //   isLoading ? <Loading/> : 
+      //   <>
+      //   <Header/>
+      //   <Navbar/>
+    
+      //   {/* 2D winners */}
+      //   <div className='App winners-parent-container'>
+      //       <div className='winners-header-container'>
+      //         <p>{current_language === "english" ? "2Pieces Winners" : "၂လုံးအောင်စရင်း"}</p>
+      //         <div className='winners-filters-container'>
+      //           {/* <div className='winners-name-container'>
+      //              <input list='customers' type="text" placeholder='Customer Name'/>
+      //              <datalist id="customers">
+      //               <option value="Customer Name1"></option>
+      //               <option value="Customer Name2"></option>
+      //               <option value="Customer Name3"></option>
+      //              </datalist>
+      //           </div> */}
+    
+      //           <input className='winners-date-filter' type="date" onChange={(e) => filter2dWinnersDate(e)}></input>
+    
+      //           <select className='winners-round-filter' onChange={(e) => filter2dRound(e)}>
+      //             <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
+      //             <option value="Morning">Morning</option>
+      //             <option value="Evening">Evening</option>
+      //           </select>
+      //         </div>
+      //         <div className='sale-generate-btns-container' onClick={() => setIs2dGenerateOpen(!is2dGenerateOpen)}>
+      //           {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+      //             <div className={is2dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+      //               <button onClick={() => handleExcelExport(twodData,"2dWinners")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+      //               <button onClick={() => handlePdfExport("2dWinners","#twodWinners")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+      //             </div>
+      //           </div>
+      //       </div>
+    
+      //       {/* <table className='winners-details-parent-container'>
+      //           <tr className='winners-details-labels-container'>
+      //               <th>Name</th>
+      //               <th>Number</th>
+      //               <th>Amount</th>
+      //               <th>Comthensation</th>
+      //               <th>Game Type</th>
+      //               <th>Date</th>
+      //               <th>Round</th>
+      //           </tr>
+    
+      //           <tbody className='winners-details-container'>
+      //               <tr className='winners-details-rows'>
+      //                   <td>Customer Name1</td>
+      //                   <td>32</td>
+      //                   <td>10000ks</td>
+      //                   <td>85</td>
+      //                   <td>2Pieces</td>
+      //                   <td>08/22/2022</td>
+      //                   <td>Morning</td>
+      //               </tr>
+      //               <tr className='winners-details-rows'>
+      //                   <td>Customer Name1</td>
+      //                   <td>32</td>
+      //                   <td>10000ks</td>
+      //                   <td>85</td>
+      //                   <td>2Pieces</td>
+      //                   <td>08/22/2022</td>
+      //                   <td>Morning</td>
+      //               </tr>
+      //               <tr className='winners-details-rows'>
+      //                   <td>Customer Name1</td>
+      //                   <td>32</td>
+      //                   <td>10000ks</td>
+      //                   <td>85</td>
+      //                   <td>2Pieces</td>
+      //                   <td>08/22/2022</td>
+      //                   <td>Morning</td>
+      //               </tr>
+      //           </tbody>
+      //       </table> */}
+      //       <div className='winners-table-container'>
+      //        <Table 
+      //             id="twodWinners"
+      //             columns={twodColumns} 
+      //             data = {twodData}
+      //           />
+      //       </div>
+      //   </div>
+    
+      //   {/* Lone Pyine Winners */}
+      //   <div className='App winners-parent-container'>
+      //       <div className='winners-header-container'>
+      //         <p>{current_language === "english" ? "Lone Pyine Winners" : "လုံးပြိုင်အောင်စရင်း"}</p>
+      //         <div className='winners-filters-container'>
+      //           {/* <div className='winners-name-container'>
+      //              <input list='customers' type="text" placeholder='Customer Name'/>
+      //              <datalist id="customers">
+      //               <option value="Customer Name1"></option>
+      //               <option value="Customer Name2"></option>
+      //               <option value="Customer Name3"></option>
+      //              </datalist>
+      //           </div> */}
+    
+      //           <input className='winners-date-filter' type="date" onChange={(e) => filterLonePyineWinnersDate(e)}></input>
+    
+      //           <select className='winners-round-filter' onChange={(e) => filterLonePyineRound(e)}>
+      //             <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
+      //             <option value="Morning">Morning</option>
+      //             <option value="Evening">Evening</option>
+      //           </select>
+      //           </div>
+      //           <div className='sale-generate-btns-container' onClick={() => setIsLonePyineGenerateOpen(!isLonePyineGenerateOpen)}>
+      //           {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+      //             <div className={isLonePyineGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+      //               <button onClick={() => handleExcelExport(lonePyineData,"LonePyineWinners")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+      //               <button onClick={() => handlePdfExport("LonePyineWinners","#lonePyineWinners")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+      //             </div>
+      //           </div>
+      //       </div>
+    
+      //       {/* <div className='winners-details-parent-container'>
+      //           <div className='winners-details-labels-container'>
+      //               <p>Name</p>
+      //               <p>Number</p>
+      //               <p>Amount</p>
+      //               <p>Compensation</p>
+      //               <p>Game Type</p>
+      //               <p>Date</p>
+      //               <p>Round</p>
+      //           </div>
+    
+      //           <div className='winners-details-container'>
+      //               <div className='winners-details-rows'>
+      //                   <p>Customer Name1</p>
+      //                   <p>32</p>
+      //                   <p>10000ks</p>
+      //                   <p>85</p>
+      //                   <p>2Pieces</p>
+      //                   <p>08/22/2022</p>
+      //                   <p>Morning</p>
+      //               </div>
+      //               <div className='winners-details-rows'>
+      //                   <p>Customer Name1</p>
+      //                   <p>32</p>
+      //                   <p>10000ks</p>
+      //                   <p>85</p>
+      //                   <p>2Pieces</p>
+      //                   <p>08/22/2022</p>
+      //                   <p>Morning</p>
+      //               </div>
+      //               <div className='winners-details-rows'>
+      //                   <p>Customer Name1</p>
+      //                   <p>32</p>
+      //                   <p>10000ks</p>
+      //                   <p>85</p>
+      //                   <p>2Pieces</p>
+      //                   <p>08/22/2022</p>
+      //                   <p>Morning</p>
+      //               </div>
+      //           </div>
+      //       </div> */}
+      //       <div className='winners-table-container'>
+
+           
+      //        <Table 
+      //             id="lonePyineWinners"
+      //             columns={LonePyineColumns} 
+      //             data = {lonePyineData}
+      //           />
+      //       </div>
+      //   </div>
+    
+      //   {/* 3d Winners */}
+      //   <div className='App winners-parent-container'>
+      //       <div className='winners-header-container'>
+      //         <p>{current_language === "english" ? "3D Winners" : "၃လုံးအောင်စရင်း"}</p>
+      //         <div className='winners-filters-container'>
+      //           {/* <div className='winners-name-container'>
+      //              <input list='customers' type="text" placeholder='Customer Name'/>
+      //              <datalist id="customers">
+      //               <option value="Customer Name1"></option>
+      //               <option value="Customer Name2"></option>
+      //               <option value="Customer Name3"></option>
+      //              </datalist>
+      //           </div> */}
+    
+      //           <input className='winners-date-filter' type="date" onChange={(e) => filter3dWinnersDate(e)}></input>
+    
+      //           <select className='winners-round-filter' onChange={(e) => filter3DRound(e)}>
+      //             <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
+      //             <option value="Morning">Morning</option>
+      //             <option value="Evening">Evening</option>
+      //           </select>
+      //           </div>
+      //           <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
+      //           {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+      //             <div className={is3dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+      //               <button onClick={() =>  handleExcelExport(threedData,"3dWinners")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+      //               <button onClick={() => handlePdfExport("3dWinners","#threedWinners")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+      //             </div>
+      //           </div>
+      //       </div>
+    
+      //       {/* <div className='winners-details-parent-container'>
+      //           <div className='winners-details-labels-container'>
+      //               <p>Name</p>
+      //               <p>Number</p>
+      //               <p>Amount</p>
+      //               <p>Compensation</p>
+      //               <p>Game Type</p>
+      //               <p>Date</p>
+      //               <p>Round</p>
+      //           </div>
+    
+      //           <div className='winners-details-container'>
+      //               <div className='winners-details-rows'>
+      //                   <p>Customer Name1</p>
+      //                   <p>32</p>
+      //                   <p>10000ks</p>
+      //                   <p>85</p>
+      //                   <p>2Pieces</p>
+      //                   <p>08/22/2022</p>
+      //                   <p>Morning</p>
+      //               </div>
+      //               <div className='winners-details-rows'>
+      //                   <p>Customer Name1</p>
+      //                   <p>32</p>
+      //                   <p>10000ks</p>
+      //                   <p>85</p>
+      //                   <p>2Pieces</p>
+      //                   <p>08/22/2022</p>
+      //                   <p>Morning</p>
+      //               </div>
+      //               <div className='winners-details-rows'>
+      //                   <p>Customer Name1</p>
+      //                   <p>32</p>
+      //                   <p>10000ks</p>
+      //                   <p>85</p>
+      //                   <p>2Pieces</p>
+      //                   <p>08/22/2022</p>
+      //                   <p>Morning</p>
+      //               </div>
+      //           </div>
+      //       </div> */}
+      //       <div className='winners-table-container'>
+      //        <Table 
+      //             id="threedWinners"
+      //             columns={threedColumns} 
+      //             data = {threedData}
+      //           />
+      //       </div>
+      //   </div>
+    
+      //   <div className='App transaction-parent-container'>
+      //         <div className='transaction-header-container'>
+      //           <p onClick={() => setHeaderCategory("2d")} className={headerCategory === "2d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>{current_language === "english" ? "2D" : "၂လုံး"}</p>
+      //           <p onClick={() => setHeaderCategory("3d")} className={headerCategory === "3d" ? 'transaction-header-item transaction-header-active' : "transaction-header-item"}>{current_language === "english" ? "3D" : "၃လုံး"}</p>
+      //         </div>
+    
+      //         <div className='transaction-category-container'>
+      //           {/* <button onClick={() => setTransactionCategory("sale voucher")} className={transactionCategory === "sale voucher" ? 'transaction-category-btn transaction-category-btn-active' : "transaction-category-btn"}>Sale Voucher</button> */}
+      //           <button onClick={() => setTransactionCategory("sale day book")} className={transactionCategory === "sale day book" ? 'transaction-category-btn transaction-category-btn-active' : "transaction-category-btn"}>{current_language === 'english' ? 'Sale Day Book' : "နေ့စဉ်အရောင်းစာအုပ်"}</button>
+      //         </div>
+    
+      //         {/* {
+      //           headerCategory === "2d" && transactionCategory ==="sale voucher" ? 
+      //           <div className='towd-voucher-parent-container'>
+      //             <div className='twod-day-voucher-rows-container'></div>
+      //           </div> : null
+      //         } */}
+      //         {
+      //           headerCategory === "2d" && transactionCategory ==="sale day book" ? 
+      //           <>
+      //             <div className='twod-sale-day-book-parent-container'>
+      //               <div className='twod-sale-day-book-header-container'>
+      //                 <p>{current_language === "english" ? "2Pieces" : "၂လုံး"}</p>
+      //                 <div className='sale-generate-btns-container' onClick={() => setIs2dSaleBookGenerateOpen(!is2dSaleBookGenerateOpen)}>
+      //                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+      //                   <div className={is2dSaleBookGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+      //                     {/* <button onClick={() =>  handleExcelExport(twodSaleBookData,"2dSaleBook")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button> */}
+      //                     <button onClick={() => handlePdfExport("2dSaleBook","#twodSaleBook")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+      //                   </div>
+      //                 </div>
+      //               </div>
+    
+      //               {/* <table className='twod-sale-day-book-details-parent-container'>
+    
+      //               </table> */}
+      //               {/* <div className='twod-sale-day-book-label-container'>
+      //                 <p>No</p>
+      //                 <p>Date</p>
+      //                 <p>Time</p>
+      //                 <p>Name</p>
+      //                 <p>Game Type</p>
+      //                 <p>Number</p>
+      //                 <p>Compensation</p>
+      //                 <p>Amount</p>
+      //                 <p>Total</p>
+      //               </div>
+    
+      //               <div className='twod-day-sale-book-rows-container'>
+      //                 <div className='twod-day-sale-book-row-container'>
+    
+      //                   <div className='twod-day-sale-book-row'>
+      //                     <p>1</p>
+      //                     <p>08/18/2022</p>
+      //                     <p>9:51</p>
+      //                     <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
+      //                       <p>Customer Name</p>
+      //                       <p>0912345678</p>
+      //                     </div>
+    
+      //                     <p>2Pieces</p>
+    
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>34</p>
+      //                       <p>48</p>
+      //                       <p>67</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>85</p>
+      //                       <p>80</p>
+      //                       <p>83</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>10000ks</p>
+      //                       <p>100000ks</p>
+      //                       <p>20000ks</p>
+      //                       <p className='twod-day-sale-book-seperate-row'>
+      //                         130000ks
+      //                       </p>
+      //                     </div>
+      //                     <p>130000ks</p> 
+      //                   </div>
+      //                   <div className='twod-day-sale-book-row-line'></div>
+      //                 </div>
+      //                 <div className='twod-day-sale-book-row-container'>
+    
+      //                   <div className='twod-day-sale-book-row'>
+      //                     <p>88</p>
+      //                     <p>01/11/2022</p>
+      //                     <p>9:51</p>
+      //                     <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
+      //                       <p>Customer Name name</p>
+      //                       <p>0912345678</p>
+      //                     </div>
+    
+      //                     <p>2Pieces</p>
+    
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>34</p>
+      //                       <p>48</p>
+      //                       <p>67</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>85</p>
+      //                       <p>80</p>
+      //                       <p>83</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>10000ks</p>
+      //                       <p>100000ks</p>
+      //                       <p>20000ks</p>
+      //                       <p className='twod-day-sale-book-seperate-row'>
+      //                         130000ks
+      //                       </p>
+      //                     </div>
+      //                     <p>130000ks</p> 
+      //                   </div>
+      //                   <div className='twod-day-sale-book-row-line'></div>
+      //                 </div>
+                      
+      //               </div> */}
+      //               <div className='salebook-table-container'>
+      //               <SaleBookTable 
+      //                 id="twodSaleBook"
+      //                 columns={twodSaleBookColumns} 
+      //                 data = {twodSaleBookData}
+      //               />
+      //               </div>
+      //             </div>
+    
+    
+      //             <div className='twod-sale-day-book-parent-container'>
+      //             <div className='twod-sale-day-book-header-container'>
+      //                 <p>{current_language === "english" ? "Lone Pyine" : "လုံးပြိုင်"}</p>
+      //                 <div className='sale-generate-btns-container' onClick={() => setIsLonePyineSaleBookGenerateOpen(!isLonePyineSaleBookGenerateOpen)}>
+      //                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+      //                   <div className={isLonePyineSaleBookGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+      //                     {/* <button onClick={() =>  handleExcelExport(lonePyineSaleBookData,"LonePyineSaleBook")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button> */}
+      //                     <button onClick={() => handlePdfExport("LonePyineSaleBook","#lonePyineSaleBook")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+      //                   </div>
+      //                 </div>
+      //               </div>
+      //               {/* <div className='twod-sale-day-book-label-container'>
+      //                 <p>No</p>
+      //                 <p>Date</p>
+      //                 <p>Time</p>
+      //                 <p>Name</p>
+      //                 <p>Game Type</p>
+      //                 <p>Number</p>
+      //                 <p>Compensation</p>
+      //                 <p>Amount</p>
+      //                 <p>Total</p>
+      //               </div>
+    
+      //               <div className='twod-day-sale-book-rows-container'>
+      //                 <div className='twod-day-sale-book-row-container'>
+    
+      //                   <div className='twod-day-sale-book-row'>
+      //                     <p>1</p>
+      //                     <p>08/18/2022</p>
+      //                     <p>9:51</p>
+      //                     <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
+      //                       <p>Customer Name</p>
+      //                       <p>0912345678</p>
+      //                     </div>
+    
+      //                     <p>2Pieces</p>
+    
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>34</p>
+      //                       <p>48</p>
+      //                       <p>67</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>85</p>
+      //                       <p>80</p>
+      //                       <p>83</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>10000ks</p>
+      //                       <p>100000ks</p>
+      //                       <p>20000ks</p>
+      //                       <p className='twod-day-sale-book-seperate-row'>
+      //                         130000ks
+      //                       </p>
+      //                     </div>
+      //                     <p>130000ks</p> 
+      //                   </div>
+      //                   <div className='twod-day-sale-book-row-line'></div>
+      //                 </div>
+      //                 <div className='twod-day-sale-book-row-container'>
+    
+      //                   <div className='twod-day-sale-book-row'>
+      //                     <p>88</p>
+      //                     <p>01/11/2022</p>
+      //                     <p>9:51</p>
+      //                     <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
+      //                       <p>Customer Name name</p>
+      //                       <p>0912345678</p>
+      //                     </div>
+    
+      //                     <p>2Pieces</p>
+    
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>34</p>
+      //                       <p>48</p>
+      //                       <p>67</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>85</p>
+      //                       <p>80</p>
+      //                       <p>83</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>10000ks</p>
+      //                       <p>100000ks</p>
+      //                       <p>20000ks</p>
+      //                       <p className='twod-day-sale-book-seperate-row'>
+      //                         130000ks
+      //                       </p>
+      //                     </div>
+      //                     <p>130000ks</p> 
+      //                   </div>
+      //                   <div className='twod-day-sale-book-row-line'></div>
+      //                 </div>
+                      
+      //               </div> */}
+      //               <div className='winners-table-container'>
+      //                 <SaleBookTable 
+      //                   id="lonePyineSaleBook"
+      //                   columns={LonePyineSaleBookColumns} 
+      //                   data = {lonePyineSaleBookData}
+      //                 />
+      //               </div>
+      //             </div>
+      //           </>
+               
+      //           : null
+      //         }
+      //         {/* {
+      //           headerCategory === "3d" && transactionCategory ==="sale voucher" ? 
+      //           <div className='towd-voucher-parent-container'>
+      //             <div className='twod-day-voucher-rows-container'></div>
+      //           </div> : null
+      //         } */}
+      //         {
+      //           headerCategory === "3d" && transactionCategory ==="sale day book" ? 
+      //           <div className='twod-sale-day-book-parent-container'>
+      //             <div className='twod-sale-day-book-header-container'>
+      //                 <p>{current_language === "english" ? "3Pieces" : "၃လုံး"}</p>
+      //                 <div className='sale-generate-btns-container' onClick={() => setIs3dSaleBookGenerateOpen(!is3dSaleBookGenerateOpen)}>
+      //                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+      //                   <div className={is3dSaleBookGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+      //                     {/* <button onClick={() =>  handleExcelExport(threedSaleBookData,"3dSaleBook")}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button> */}
+      //                     <button onClick={() => handlePdfExport("3dSaleBook","#threedSaleBook")}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+      //                   </div>
+      //                 </div>
+      //               </div>
+      //               {/* <div className='twod-sale-day-book-label-container'>
+      //                 <p>No</p>
+      //                 <p>Date</p>
+      //                 <p>Time</p>
+      //                 <p>Name</p>
+      //                 <p>Game Type</p>
+      //                 <p>Number</p>
+      //                 <p>Compensation</p>
+      //                 <p>Amount</p>
+      //                 <p>Total</p>
+      //               </div>
+    
+      //               <div className='twod-day-sale-book-rows-container'>
+      //                 <div className='twod-day-sale-book-row-container'>
+    
+      //                   <div className='twod-day-sale-book-row'>
+      //                     <p>1</p>
+      //                     <p>08/18/2022</p>
+      //                     <p>9:51</p>
+      //                     <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
+      //                       <p>Customer Name</p>
+      //                       <p>0912345678</p>
+      //                     </div>
+    
+      //                     <p>3Pieces</p>
+    
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>34</p>
+      //                       <p>48</p>
+      //                       <p>67</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>85</p>
+      //                       <p>80</p>
+      //                       <p>83</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>10000ks</p>
+      //                       <p>100000ks</p>
+      //                       <p>20000ks</p>
+      //                       <p className='twod-day-sale-book-seperate-row'>
+      //                         130000ks
+      //                       </p>
+      //                     </div>
+      //                     <p>130000ks</p> 
+      //                   </div>
+      //                   <div className='twod-day-sale-book-row-line'></div>
+      //                 </div>
+      //                 <div className='twod-day-sale-book-row-container'>
+    
+      //                   <div className='twod-day-sale-book-row'>
+      //                     <p>1</p>
+      //                     <p>01/11/2022</p>
+      //                     <p>9:51</p>
+      //                     <div className='twod-day-sale-book-row-detail-column twod-day-sale-book-row-name-column'>
+      //                       <p>Customer Name name</p>
+      //                       <p>0912345678</p>
+      //                     </div>
+    
+      //                     <p>3Pieces</p>
+    
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>134</p>
+      //                       <p>548</p>
+      //                       <p>767</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>85</p>
+      //                       <p>80</p>
+      //                       <p>83</p>
+      //                     </div>
+      //                     <div className='twod-day-sale-book-row-detail-column'>
+      //                       <p>10000ks</p>
+      //                       <p>100000ks</p>
+      //                       <p>20000ks</p>
+      //                       <p className='twod-day-sale-book-seperate-row'>
+      //                         130000ks
+      //                       </p>
+      //                     </div>
+      //                     <p>130000ks</p> 
+      //                   </div>
+      //                   <div className='twod-day-sale-book-row-line'></div>
+      //                 </div>
+                      
+      //               </div> */}
+      //               <div className='winners-table-container'>
+      //               <SaleBookTable 
+      //                 id="threedSaleBook"
+      //                 columns={threedSaleBookColumns} 
+      //                 data = {threedSaleBookData}
+      //               />
+      //               </div>
+    
+      //             </div> : null
+      //         }
+      //   </div>
+      //   {/* <ToastContainer /> */}
+      //   </>
+      // }
+        
+      // </>)
+      return(
+        <Loading isLoading={isLoading}>
+           <>
         <Header/>
         <Navbar/>
     
@@ -1364,9 +1974,8 @@ const Transaction = () => {
         </div>
         {/* <ToastContainer /> */}
         </>
-      }
-        
-      </>)
+        </Loading>
+      )
      }else{
       return(
       <Navigate to ="/" replace={true}></Navigate>

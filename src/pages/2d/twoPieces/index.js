@@ -61,7 +61,7 @@ const TwoPieces = () => {
           const sortedMorningTwodList = morning2d.data.twods.sort((a,b) => {
             return a.id - b.id
           })
-          console.log(sortedMorningTwodList)
+          // console.log(sortedMorningTwodList)
           dispatch(setTwodList(sortedMorningTwodList))
         }
         }
@@ -73,7 +73,7 @@ const TwoPieces = () => {
             const sortedEveningTwodList = evening2d.data.twods.sort((a,b) => {
               return a.id - b.id
             })
-            console.log(sortedEveningTwodList)
+            // console.log(sortedEveningTwodList)
             dispatch(setTwodList(sortedEveningTwodList))
           }
         }
@@ -93,7 +93,7 @@ const TwoPieces = () => {
   
         const channel = pusher.subscribe(`${process.env.REACT_APP_PUSHER_CHANNEL}.${profile.refereeId}`);
         channel.bind('App\\Events\\testing', function(data) {
-          console.log(data);
+          // console.log(data);
          
         //   const sortedTwodList = data.salesList.sort((a,b) => {
         //     return a.id - b.id

@@ -66,7 +66,7 @@ const Header = () => {
 
                 // console.log(res)
                 if(res.data.status === 200){
-                    console.log("agent profile")
+                    // console.log("agent profile")
                     const agent = {
                         id:res.data.agent?.id,
                         image:res.data.agent?.image,
@@ -83,7 +83,7 @@ const Header = () => {
                     // console.log(profile)
                 }
         } catch (error) {
-            notify(error.message)
+            notify("Something went wrong. Please log in again.")
         }
         
     }
@@ -96,7 +96,7 @@ const Header = () => {
                 dispatch(setRefereeProfile(res.data.referee))
             }
         } catch (error) {
-            notify(error.message)
+            // notify(error.message)
         }
      
     }
@@ -105,7 +105,7 @@ const Header = () => {
         if(user_login.isLoggedIn && user_login.role === "agent"){ 
             const channel1 = pusher.subscribe(`accepted-channel.${profile.refereeId}`);
             channel1.bind('App\\Events\\AcceptedSMS', function(data) { 
-              notify(data)
+            //   notify(data)
               fetchAgentProfile()
               
             });
@@ -115,9 +115,16 @@ const Header = () => {
                 notify(data)
                 fetchAgentProfile()
             })
+
+            const channel3 = pusher.subscribe(`agentAccept-noti.${profile.id}`)
+            channel3.bind("App\\Events\\AcceptNotiAgent",function(data){
+                // console.log(data)
+                notify(data)
+            })
             return (() => {
                     pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
                     pusher.unsubscribe(`channel-agent.${profile.id}`)
+                    pusher.unsubscribe(`agentAccept-noti.${profile.id}`)
                 })
         }
         

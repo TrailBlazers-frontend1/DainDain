@@ -446,10 +446,256 @@ const fetch3dAcceptedTransactions = async (date) => {
   }
 
   if(user_login.isLoggedIn && user_login.role === "agent"){
-    return(<>
-      {
-        isLoading ? <Loading/> :  
-          <>
+  //   return(<>
+  //     {
+  //       isLoading ? <Loading/> :  
+  //         <>
+  //             <Header/>
+  //             <Navbar/>
+  
+  //             <div className='App sale-parent-container'> 
+  //               {/* <ExcelExport data={accepted2dTransactions} fileName="2dAcceptedTransactions.xlsx" ref={excel_exporter}>
+  
+                
+  //               <Grid data={accepted2dTransactions} className='sale-2pieces-container'>
+  //                 <GridToolbar className='sale-headers-container'>
+  //                   <p className='sale-header'>2Pieces Accepted Sales</p>
+  //                   <div className='sale-filters-container'>
+  //                     <input className='sale-filter-date-input' type="date"></input>
+  //                     <div className='sale-filter-customer-filter'>
+  //                       <input list='customers' type="text" placeholder='Customer Name'/>
+  //                       <datalist id="customers">
+  //                         <option value="Customer Name1"></option>
+  //                         <option value="Customer Name2"></option>
+  //                         <option value="Customer Name3"></option>
+  //                       </datalist>
+  //                     </div>
+  
+  //                   <select className='sale-filter-round-filter'>
+  //                     <option>Round</option>
+  //                   </select>
+  //                   </div>
+  //                   <button onClick={exportExcel}>Generate Sales</button>
+  //                 </GridToolbar>
+  
+  //                 <Column field='customer_name' title="Name" ></Column>
+  //                 <Column field='created_at' title="Date" ></Column>
+  //                 <Column field='round' title="Round" ></Column>
+  //                 <Column field='number' title="Number" ></Column>
+  //                 <Column field='sale_amount' title="Amount" ></Column>
+  
+  //                 <ExcelExportColumn field='customer_name' title="Name" ></ExcelExportColumn>
+  //                 <ExcelExportColumn field='created_at' title="Date" ></ExcelExportColumn>
+  //                 <ExcelExportColumn field='round' title="Round" ></ExcelExportColumn>
+  //                 <ExcelExportColumn field='number' title="Number" ></ExcelExportColumn>
+  //                 <ExcelExportColumn field='sale_amount' title="Amount" ></ExcelExportColumn>
+                  
+  
+                  
+  //               </Grid>
+  //               </ExcelExport> */}
+  
+  //               <div className='sale-2pieces-container'>
+  //                 <div className='sale-headers-container'>
+  //                 <p className='sale-header'>{current_language === "english" ? "2Pieces Accepted Sales" : "၂လုံးလက်ခံရောင်းချခြင်း"}</p>
+  //                 <div className='sale-filters-container'>
+  //                   <input className='sale-filter-date-input' type="date" onChange={(e) => filter2dDate(e)}></input>
+  //                   {/* <div className='sale-filter-customer-filter'>
+  //                     <input list='customers' type="text" placeholder='Customer Name'/>
+  //                     <datalist id="customers">
+  //                       <option value="Customer Name1"></option>
+  //                       <option value="Customer Name2"></option>
+  //                       <option value="Customer Name3"></option>
+  //                     </datalist>
+  //                   </div> */}
+  
+  //                 <select className='sale-filter-round-filter'onChange={(e) => filter2dRound(e)}>
+  //                   <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
+  //                   <option value="Morning" >Morning</option>
+  //                   <option value="Evening" >Evening</option>
+  //                 </select>
+  //                 </div>
+  //                 <div className='sale-generate-btns-container' onClick={() => setIs2dGenerateOpen(!is2dGenerateOpen)}>
+  //                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+  //                   <div className={is2dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+  //                     <button onClick={() => handle2piecesExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+  //                     <button onClick={() => handle2piecesExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+  //                   </div>
+  //                 </div>
+                  
+  //                 </div>
+                  
+  
+  //               {/* <table className='sale-details-parent-container'>
+  //                 <tr className='sale-details-labels-container'>
+  //                   <th>Name</th>
+  //                   <th>Date</th>
+  //                   <th>Round</th>
+  //                   <th>Number</th>
+  //                   <th>Amount</th>
+  //                 </tr>
+  
+  //                 <div className='sale-details-rows-container'>
+  //                   {
+  //                     accepted2dTransactions.map((item) => (
+  //                       <tr className='sale-details-row'>
+  //                         <td>{item.customer_name}</td>
+  //                         <td>{(item.created_at).split(" ")[0]}</td>
+  //                         <td>Morning</td>
+  //                         <td>{item.number}</td>
+  //                         <td>{item.sale_amount}ks</td>
+  //                       </tr>
+  //                     ))
+  //                   }
+                    
+  //                 </div>
+  //               </table> */}
+  //                 <div className='sale-table-container'>
+  //                 <Table 
+  //                   id="twodAcceptedTransactions"
+  //                   columns={twodColumns} 
+  //                   data = {twodData}
+  //                 />
+  //                 </div>
+  //               </div>
+  
+  //               <div className='sale-lonepyine-container'>
+  //                 <div className='sale-headers-container'>
+  //                 <p className='sale-header'>{current_language === "english" ? "Lone Pyine Accepted Sales" : "လုံးပြိုင်လက်ခံရောင်းချခြင်း"}</p>
+  //                 <div className='sale-filters-container'>
+  //                   <input className='sale-filter-date-input' type="date" onChange={(e) => filterLonePyineDate(e)}></input>
+  //                   {/* <div className='sale-filter-customer-filter'>
+  //                     <input list='customers' type="text" placeholder='Customer Name'/>
+  //                     <datalist id="customers">
+  //                       <option value="Customer Name1"></option>
+  //                       <option value="Customer Name2"></option>
+  //                       <option value="Customer Name3"></option>
+  //                     </datalist>
+  //                   </div> */}
+  
+  //                 <select className='sale-filter-round-filter'onChange={(e) => filterLonePyineRound(e)}>
+  //                   <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
+  //                   <option value="morning" >Morning</option>
+  //                   <option value="evening" >Evening</option>
+  //                 </select>
+  //                 </div>
+                  
+  //                 <div className='sale-generate-btns-container' onClick={() => setIsLonePyineGenerateOpen(!isLonePyineGenerateOpen)}>
+  //                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+  //                   <div className={isLonePyineGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+  //                     <button onClick={() => handleLonePyineExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+  //                     <button onClick={() => handleLonePyineExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+  //                   </div>
+  //                 </div>
+                  
+  //                 </div>
+                  
+  
+  //               {/* <table className='sale-details-parent-container'>
+  //                 <tr className='sale-details-labels-container'>
+  //                   <th>Name</th>
+  //                   <th>Date</th>
+  //                   <th>Round</th>
+  //                   <th>Number</th>
+  //                   <th>Amount</th>
+  //                 </tr>
+  
+  //                 <div className='sale-details-rows-container'>
+  //                   {
+  //                     acceptedLonePyineTransactions.map((item) => (
+  //                       <tr className='sale-details-row'>
+  //                         <td>{item.customer_name}</td>
+  //                         <td>{(item.created_at).split(" ")[0]}</td>
+  //                         <td>Morning</td>
+  //                         <td>{item.number}</td>
+  //                         <td>{item.sale_amount}ks</td>
+  //                       </tr>
+  //                     ))
+  //                   }
+                    
+  //                 </div>
+  //               </table> */}
+  //               <div className='sale-table-container'>
+  //               <Table
+  //               id = "lonePyineAcceptedTransactions"
+  //               columns={LonePyineColumns} 
+  //                   data = {lonePyineData}/>
+  //                 </div>
+  //               </div>
+  //               <div className='sale-lonepyine-container'>
+  //                 <div className='sale-headers-container'>
+  //                 <p className='sale-header'>{current_language === "english" ? "3Pieces Accepted Sales" : "၃လုံးလက်ခံရောင်းချခြင်း"}</p>
+  //                 <div className='sale-filters-container'>
+  //                   <input className='sale-filter-date-input' type="date" onChange={(e) => filter3DDate(e)}></input>
+  //                   {/* <div className='sale-filter-customer-filter'>
+  //                     <input list='customers' type="text" placeholder='Customer Name'/>
+  //                     <datalist id="customers">
+  //                       <option value="Customer Name1"></option>
+  //                       <option value="Customer Name2"></option>
+  //                       <option value="Customer Name3"></option>
+  //                     </datalist>
+  //                   </div> */}
+  
+  //                 <select className='sale-filter-round-filter'onChange={(e) => filter3DRound(e)}>
+  //                   <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
+  //                   <option value="morning" >Morning</option>
+  //                   <option value="evening" >Evening</option>
+  //                 </select>
+  //                 </div>
+  //                 <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
+  //                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}
+  //                   <div className={is3dGenerateOpen ? 'sale-generate-dropdown-container sale-generate-dropdown-open' : 'sale-generate-dropdown-container sale-generate-dropdown-close'}>
+  //                     <button onClick={() => handle3piecesExport()}>{current_language === "english" ? "Generate To Excel" : "Excelဖြင့်ထုတ်မည်"}</button>
+  //                     <button onClick={() => handle3DExportPDF()}>{current_language === "english" ? "Generate To PDF" : "PDFဖြင့်ထုတ်မည်"}</button>
+  //                   </div>
+  //                 </div>
+  //                 </div>
+                  
+  
+  //               {/* <table className='sale-details-parent-container'>
+  //                 <tr className='sale-details-labels-container'>
+  //                   <th>Name</th>
+  //                   <th>Date</th>
+  //                   <th>Round</th>
+  //                   <th>Number</th>
+  //                   <th>Amount</th>
+  //                 </tr>
+  
+  //                 <div className='sale-details-rows-container'>
+  //                   {
+  //                     accepted3dTransactions.map((item) => (
+  //                       <tr className='sale-details-row'>
+  //                         <td>{item.customer_name}</td>
+  //                         <td>{(item.created_at).split(" ")[0]}</td>
+  //                         <td>Morning</td>
+  //                         <td>{item.number}</td>
+  //                         <td>{item.sale_amount}ks</td>
+  //                       </tr>
+  //                     ))
+  //                   }
+                    
+  //                 </div>
+  //               </table> */}
+  //                 <div className='sale-table-container'>
+
+                 
+  //                 <Table
+  //                 id = "threedAcceptedTransactions"
+  //                 columns={threedColumns} 
+  //                   data = {threedData}/>
+  //                    </div>
+  //               </div>
+              
+                
+  //             </div>
+  
+  //             {/* <ToastContainer /> */}
+  //         </>   
+  //     }
+  //  </>)
+  return(
+    <Loading isLoading={isLoading}>
+       <>
               <Header/>
               <Navbar/>
   
@@ -691,8 +937,8 @@ const fetch3dAcceptedTransactions = async (date) => {
   
               {/* <ToastContainer /> */}
           </>   
-      }
-   </>)
+    </Loading>
+  )
   }else{
     return(
       <Navigate to ="/" replace={true}></Navigate>
