@@ -523,7 +523,7 @@ const TwoPieces = () => {
             </div>
             <div className='twopieces-phno-input-container'>
               <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
-              <input ref={customerPhnoInput} required type="text" name="twopieces phno" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
+              <input ref={customerPhnoInput} required type="number" name="twopieces phno" disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false}></input>
             </div>
   
             {/* <div   className='customer-type-container'>

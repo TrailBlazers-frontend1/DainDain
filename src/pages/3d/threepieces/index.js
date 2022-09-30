@@ -274,7 +274,7 @@ const ThreePieces = () => {
             </div>
             <div className='threepieces-phno-input-container'>
               <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
-              <input ref={customerPhnoInput} required type="text" name="threepieces phno" disabled={user_login.role==="guest"  ? true:false}></input>
+              <input ref={customerPhnoInput} required type="number" name="threepieces phno" disabled={user_login.role==="guest"  ? true:false}></input>
             </div>
   
             {/* <div   className='customer-type-container'>
