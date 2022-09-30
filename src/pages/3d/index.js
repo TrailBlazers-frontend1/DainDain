@@ -31,6 +31,7 @@ const ThreeD = () => {
         const res = await axiosInstance.get("/winning-3ds",{headers:{Authorization:`Bearer ${user_login.token}`}})
         // console.log(res)
         setThreedHistory(res.data.threeds)
+        // console.log(res.data.threeds)
       } catch (error) {
         // notify("Something went Wrong. Please log in again.")
       }
@@ -83,9 +84,9 @@ const ThreeD = () => {
                       {/* <p>15:00:00</p> */}
                     </div>
                     <div className='threed-op-record-number-container'>
-                      <p>{item.number.split("")[0]}</p>
-                      <p>{item.number.split("")[1]}</p>
-                      <p>{item.number.split("")[2]}</p>
+                      <p>{item.number?.toString().split("")[0]}</p>
+                      <p>{item.number?.toString().split("")[1]}</p>
+                      <p>{item.number?.toString().split("")[2]}</p>
                     </div>
                   </div>
                  

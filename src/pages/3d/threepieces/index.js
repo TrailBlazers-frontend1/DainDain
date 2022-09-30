@@ -34,6 +34,8 @@ const ThreePieces = () => {
 
     const {current_language} = useSelector(state => state.language)
 
+    const {canBetThreed} = useSelector(state => state.countdown)
+
     const notify = (message) => toast(message, {
       position: "top-center",
       autoClose: 3000,
@@ -270,11 +272,11 @@ const ThreePieces = () => {
           <form onSubmit={(e) => submitCustomerInfo(e)} className='threepieces-name-phno-input-container'>
             <div className='threepieces-name-input-container'>
               <p>{current_language === "english" ? "Name:" : "နာမည်"}</p>
-              <input ref={customerNameInput} required type="text" name="threepieces name" disabled={user_login.role==="guest"  ? true:false}></input>
+              <input ref={customerNameInput} required type="text" name="threepieces name" disabled={user_login.role==="guest" || !canBetThreed  ? true:false}></input>
             </div>
             <div className='threepieces-phno-input-container'>
               <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
-              <input ref={customerPhnoInput} required type="number" name="threepieces phno" disabled={user_login.role==="guest"  ? true:false}></input>
+              <input ref={customerPhnoInput} required type="number" name="threepieces phno" disabled={user_login.role==="guest" || !canBetThreed ? true:false}></input>
             </div>
   
             {/* <div   className='customer-type-container'>
@@ -292,7 +294,7 @@ const ThreePieces = () => {
               </div>
             </div> */}
             
-            <button disabled={user_login.role==="guest" ? true:false} type='submit' className='threepieces-name-phno-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
+            <button disabled={user_login.role==="guest" || !canBetThreed ? true:false} type='submit' className='threepieces-name-phno-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
   
           </form>
   
@@ -304,12 +306,12 @@ const ThreePieces = () => {
             </div>
             <div className='threepieces-number-input-container'>
               <p>{current_language === "english" ? "Number" : "နံပါတ်"}</p>
-              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest"  ? true:false}></input>
+              <input required value={number} onWheel={(e) => e.target.blur()} onChange={(e) => setNumber(e.target.value)} type="number" id="number" name="number" disabled={user_login.role==="guest" || !canBetThreed  ? true:false}></input>
             </div>
 
             <div className='threepieces-R-counter'>
               <p>R:</p>
-              <input onChange={() => handleRCheck()} type="checkbox"></input>
+              <input disabled={user_login.role==="guest" || !canBetThreed  ? true:false} onChange={() => handleRCheck()} type="checkbox"></input>
             </div>
   
             <div className='threepieces-amount-input-container'>
@@ -319,17 +321,17 @@ const ThreePieces = () => {
                   if(amount > 100){
                     setAmount(parseInt(amount)-100)
                   }
-                  }} disabled={user_login.role==="guest"  ? true:false}>-</button>
-              <input value={amount} onWheel={(e) => e.target.blur()}  onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount" disabled={user_login.role==="guest"  ? true:false}>
+                  }} disabled={user_login.role==="guest" || !canBetThreed  ? true:false}>-</button>
+              <input value={amount} onWheel={(e) => e.target.blur()}  onChange={(e) => setAmount(e.target.value)} type="number" id="amount" name="amount" disabled={user_login.role==="guest" || !canBetThreed  ? true:false}>
               </input>
   
-                <button type='button' className='threepieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest"  ? true:false}>+</button>
+                <button type='button' className='threepieces-plus-btn' onClick={()=>{setAmount(parseInt(amount)+100)}} disabled={user_login.role==="guest" || !canBetThreed  ? true:false}>+</button>
               </div>
             </div>
 
             
   
-            <button disabled={user_login.role==="guest"  ? true:false} type='submit' className='threepieces-number-amount-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
+            <button disabled={user_login.role==="guest" || !canBetThreed  ? true:false} type='submit' className='threepieces-number-amount-btn'>{current_language === "english" ? "Add" : "ထည့်မည်"}</button>
           </form>
   
         </div>
@@ -354,19 +356,19 @@ const ThreePieces = () => {
                             <td>
                             <div className='twod-details-amount-container'>
                               <button
-                              disabled={user_login.role==="guest"  ? true:false}
+                              disabled={user_login.role==="guest" || !canBetThreed  ? true:false}
                               onClick={(e) => 
                               {if(item.amount > 100){
                                 decreaseAmount(e,item)} 
     
                               }}
                                 >-</button>
-                              <input disabled={user_login.role==="guest"  ? true:false} type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
-                              <button disabled={user_login.role==="guest"  ? true:false} onClick={(e) => increaseAmount(e,item)}>+</button>
+                              <input disabled={user_login.role==="guest" || !canBetThreed  ? true:false} type="number" onWheel={(e) => e.target.blur()} onChange={(e) => handleAmountfinalChange(e,item)} value={item.amount}></input>
+                              <button disabled={user_login.role==="guest" || !canBetThreed  ? true:false} onClick={(e) => increaseAmount(e,item)}>+</button>
                             </div>
                             </td>
                             <td>
-                            <button disabled={user_login.role==="guest"  ? true:false} className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
+                            <button disabled={user_login.role==="guest" || !canBetThreed  ? true:false} className='twod-details-delete-btn' onClick={() => deleteNumber(item)}>Delete</button>
                             </td>
                           </tr>
                       ))
@@ -388,7 +390,7 @@ const ThreePieces = () => {
                     <p>{threeDCountDown().diffInDays}days:{threeDCountDown().diffinHours}hours</p>
                   </div>
   
-                  <button className='twod-betnow-btn' disabled={user_login.role==="guest"  ? true:false} onClick={submitBetNow}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
+                  <button className='twod-betnow-btn' disabled={user_login.role==="guest" || !canBetThreed  ? true:false} onClick={submitBetNow}>{current_language === "english" ? "Bet Now" : "ထိုးမည်"}</button>
                   
                 </div>
       </div>

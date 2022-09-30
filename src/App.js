@@ -16,7 +16,7 @@ import RefreeRequests from './pages/refreeRequests';
 import AgentProfile from './pages/agentProfile';
 // import Transaction from './pages/transaction';
 import Sale from './pages/sale';
-import { isMorningOrEvening, countdown, resetRound, changeRound, threeDCountDown } from './redux/countdown';
+import { isMorningOrEvening, countdown, resetRound, changeRound, threeDCountDown, threedResetRound, changeThreedCanBet } from './redux/countdown';
 import OpProfile from './pages/opProfile';
 import ViewRefree from './pages/viewrefree';
 import Transaction from './pages/transaction';
@@ -229,6 +229,20 @@ function ParentRouter() {
       }else{
         dispatch(resetRound())
       }
+
+      const threedNow = new Date()
+      const threedResetDate1 = new Date(threedNow.getFullYear(), threedNow.getMonth(), 1)
+      const threedResetDate2 = new Date(threedNow.getFullYear(), threedNow.getMonth(), 16)
+      // console.log(threedResetDate1, threedResetDate2)
+      if(threedNow.getDate() === 1 || threedNow.getDate() === 16){
+        // console.log(threedNow.toTimeString().split(" ")[0] > '13:30:00')
+        if(threedNow.toTimeString().split(" ")[0] > '13:30:00'){
+          dispatch(threedResetRound())
+        }
+      }else{
+        dispatch(changeThreedCanBet())
+      }
+      
     },1000)
 
     return () => clearInterval(intervalId)

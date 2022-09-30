@@ -89,7 +89,9 @@ const initialState = {
       hours:"",
       minutes:"",
       seconds:""
-    }
+    },
+
+    canBetThreed : true
    
 }
 
@@ -113,11 +115,17 @@ export const countdownSlice = createSlice({
       },
       resetRound:(state,action) => {
         state.morning_evening = initialState
+      },
+      threedResetRound :(state,action) => {
+        state.canBetThreed = false
+      },
+      changeThreedCanBet:(state,action) => {
+        state.canBetThreed = initialState
       }
     },
 })
 
-export const { countdown, changeRound,resetRound } = countdownSlice.actions
+export const { countdown, changeRound,resetRound ,threedResetRound, changeThreedCanBet} = countdownSlice.actions
 
 export default countdownSlice.reducer
 
