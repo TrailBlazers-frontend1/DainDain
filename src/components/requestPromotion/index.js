@@ -50,7 +50,7 @@ const RequestPromotion = ({isRequestPromoOpen,setIsRequestPromoOpen}) => {
         // dispatch(promoteRole(role))
 
       } catch (error) {
-        notify(error.message)
+        notify("Something went Wrong. Please log in again.")
       }
       
       

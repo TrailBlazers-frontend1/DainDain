@@ -105,7 +105,7 @@ function ParentRouter() {
                 // console.log(profile)
             }
     } catch (error) {
-        notify(error.message)
+        notify("Something went Wrong. Please log in again.")
     }
     
 }

@@ -92,7 +92,7 @@ const LonePyaing = () => {
             }
             
           } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
           }
         
   
@@ -120,7 +120,7 @@ const LonePyaing = () => {
                     // console.log(profile)
                 }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
         
     }
@@ -151,14 +151,14 @@ const LonePyaing = () => {
           fetchAgentProfile()
             
         });
-        const channel3 = pusher.subscribe(`agentAccept-noti.${profile.id}`)
-        channel3.bind("App\\Events\\AcceptNotiAgent",function(data){
-            notify(data)
-        })
+        // const channel3 = pusher.subscribe(`agentAccept-noti.${profile.id}`)
+        // channel3.bind("App\\Events\\AcceptNotiAgent",function(data){
+        //     // notify(data)
+        // })
 
           return (() => {
             pusher.unsubscribe(`lonepyine-channel.${profile.refereeId}`)
-            pusher.unsubscribe(`agentAccept-noti.${profile.id}`)
+            // pusher.unsubscribe(`agentAccept-noti.${profile.id}`)
             // pusher.unsubscribe(`accepted-channel.${profile.refereeId}`)
         })
         }
@@ -546,7 +546,7 @@ const LonePyaing = () => {
                 <div className='onenumber-phno-input-container'>
                 <p>{current_language === "english" ? "Phone:" : "ဖုန်း"}</p>
                 {/* disabled={user_login.role==="guest" ? true:false} */}
-                <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} ref={customerPhNoInput} required type="text" name="onenumber phno" ></input>
+                <input disabled={user_login.role==="guest" || (!morning_evening.morning && !morning_evening.evening) ? true:false} ref={customerPhNoInput} required type="number" name="onenumber phno" ></input>
                 </div>
             </div>
             

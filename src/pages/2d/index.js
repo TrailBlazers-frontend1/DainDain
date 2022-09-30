@@ -60,7 +60,7 @@ const TwoD = () => {
       // console.log(res)
       setOpRecords(res.data)
     } catch (error) {
-      notify(error.message)
+      notify("Something went Wrong. Please log in again.")
     }
     
   }
@@ -88,7 +88,7 @@ const TwoD = () => {
                 // console.log(profile)
             }
     } catch (error) {
-        notify(error.message)
+        notify("Something went Wrong. Please log in again.")
     }
     
 }

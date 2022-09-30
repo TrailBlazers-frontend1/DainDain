@@ -96,7 +96,7 @@ const Header = () => {
                 dispatch(setRefereeProfile(res.data.referee))
             }
         } catch (error) {
-            // notify(error.message)
+            // notify("Something went Wrong. Please log in again.")
         }
      
     }
@@ -166,7 +166,7 @@ const Header = () => {
                 notify(res.data.message)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
         
         

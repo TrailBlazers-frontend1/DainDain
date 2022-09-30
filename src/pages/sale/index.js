@@ -133,7 +133,7 @@ const Sale = () => {
     setIsLoading(false)
   }
   } catch (error) {
-    notify(error.message)
+    notify("Something went Wrong. Please log in again.")
     setIsLoading(false)
   }
   

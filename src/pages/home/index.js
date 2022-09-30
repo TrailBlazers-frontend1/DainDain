@@ -68,7 +68,7 @@ const Home = () => {
                     // console.log(profile)
                 }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
         
     }
@@ -81,7 +81,7 @@ const Home = () => {
                 dispatch(setRefereeProfile(res.data.referee))
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
         
     }
@@ -111,7 +111,7 @@ const Home = () => {
             // setLive(res.data.live.twod)
 
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
     } 
 

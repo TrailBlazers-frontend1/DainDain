@@ -166,7 +166,7 @@ const Register = ({isDaiRegOpen,setIsDaiRegOpen}) => {
         }
       } catch (error) {
         // console.log(error)
-        notify(error.message)
+        notify("Something went Wrong. Please log in again.")
       }
 
       setName("")

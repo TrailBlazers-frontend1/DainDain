@@ -44,7 +44,7 @@ const ViewRefree = () => {
                 setRefereeId(res.data.referee.referee_code)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
      
     }

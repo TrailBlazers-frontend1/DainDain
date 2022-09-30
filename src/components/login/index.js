@@ -8,7 +8,7 @@ import { useSelector , useDispatch } from 'react-redux'
 import { Icon } from '@iconify/react';
 import { login } from '../../redux/user'
 import { axiosInstance } from '../../urlConfig';
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 // import axios from 'axios'
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -85,7 +85,8 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
                 }
 
                   if(data.request_type === "referee"){
-                    navigate("https://www.google.com/",{replace : true})
+                    window.location.href = 'http://128.199.201.43/';
+                    return null;
                   }else{
                     localStorage.setItem("auth",JSON.stringify(user))
                     dispatch(login(user))
@@ -234,7 +235,7 @@ const Login = ({isLoginOpen,setIsLoginOpen}) => {
             }
           } catch (error) {
             // console.log(error)
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
           }
     
         //   setName("")

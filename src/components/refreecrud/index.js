@@ -52,7 +52,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
                 setRefereeLists(referees.data.referees)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
        
     }
@@ -108,7 +108,7 @@ const RefreeCrud = ({title,setTitle,isAddRefree,setIsAddRefree , isEditRefree, s
             fetchRefereeRequests()
            }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
 
         setIsEditRefree(false)

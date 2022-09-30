@@ -223,7 +223,7 @@ const Transaction = () => {
       
       } catch (error) {
         setIsLoading(false)
-        notify(error.message)
+        notify("Something went Wrong. Please log in again.")
       }
       
 
@@ -254,7 +254,7 @@ const Transaction = () => {
        
       } catch (error) {
         setIsLoading(false)
-        notify(error.message)
+        notify("Something went Wrong. Please log in again.")
       }
      
     }

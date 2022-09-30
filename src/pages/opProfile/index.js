@@ -42,7 +42,7 @@ const OpProfile = () => {
                 setOpCode(res.data.data.operationstaff_code)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
        
     }
@@ -68,7 +68,7 @@ const OpProfile = () => {
                 fetchOpProfile()
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
         setIsChangeUsername(false)
         // setAgentName('')

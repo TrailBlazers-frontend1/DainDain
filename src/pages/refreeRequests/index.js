@@ -60,7 +60,7 @@ const RefreeRequests = () => {
                 setRefereeLists(referees.data.referees)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
        
     }
@@ -97,7 +97,7 @@ const RefreeRequests = () => {
                 fetchRefereeRequests()
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
         
         
@@ -119,7 +119,7 @@ const RefreeRequests = () => {
                 fetchRefereeRequests()
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
 
        
@@ -137,7 +137,7 @@ const RefreeRequests = () => {
                 fetchRefereeRequests()
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
        
     }

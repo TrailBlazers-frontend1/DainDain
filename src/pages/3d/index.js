@@ -32,7 +32,7 @@ const ThreeD = () => {
         // console.log(res)
         setThreedHistory(res.data.threeds)
       } catch (error) {
-        // notify(error.message)
+        // notify("Something went Wrong. Please log in again.")
       }
     }
 

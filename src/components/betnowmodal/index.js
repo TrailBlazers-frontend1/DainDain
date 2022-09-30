@@ -49,7 +49,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 notify(res.data.message)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
     }
     const sendLonePyineSaleOrder = async (lonePyineData) => {
@@ -61,7 +61,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 notify(res.data.message)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
     }
 
@@ -74,7 +74,7 @@ const BetNowModal = ({isBetNowModalOpen,setIsBetNowModalOpen,
                 notify(res.data.message)
             }
         } catch (error) {
-            notify(error.message)
+            notify("Something went Wrong. Please log in again.")
         }
     }
 
