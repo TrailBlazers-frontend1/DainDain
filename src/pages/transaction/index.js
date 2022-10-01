@@ -634,7 +634,7 @@ const Transaction = () => {
           Compensation: item.threed.compensation,
           GameType: "3D",
           Date: item.threed.date,
-          Round: item.threed.round,
+          // Round: item.threed.round,
     }
       })
       return transactionarr
@@ -666,10 +666,10 @@ const Transaction = () => {
         Header: current_language === "english" ? "Date" : "ရက်",
         accessor : "Date"
       },
-      {
-        Header:current_language === "english" ? "Round" : "ပွဲ",
-        accessor : "Round"
-      },
+      // {
+      //   Header:current_language === "english" ? "Round" : "ပွဲ",
+      //   accessor : "Round"
+      // },
     ]
      )
      const threedSaleBookData = useMemo(() => {
@@ -689,9 +689,9 @@ const Transaction = () => {
         const date = data.map((item) => {
           return item.threed.date
         })
-        const round = data.map((item) => {
-          return item.threed.round
-        })
+        // const round = data.map((item) => {
+        //   return item.threed.round
+        // })
 
         const customer = data.map((item) => {
           return item.customer_name
@@ -702,7 +702,7 @@ const Transaction = () => {
         return {
           No:index + 1,
           Date: date[0],
-          Round: round[0],
+          // Round: round[0],
           Name: customer[0],
           GameType: "3D",
           Number: numbers,
@@ -724,10 +724,10 @@ const Transaction = () => {
         Header: current_language === "english" ? "Date" : "ရက်",
         accessor : "Date"
       },
-      {
-        Header: current_language === "english" ? "Round" : "ပွဲ",
-        accessor : "Round"
-      },
+      // {
+      //   Header: current_language === "english" ? "Round" : "ပွဲ",
+      //   accessor : "Round"
+      // },
       {
         Header: current_language === "english" ? "Name" : "နာမည်",
         accessor : "Name"
@@ -1554,11 +1554,11 @@ const Transaction = () => {
     
                 <input className='winners-date-filter' type="date" onChange={(e) => filter3dWinnersDate(e)}></input>
     
-                <select className='winners-round-filter' onChange={(e) => filter3DRound(e)}>
+                {/* <select className='winners-round-filter' onChange={(e) => filter3DRound(e)}>
                   <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
                   <option value="Morning">Morning</option>
                   <option value="Evening">Evening</option>
-                </select>
+                </select> */}
                 </div>
                 <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
                 {current_language === "english" ? "Generate" : "ထုတ်မည်"}

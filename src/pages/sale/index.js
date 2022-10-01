@@ -154,7 +154,8 @@ const fetch2dAcceptedTransactions = async (date) => {
   
 
   if(twod.data.status === 200){
-    setAccepted2dTransactions(twod.data.accepted_twod_lists)
+    setAccepted2dTransactions(twod?.data?.accepted_twod_lists)
+    setTemp2dArr(twod?.data?.accepted_twod_lists)
   }
 }
 
@@ -165,7 +166,8 @@ const fetchLonePyineAcceptedTransactions = async (date) => {
     current_date : date
   },{headers:{Authorization:`Bearer ${user_login.token}`}})
   if(lonepyine.data.status === 200){
-    setAcceptedLonePyineTransactions(lonepyine.data.accepted_lonepyaing_lists)
+    setAcceptedLonePyineTransactions(lonepyine?.data?.accepted_lonepyaing_lists)
+    setTempLonePyineArr(lonepyine?.data?.accepted_lonepyaing_lists)
   }
 }
 
@@ -176,7 +178,8 @@ const fetch3dAcceptedTransactions = async (date) => {
     current_date : date
   },{headers:{Authorization:`Bearer ${user_login.token}`}})
   if(threed.data.status === 200){
-    setAccepted3dTransactions(threed.data.accepted_threed_lists)
+    setAccepted3dTransactions(threed?.data?.accepted_threed_lists)
+    setTemp3dArr(threed?.data?.accepted_threed_lists)
   }
 }
 
@@ -274,7 +277,7 @@ const fetch3dAcceptedTransactions = async (date) => {
     return {
       Name : item.customer_name,
       Date : item.threed.date,
-      Round : item.threed.round,
+      // Round : item.threed.round,
       Number : item.threed.number,
       Amount : item.sale_amount
     }
@@ -292,10 +295,10 @@ const fetch3dAcceptedTransactions = async (date) => {
       Header: current_language === "english" ? "Date" : "ရက်",
       accessor : "Date"
     },
-    {
-      Header: current_language === "english" ? "Round" : "ပွဲ",
-      accessor : "Round"
-    },
+    // {
+    //   Header: current_language === "english" ? "Round" : "ပွဲ",
+    //   accessor : "Round"
+    // },
     {
       Header: current_language === "english" ? "Number" : "နံပါတ်",
       accessor : "Number"
@@ -351,7 +354,7 @@ const fetch3dAcceptedTransactions = async (date) => {
 
   //filter lonepyine
   const filterLonePyineRound = (e) => {
-    // console.log(e.target.value)
+    console.log(e.target.value)
     setAcceptedLonePyineTransactions(tempLonePyineArr)
     if(e.target.value){
       const filteredArr = tempLonePyineArr.filter((item) => {
@@ -821,8 +824,8 @@ const fetch3dAcceptedTransactions = async (date) => {
   
                   <select className='sale-filter-round-filter'onChange={(e) => filterLonePyineRound(e)}>
                     <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
-                    <option value="morning" >Morning</option>
-                    <option value="evening" >Evening</option>
+                    <option value="Morning" >Morning</option>
+                    <option value="Evening" >Evening</option>
                   </select>
                   </div>
                   
@@ -882,11 +885,11 @@ const fetch3dAcceptedTransactions = async (date) => {
                       </datalist>
                     </div> */}
   
-                  <select className='sale-filter-round-filter'onChange={(e) => filter3DRound(e)}>
+                  {/* <select className='sale-filter-round-filter'onChange={(e) => filter3DRound(e)}>
                     <option value="">{current_language === "english" ? "Round" : "ပွဲ"}</option>
-                    <option value="morning" >Morning</option>
-                    <option value="evening" >Evening</option>
-                  </select>
+                    <option value="Morning" >Morning</option>
+                    <option value="Evening" >Evening</option>
+                  </select> */}
                   </div>
                   <div className='sale-generate-btns-container' onClick={() => setIs3dGenerateOpen(!is3dGenerateOpen)}>
                   {current_language === "english" ? "Generate" : "ထုတ်မည်"}
